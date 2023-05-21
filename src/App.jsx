@@ -1,8 +1,13 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ComponentExample from "./components/ComponentExample";
+
 function App() {
   return (
-    <>
-      <h1>Balink</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ComponentExample />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
