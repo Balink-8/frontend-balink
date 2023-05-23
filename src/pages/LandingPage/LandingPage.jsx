@@ -25,7 +25,7 @@ const LandingPage = () => {
   return(
     <div>
 
-      {/* header */}
+      {/* headers */}
       <header className={styles.navbarLandingpage}>
         <img className={styles.logo} src={balink} alt="logo" weight="155.71" height={50} />
         <nav className={styles.navbarLink}>
