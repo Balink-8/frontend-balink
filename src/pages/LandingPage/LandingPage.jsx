@@ -64,7 +64,7 @@ const LandingPage = () => {
             <div className="col-lg-6">
               <div className={styles.textJumbotron}>
                 <div className="display-medium-semibold mb-8">
-                  Nikmati Liburanmu dengan Cepat dan Mudah di Pulau Dewata
+                  Nikmati Liburanmu dengan Cepat dan Mudah di Pulau Dewata Bali
                 </div>
                 <p className="title-medium-semibold mb-8">
                   Bingung mau pergi ke bali tapi tidak tau tujuan wisatanya dan tidak
