@@ -1,46 +1,59 @@
 import React from "react";
-import styles from './LandingPage.module.css'
-import balink from "../../assets/assetsLandingPage/balink.svg"
-import background from "../../assets/assetsLandingPage/background.svg"
-import phone from "../../assets/assetsLandingPage/phone.svg"
-import info from "../../assets/assetsLandingPage/info.svg"
-import lokasi from "../../assets/assetsLandingPage/lokasi.svg"
-import pencarian from "../../assets/assetsLandingPage/pencarian.svg"
-import waktu from "../../assets/assetsLandingPage/waktu.svg"
-import wisata from "../../assets/assetsLandingPage/wisata.svg"
-import belanja from "../../assets/assetsLandingPage/belanja.svg"
-import apple from "../../assets/assetsLandingPage/apple.svg"
-import play from "../../assets/assetsLandingPage/play.svg"
-import ujang from "../../assets/assetsLandingPage/ujang.svg"
-import dadang from "../../assets/assetsLandingPage/dadang.svg"
-import oscar from "../../assets/assetsLandingPage/oscar.svg"
-import bilgates from "../../assets/assetsLandingPage/bilgates.svg"
-import whatsapp from "../../assets/assetsLandingPage/whatsapp.svg"
-import instagram from "../../assets/assetsLandingPage/instagram.svg"
-import email from "../../assets/assetsLandingPage/email.svg"
-import gps from "../../assets/assetsLandingPage/gps.svg"
+import styles from "./LandingPage.module.css";
+import balink from "../../assets/assetsLandingPage/balink.svg";
+import background from "../../assets/assetsLandingPage/background.svg";
+import phone from "../../assets/assetsLandingPage/phone.svg";
+import info from "../../assets/assetsLandingPage/info.svg";
+import lokasi from "../../assets/assetsLandingPage/lokasi.svg";
+import pencarian from "../../assets/assetsLandingPage/pencarian.svg";
+import waktu from "../../assets/assetsLandingPage/waktu.svg";
+import wisata from "../../assets/assetsLandingPage/wisata.svg";
+import belanja from "../../assets/assetsLandingPage/belanja.svg";
+import apple from "../../assets/assetsLandingPage/apple.svg";
+import play from "../../assets/assetsLandingPage/play.svg";
+import ujang from "../../assets/assetsLandingPage/ujang.svg";
+import dadang from "../../assets/assetsLandingPage/dadang.svg";
+import oscar from "../../assets/assetsLandingPage/oscar.svg";
+import bilgates from "../../assets/assetsLandingPage/bilgates.svg";
+import whatsapp from "../../assets/assetsLandingPage/whatsapp.svg";
+import instagram from "../../assets/assetsLandingPage/instagram.svg";
+import email from "../../assets/assetsLandingPage/email.svg";
+import gps from "../../assets/assetsLandingPage/gps.svg";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
-  return(
+  return (
     <div>
-
       {/* header */}
       <header className={styles.navbarLandingpage}>
-        <img className={styles.logo} src={balink} alt="logo" weight="155.71" height={50} />
+        <img
+          className={styles.logo}
+          src={balink}
+          alt="logo"
+          weight="155.71"
+          height={50}
+        />
         <nav className={styles.navbarLink}>
           <ul className="title-medium-regular">
             <li className="mx-8">
-              <Link to="#" className={styles.link}>Home</Link>
+              <Link to="#" className={styles.link}>
+                Home
+              </Link>
             </li>
             <li className="mx-8">
-              <Link to="#" className={styles.link}>About Us</Link>
+              <Link to="#" className={styles.link}>
+                About Us
+              </Link>
             </li>
             <li className="mx-8">
-              <Link to="#" className={styles.link}>Download</Link>
+              <Link to="#" className={styles.link}>
+                Download
+              </Link>
             </li>
             <li className="mx-8">
-              <Link to="#" className={styles.link}>Contact</Link>
+              <Link to="#" className={styles.link}>
+                Contact
+              </Link>
             </li>
           </ul>
         </nav>
@@ -53,29 +66,27 @@ const LandingPage = () => {
           <div className="row flex-lg-row-reverse align-items-center py-5">
             <div className="col-lg-6">
               <img
-              src={phone}
-              className="d-block mx-lg-auto img-fluid"
-              alt="phone"
-              width={450}
-              height={610}
-              loading="lazy"
+                src={phone}
+                className="d-block mx-lg-auto img-fluid"
+                alt="phone"
+                width={450}
+                height={610}
+                loading="lazy"
               />
             </div>
             <div className="col-lg-6">
               <div className={styles.textJumbotron}>
                 <div className="display-medium-semibold mb-8">
-                  Nikmati Liburanmu dengan Cepat dan Mudah di Pulau Dewata Bali
+                  Nikmati Liburanmu dengan Cepat dan Mudah di Pulau Dewata
                 </div>
                 <p className="title-medium-semibold mb-8">
-                  Bingung mau pergi ke bali tapi tidak tau tujuan wisatanya dan tidak
-                  tau buah tangan khas Bali ?? <span>Balink</span> siap memberikan
-                  solusinya bagi anda{" "}
+                  Bingung mau pergi ke bali tapi tidak tau tujuan wisatanya dan
+                  tidak tau buah tangan khas Bali ??{" "}
+                  <span className={styles.spanText}>Balink</span> siap
+                  memberikan solusinya bagi anda{" "}
                 </p>
                 <div className="mt-48">
-                  <button
-                  type="button"
-                  className={styles.buttonMain}
-                  >
+                  <button type="button" className={styles.buttonMain}>
                     Mulai Aktivitas
                   </button>
                 </div>
@@ -91,12 +102,12 @@ const LandingPage = () => {
           <div className="row flex-lg-row align-items-center py-5">
             <div className="col-lg-6">
               <img
-              src={info}
-              className="d-block mx-lg-auto img-fluid"
-              alt="Bootstrap Themes"
-              width={400}
-              height={545}
-              loading="lazy"
+                src={info}
+                className="d-block mx-lg-auto img-fluid"
+                alt="Bootstrap Themes"
+                width={400}
+                height={545}
+                loading="lazy"
               />
             </div>
             <div className="col-lg-6">
@@ -105,9 +116,10 @@ const LandingPage = () => {
                   Balink Aplikasi Traveller Asik
                 </div>
                 <p className="body-large-regular mb-8">
-                    Kami menyediakan sebuah layanan dari sebuah aplikasi Wisata Masa
-                    Kini khusus nya Wisata yang ada di Bali. Nyaman, aman, cepat dan
-                    senang akan kalian dapat kan di <span>Balink</span>
+                  Kami menyediakan sebuah layanan dari sebuah aplikasi Wisata
+                  Masa Kini khusus nya Wisata yang ada di Bali. Nyaman, aman,
+                  cepat dan senang akan kalian dapat kan di{" "}
+                  <span className={styles.spanText}>Balink</span>
                 </p>
 
                 <div className="mt-48">
@@ -116,12 +128,10 @@ const LandingPage = () => {
                       <img src={lokasi} alt="location" />
                     </div>
                     <div className="flex-grow-1 ms-3 ">
-                      <div className="headline-large-semibold mb-4">
-                        Lokasi
-                      </div>
+                      <div className="headline-large-semibold mb-4">Lokasi</div>
                       <p className="body-large-regular mb-4">
-                        Kamu dapat mengakses lokasi dari event yang belum kamu ketahui
-                        lokasi penyelenggaraan event.
+                        Kamu dapat mengakses lokasi dari event yang belum kamu
+                        ketahui lokasi penyelenggaraan event.
                       </p>
                     </div>
                   </div>
@@ -137,8 +147,8 @@ const LandingPage = () => {
                         Pencarian
                       </div>
                       <p className="body-large-regular mb-4">
-                        Kami menyediakan fitur pencarian agar barang yang kamu beli
-                        dapat ditemukan dengan cepat.
+                        Kami menyediakan fitur pencarian agar barang yang kamu
+                        beli dapat ditemukan dengan cepat.
                       </p>
                     </div>
                   </div>
@@ -150,17 +160,15 @@ const LandingPage = () => {
                       <img src={waktu} alt="pencarian" />
                     </div>
                     <div className="flex-grow-1 ms-3 ">
-                      <div className="headline-large-semibold mb-4">
-                        Waktu
-                      </div>
+                      <div className="headline-large-semibold mb-4">Waktu</div>
                       <p className="body-large-regular mb-4">
-                        Kami menyediakan tanggal dan waktu untuk selalu update cuaca
-                        terkini yang ada di Bali dan waktu Pagelaran Event.
+                        Kami menyediakan tanggal dan waktu untuk selalu update
+                        cuaca terkini yang ada di Bali dan waktu Pagelaran
+                        Event.
                       </p>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -172,33 +180,36 @@ const LandingPage = () => {
         <div className="container py-5">
           <div className={styles.textFitur}>
             <div className="row row-cols-lg-3 py-5">
-
               <div className=" d-flex justify-content-center">
                 <div className="card h-100 w-75">
                   <div className={styles.totalFitur}>
                     <div className="mt-3 display-small-semibold">20</div>
                   </div>
-                  <div className="mt-3 headline-small-semibold">Artikel Wisata</div>
+                  <div className="mt-3 headline-small-semibold">
+                    Artikel Wisata
+                  </div>
                   <p className="my-3 body-medium-regular">
-                    Artikel terkait beberapa destinasi yang ada di pulau dewata bali
-                    dengan sajian yang menarik.
+                    Artikel terkait beberapa destinasi yang ada di pulau dewata
+                    bali dengan sajian yang menarik.
                   </p>
                 </div>
               </div>
 
               <div className=" d-flex justify-content-center">
                 <div className="card h-100 w-75">
-                <div className={styles.totalFitur}>
+                  <div className={styles.totalFitur}>
                     <div className="mt-3 display-small-semibold">250 +</div>
                   </div>
-                  <div className="mt-3 headline-small-semibold">Oleh - Oleh</div>
+                  <div className="mt-3 headline-small-semibold">
+                    Oleh - Oleh
+                  </div>
                   <p className="my-3 body-medium-regular">
-                    Oleh - oleh khas bali dengan dari segala bentuk, baju, gantungan
-                    kunci, kue dll.
+                    Oleh - oleh khas bali dengan dari segala bentuk, baju,
+                    gantungan kunci, kue dll.
                   </p>
                 </div>
               </div>
-                  
+
               <div className=" d-flex justify-content-center">
                 <div className="card h-100 w-75">
                   <div className={styles.totalFitur}>
@@ -206,12 +217,11 @@ const LandingPage = () => {
                   </div>
                   <div className="mt-3 headline-small-semibold">Event Bali</div>
                   <p className="my-3 body-medium-regular">
-                    Kuliner yang tersebar di segala tempat yang ada di pulau bali
-                    dengan citarasa yang enak.
+                    Kuliner yang tersebar di segala tempat yang ada di pulau
+                    bali dengan citarasa yang enak.
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -229,24 +239,21 @@ const LandingPage = () => {
                 width={450}
                 height={610}
                 loading="lazy"
-                />
+              />
             </div>
             <div className="col-lg-6">
               <div className="headline-large-semibold mb-8">
                 Memilih Tempat Wisata
               </div>
               <p className="body-large-regular text-event mb-8">
-                Dengan aplikasi ini kamu dapat memilih tempat wisata dari beberapa
-                event yang ada di Bali. Kamu juga akan mengetahui tempat dan waktu
-                penyelenggaraan event tersebut. Ada beberapa event yang kamu membeli
-                tiket terlebih dahulu. Kami menyediakan informasi deskripsi
-                kegiatan, link maps, dan info terkait event.{" "}
+                Dengan aplikasi ini kamu dapat memilih tempat wisata dari
+                beberapa event yang ada di Bali. Kamu juga akan mengetahui
+                tempat dan waktu penyelenggaraan event tersebut. Ada beberapa
+                event yang kamu membeli tiket terlebih dahulu. Kami menyediakan
+                informasi deskripsi kegiatan, link maps, dan info terkait event.{" "}
               </p>
               <div className="mt-3">
-                <button
-                  type="button"
-                  className={styles.buttonMain}
-                >
+                <button type="button" className={styles.buttonMain}>
                   Info Selengkapnya
                 </button>
               </div>
@@ -279,10 +286,7 @@ const LandingPage = () => {
                 menyediakan untuk keamanan transaksinya.
               </p>
               <div className="mt-3">
-                <button
-                  type="button"
-                  className={styles.buttonMain}
-                >
+                <button type="button" className={styles.buttonMain}>
                   Info Selengkapnya
                 </button>
               </div>
@@ -299,16 +303,14 @@ const LandingPage = () => {
               <div className="row flex-lg-row align-items-center py-5">
                 <div className="col-lg-9">
                   <div className="headline-large-semibold mb-8">
-                    Gunakan <span>BALINK</span> sekarang juga{" "}
+                    Gunakan <span className={styles.spanText}>BALINK</span>{" "}
+                    sekarang juga{" "}
                   </div>
                   <p className="body-large-regular mb-8">
                     Peniliain pengguna terhadap Balink
                   </p>
                   <div className="mt-3">
-                    <button
-                      type="button"
-                      className={styles.buttonMain}
-                    >
+                    <button type="button" className={styles.buttonMain}>
                       Info Selengkapnya
                     </button>
                   </div>
@@ -325,7 +327,6 @@ const LandingPage = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -335,9 +336,7 @@ const LandingPage = () => {
       <div className={styles.textRating}>
         <div className="container py-5">
           <div className="text-center">
-            <h1 className="headline-large-semibold mb-8">
-              Penilaian Pengguna
-            </h1>
+            <h1 className="headline-large-semibold mb-8">Penilaian Pengguna</h1>
             <p className="body-large-regular mb-8">
               Peniliain pengguna terhadap <b>Balink</b>
             </p>
@@ -474,7 +473,6 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -492,7 +490,8 @@ const LandingPage = () => {
               />
               <div className="col-sm-6 my-3">
                 <p className="label-medium-regular">
-                  Desa Tukadmungga, Kec. Buleleng, Kabupaten Buleleng, Bali 81119
+                  Desa Tukadmungga, Kec. Buleleng, Kabupaten Buleleng, Bali
+                  81119
                 </p>
               </div>
             </div>
@@ -556,10 +555,9 @@ const LandingPage = () => {
                 </li>
               </ul>
             </div>
-
           </div>
         </div>
-        
+
         <hr />
         <div className="text-center">
           <div>
@@ -579,9 +577,8 @@ const LandingPage = () => {
           <div className="body-large-regular p-3">Copyright 2023</div>
         </div>
       </footer>
-
     </div>
-  )
+  );
 };
 
 export default LandingPage;

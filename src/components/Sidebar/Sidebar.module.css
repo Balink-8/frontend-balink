@@ -1,0 +1,22 @@
+.sidebar {
+  background-color: var(--white) !important;
+}
+
+.navLink {
+  color: var(--dark-medium) !important;
+  margin-top: 0.5rem;
+}
+
+.active {
+  background-color: #7d736a !important;
+  color: var(--white) !important;
+}
+
+.navLink:hover {
+  background-color: #f5f5f5 !important;
+}
+
+.active:hover {
+  background-color: #7d736a !important;
+  color: var(--white) !important;
+}
