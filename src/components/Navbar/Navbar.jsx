@@ -9,8 +9,12 @@ const Navbar = () => {
       <div className="container-fluid">
         <a className="navbar-brand headline-small-semibold">Dashboard</a>
         <div className="user">
-          <img src={notification} alt="notification-icon" className="me-16" />
-          <img src={avatar} alt="avatar-img" />
+          <a href="">
+            <img src={notification} alt="notification-icon" className="me-16" />
+          </a>
+          <a href="">
+            <img src={avatar} alt="avatar-img" />
+          </a>
         </div>
       </div>
     </nav>

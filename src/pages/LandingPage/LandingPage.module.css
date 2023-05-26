@@ -62,7 +62,7 @@
   .buttonMain{
   padding-left: 40px;
   padding-right: 40px;
-  padding-top:8px;
+  padding-top: 8px;
   padding-bottom: 8px;
   border: none;
   color: var(--white);
@@ -70,91 +70,91 @@
   text-decoration: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: var(--brown-dark)
-  }
-  .buttonMain:hover{
-    color: var(--dark-black);
-  }
+  background-color: var(--brown-dark);
+}
+.buttonMain:hover {
+  color: var(--dark-black);
+}
 
-  /* info */
-  .textInformation{
-  color: var(--dark-black)
-  }
-  
-  /* fitur */
-  .fiturBg{
+/* info */
+.textInformation {
+  color: var(--dark-black);
+}
+
+/* fitur */
+.fiturBg {
   background-color: var(--brown-medium);
-  }
-  
-  .textFitur{
+}
+
+.textFitur {
   text-align: center;
-  color:var(--dark-black)
-  }
-  
-  .totalFitur{
-  color: var(--brown-dark)
-  }
-  
-  /* event */
-  .textEvent{
-  color:var(--dark-black)
-  }
-  
-  /* download */
-  .cardDownload{
+  color: var(--dark-black);
+}
+
+.totalFitur {
+  color: var(--brown-dark);
+}
+
+/* event */
+.textEvent {
+  color: var(--dark-black);
+}
+
+/* download */
+.cardDownload {
   background-image: url(/src/assets/assetsLandingPage/bali.svg);
   background-position: center;
   background-size: cover;
   border-radius: 5px;
-  }
-  
-  .textDownload{
+}
+
+.textDownload {
   text-align: center;
-  color:var(--white);
-  }
-  
-  /* rating */
-  .star{
+  color: var(--white);
+}
+
+/* rating */
+.star {
   color: var(--orange-dark);
-  }
-  
-  .cardRating{
+}
+
+.cardRating {
   border-radius: 16px;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-top: 30px;
   padding-left: 10px;
   padding-bottom: 24px;
-  }
-  
-  .textRating{
-  text-align: center;
-  color:var(--dark-black)
-  }
-  
-  .imgRating{
-  margin-top: -30px;
-  }
+}
 
-  .items::-webkit-scrollbar{
-    display: none;
-  }
-  
-  .items{
+.textRating {
+  text-align: center;
+  color: var(--dark-black);
+}
+
+.imgRating {
+  margin-top: -30px;
+}
+
+.items::-webkit-scrollbar {
+  display: none;
+}
+
+.items {
   display: flex;
-  overflow-x:auto;
-  }
-  
-  .item{
+  overflow-x: auto;
+}
+
+.item {
   min-width: 298px;
   height: 250px;
   margin: 20px;
-  }
-  
-  /* footer */
-  .textFooter{
+}
+
+/* footer */
+.textFooter {
   color: var(--dark-black);
-  }
-  
-  hr{
+}
+
+hr {
   opacity: 100%;
-  }
+}
