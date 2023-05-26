@@ -1,7 +1,6 @@
 import React from "react";
 import styles from './LandingPage.module.css'
 import balink from "../../assets/assetsLandingPage/balink.svg"
-import background from "../../assets/assetsLandingPage/background.svg"
 import phone from "../../assets/assetsLandingPage/phone.svg"
 import info from "../../assets/assetsLandingPage/info.svg"
 import lokasi from "../../assets/assetsLandingPage/lokasi.svg"
@@ -47,8 +46,7 @@ const LandingPage = () => {
       </header>
 
       {/* jumbotron */}
-      <div>
-        <img className={styles.bgJumbotron} src={background} alt="img" />
+      <div className={styles.bgJumbotron}>
         <div className="container pt-5">
           <div className="row flex-lg-row-reverse align-items-center py-5">
             <div className="col-lg-6">
