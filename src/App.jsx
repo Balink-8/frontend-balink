@@ -2,7 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../src/components/Login/Login";
 import Layout from "./components/Layout/Layout";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import DataTable from "./components/Table/DataTable";
+
 
 function App() {
   return (
