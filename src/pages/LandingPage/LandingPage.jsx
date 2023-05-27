@@ -18,7 +18,7 @@ import whatsapp from "../../assets/assetsLandingPage/whatsapp.svg"
 import instagram from "../../assets/assetsLandingPage/instagram.svg"
 import email from "../../assets/assetsLandingPage/email.svg"
 import gps from "../../assets/assetsLandingPage/gps.svg"
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 
 const LandingPage = () => {
   return (
@@ -40,12 +40,12 @@ const LandingPage = () => {
               </Link>
             </li>
             <li className="mx-8">
-              <Link to="#" className={styles.link}>
+              <Link to='#info' className={styles.link} smooth>
                 About Us
               </Link>
             </li>
             <li className="mx-8">
-              <Link to="#" className={styles.link}>
+              <Link to='#download' className={styles.link} smooth>
                 Download
               </Link>
             </li>
@@ -95,7 +95,7 @@ const LandingPage = () => {
       </div>
 
       {/* info */}
-      <div>
+      <div id="info">
         <div className="container pt-5 mb-5">
           <div className="row flex-lg-row align-items-center py-5">
             <div className="col-lg-6">
@@ -294,7 +294,7 @@ const LandingPage = () => {
       </div>
 
       {/* download */}
-      <div className={styles.textDownload}>
+      <div className={styles.textDownload} id="download">
         <div className="container py-5">
           <div className="row">
             <div className={styles.cardDownload}>
