@@ -1,25 +1,24 @@
 import React from "react";
-import styles from "./LandingPage.module.css";
-import balink from "../../assets/assetsLandingPage/balink.svg";
-import background from "../../assets/assetsLandingPage/background.svg";
-import phone from "../../assets/assetsLandingPage/phone.svg";
-import info from "../../assets/assetsLandingPage/info.svg";
-import lokasi from "../../assets/assetsLandingPage/lokasi.svg";
-import pencarian from "../../assets/assetsLandingPage/pencarian.svg";
-import waktu from "../../assets/assetsLandingPage/waktu.svg";
-import wisata from "../../assets/assetsLandingPage/wisata.svg";
-import belanja from "../../assets/assetsLandingPage/belanja.svg";
-import apple from "../../assets/assetsLandingPage/apple.svg";
-import play from "../../assets/assetsLandingPage/play.svg";
-import ujang from "../../assets/assetsLandingPage/ujang.svg";
-import dadang from "../../assets/assetsLandingPage/dadang.svg";
-import oscar from "../../assets/assetsLandingPage/oscar.svg";
-import bilgates from "../../assets/assetsLandingPage/bilgates.svg";
-import whatsapp from "../../assets/assetsLandingPage/whatsapp.svg";
-import instagram from "../../assets/assetsLandingPage/instagram.svg";
-import email from "../../assets/assetsLandingPage/email.svg";
-import gps from "../../assets/assetsLandingPage/gps.svg";
-import { Link } from "react-router-dom";
+import styles from './LandingPage.module.css'
+import balink from "../../assets/assetsLandingPage/balink.svg"
+import phone from "../../assets/assetsLandingPage/phone.svg"
+import info from "../../assets/assetsLandingPage/info.svg"
+import lokasi from "../../assets/assetsLandingPage/lokasi.svg"
+import pencarian from "../../assets/assetsLandingPage/pencarian.svg"
+import waktu from "../../assets/assetsLandingPage/waktu.svg"
+import wisata from "../../assets/assetsLandingPage/wisata.svg"
+import belanja from "../../assets/assetsLandingPage/belanja.svg"
+import apple from "../../assets/assetsLandingPage/apple.svg"
+import play from "../../assets/assetsLandingPage/play.svg"
+import ujang from "../../assets/assetsLandingPage/ujang.svg"
+import dadang from "../../assets/assetsLandingPage/dadang.svg"
+import oscar from "../../assets/assetsLandingPage/oscar.svg"
+import bilgates from "../../assets/assetsLandingPage/bilgates.svg"
+import whatsapp from "../../assets/assetsLandingPage/whatsapp.svg"
+import instagram from "../../assets/assetsLandingPage/instagram.svg"
+import email from "../../assets/assetsLandingPage/email.svg"
+import gps from "../../assets/assetsLandingPage/gps.svg"
+import { HashLink as Link } from "react-router-hash-link";
 
 const LandingPage = () => {
   return (
@@ -41,12 +40,12 @@ const LandingPage = () => {
               </Link>
             </li>
             <li className="mx-8">
-              <Link to="#" className={styles.link}>
+              <Link to='#info' className={styles.link} smooth>
                 About Us
               </Link>
             </li>
             <li className="mx-8">
-              <Link to="#" className={styles.link}>
+              <Link to='#download' className={styles.link} smooth>
                 Download
               </Link>
             </li>
@@ -60,8 +59,7 @@ const LandingPage = () => {
       </header>
 
       {/* jumbotron */}
-      <div>
-        <img className={styles.bgJumbotron} src={background} alt="img" />
+      <div className={styles.bgJumbotron}>
         <div className="container pt-5">
           <div className="row flex-lg-row-reverse align-items-center py-5">
             <div className="col-lg-6">
@@ -97,7 +95,7 @@ const LandingPage = () => {
       </div>
 
       {/* info */}
-      <div>
+      <div id="info">
         <div className="container pt-5 mb-5">
           <div className="row flex-lg-row align-items-center py-5">
             <div className="col-lg-6">
@@ -296,7 +294,7 @@ const LandingPage = () => {
       </div>
 
       {/* download */}
-      <div className={styles.textDownload}>
+      <div className={styles.textDownload} id="download">
         <div className="container py-5">
           <div className="row">
             <div className={styles.cardDownload}>
