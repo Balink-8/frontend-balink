@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../src/components/Login/Login";
 import Layout from "./components/Layout/Layout";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import DataTable from "./components/Table/DataTable";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<h1>Dashboard</h1>} />
-          <Route path="/akun" element={<h1>Akun</h1>} />
+          <Route path="/akun" element={<DataTable/>} />
           <Route path="/event" element={<h1>event</h1>} />
           <Route path="/produk" element={<h1>produk</h1>} />
           <Route path="/kategori" element={<h1>kategori</h1>} />
