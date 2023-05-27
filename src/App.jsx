@@ -2,13 +2,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../src/components/Login/Login";
 import Layout from "./components/Layout/Layout";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<h1>Dashboard</h1>} />
+          <Route index element={<Dashboard />} />
           <Route path="/akun" element={<h1>Akun</h1>} />
           <Route path="/event" element={<h1>event</h1>} />
           <Route path="/produk" element={<h1>produk</h1>} />
