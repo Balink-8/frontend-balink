@@ -3,16 +3,15 @@ import Login from "../src/components/Login/Login";
 import Layout from "./components/Layout/Layout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import DataTable from "./components/Table/DataTable";
-
+import Akun from "./pages/Akun/Akun";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<h1>Dashboard</h1>} />
-          <Route path="/akun" element={<DataTable/>} />
+          <Route index element={<Dashboard />} />
+          <Route path="/akun" element={<Akun />} />
           <Route path="/event" element={<h1>event</h1>} />
           <Route path="/produk" element={<h1>produk</h1>} />
           <Route path="/kategori" element={<h1>kategori</h1>} />
