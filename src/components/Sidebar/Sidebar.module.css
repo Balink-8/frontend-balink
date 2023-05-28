@@ -1,5 +1,6 @@
 .sidebar {
   background-color: var(--white) !important;
+  box-shadow: var(--box-shadow-light);
 }
 
 .navLink {
