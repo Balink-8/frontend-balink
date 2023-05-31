@@ -9,8 +9,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/akun" element={<Akun />} />
           <Route path="/event" element={<h1>event</h1>} />
           <Route path="/produk" element={<h1>produk</h1>} />
@@ -19,10 +19,9 @@ function App() {
           <Route path="/promo" element={<h1>promo</h1>} />
           <Route path="/artikel" element={<h1>artikel</h1>} />
           <Route path="/profile" element={<h1>profile</h1>} />
-          <Route path="/pengaturan" element={<h1>pengaturan</h1>} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/balink" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );
