@@ -99,6 +99,7 @@
 
 .tableRow:hover .actionButton {
   visibility: visible;
+  cursor: pointer;
 }
 
 .active {
