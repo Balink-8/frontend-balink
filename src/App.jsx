@@ -4,6 +4,8 @@ import Layout from "./components/Layout/Layout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Akun from "./pages/Akun/Akun";
+import TambahBarang from "./components/TambahBarang/TambahBarang";
+import Produk from "./pages/Produk/Produk";
 
 function App() {
   return (
@@ -13,7 +15,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="/akun" element={<Akun />} />
           <Route path="/event" element={<h1>event</h1>} />
-          <Route path="/produk" element={<h1>produk</h1>} />
+          <Route path="/produk" element={<Produk/>} />
+          <Route path="/tambahProduk" element={<TambahBarang/>} />
           <Route path="/kategori" element={<h1>kategori</h1>} />
           <Route path="/transaksi" element={<h1>transaksi</h1>} />
           <Route path="/promo" element={<h1>promo</h1>} />
