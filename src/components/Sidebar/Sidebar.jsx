@@ -6,7 +6,6 @@ import receipt_long from "../../assets/icons/receipt_long.svg";
 import local_activity from "../../assets/icons/local_activity.svg";
 import article from "../../assets/icons/article.svg";
 import home from "../../assets/icons/home.svg";
-import settings from "../../assets/icons/settings.svg";
 import logout from "../../assets/icons/logout.svg";
 import storefront from "../../assets/icons/storefront.svg";
 import folder_copy from "../../assets/icons/folder_copy.svg";
@@ -21,7 +20,7 @@ const Sidebar = () => {
         style={{ width: 280, height: "100vh" }}
       >
         <Link
-          to="/"
+          to="/dashboard"
           className="d-flex align-items-center gap-5 mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
         >
           <img src={logo} alt="img" />
@@ -30,7 +29,7 @@ const Sidebar = () => {
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
             <NavLink
-              to="/"
+              to="/dashboard"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.navLink} nav-link d-flex align-item-center gap-3 ${styles.active}`
@@ -144,19 +143,6 @@ const Sidebar = () => {
             >
               <img src={home} alt="" className="img" />
               <span id="profile">Profile</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/pengaturan"
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.navLink} nav-link d-flex align-item-center gap-2 ${styles.active}`
-                  : `${styles.navLink} nav-link d-flex align-item-center gap-2`
-              }
-            >
-              <img src={settings} alt="" className="img" />
-              <span id="pengaturan">Pengaturan</span>
             </NavLink>
           </li>
         </ul>
