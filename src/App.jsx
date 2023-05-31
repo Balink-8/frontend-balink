@@ -5,10 +5,13 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import TambahEvent from "./pages/Event/TambahEvent";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Akun from "./pages/Akun/Akun";
+import TambahBarang from "./components/TambahBarang/TambahBarang";
+import Produk from "./pages/Produk/Produk";
 import DetailEvent from "./components/Event/DetailEvent";
 import Event from "./pages/Event/Event";
 import TransaksiEvent from "./pages/Transaksi/TransaksiEvent/TransaksiEvent"
 import TransaksiProduk from "./pages/Transaksi/TransaksiProduk/Transaksiproduk"; 
+
 
 function App() {
   return (
@@ -19,9 +22,9 @@ function App() {
           <Route path="/akun" element={<Akun />} />
           <Route path="/event/detail" element={<DetailEvent/>} />
           <Route path="/event" element={<Event />} />
-          <Route path="/event" element={<h1>event</h1>} />
           <Route path="/tambah-event" element={<TambahEvent />} />
-          <Route path="/produk" element={<h1>produk</h1>} />
+          <Route path="/produk" element={<Produk/>} />
+          <Route path="/tambah-produk" element={<TambahBarang/>} />
           <Route path="/kategori" element={<h1>kategori</h1>} />
           <Route path="/transaksi" element={<TransaksiEvent/>} />
           <Route path="/transaksi/produk" element={<TransaksiProduk/>} />
