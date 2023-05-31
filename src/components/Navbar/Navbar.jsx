@@ -8,7 +8,7 @@ const Navbar = () => {
   const { pathname } = useLocation();
 
   const setTitle = (pathname) => {
-    if (pathname === "/") {
+    if (pathname === "/dashboard") {
       return "Dashboard";
     } else if (pathname.includes("/akun")) {
       return "Akun";

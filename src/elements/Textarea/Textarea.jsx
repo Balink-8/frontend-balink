@@ -1,14 +1,15 @@
-const Input = ({type, className, placeholder, id, name, value, onChange}) => {
+const Textarea = ({type, className, placeholder, id, name, rows, value, onChange}) => {
       return(
-            <input
+            <textarea
             type={type}
             className={className}
             placeholder={placeholder}
             id={id}
             name={name}
+            rows={rows}
             value={value}
             onChange={onChange}
             />
       )
    }
-   export default Input
+   export default Textarea
