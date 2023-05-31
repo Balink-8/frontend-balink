@@ -1,7 +1,7 @@
 import styles from './Login.module.css'
 import Logo from '../../assets/images/Balink 1.png'
 import Gambar from '../../assets/images/bg.jpg'
-import Input from '../../elements/input/Input'
+import Input from '../../elements/Input/Input'
 import IconVisibility from '../../assets/icons/visibility_off.svg'
 import IconVisibilityOpen from '../../assets/images/eyes3.png'
 import { useState } from 'react'

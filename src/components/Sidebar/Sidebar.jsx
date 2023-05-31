@@ -20,7 +20,7 @@ const Sidebar = () => {
         style={{ width: 280, height: "100vh" }}
       >
         <Link
-          to="/"
+          to="/dashboard"
           className="d-flex align-items-center gap-5 mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
         >
           <img src={logo} alt="img" />
@@ -29,7 +29,7 @@ const Sidebar = () => {
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
             <NavLink
-              to="/"
+              to="/dashboard"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.navLink} nav-link d-flex align-item-center gap-3 ${styles.active}`
