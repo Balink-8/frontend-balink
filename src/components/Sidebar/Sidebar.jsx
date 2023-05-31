@@ -131,7 +131,7 @@ const Sidebar = () => {
               <span id="artikel">Artikel</span>
             </NavLink>
           </li>
-          <hr />
+          <hr className={`${styles.garis}`} />
           <li>
             <NavLink
               to="/profile"
