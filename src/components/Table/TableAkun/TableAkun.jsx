@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import vector from "../../../assets/icons/Vector.svg";
 import styles from "./TableAkun.module.css";
 import demography from "../../../assets/icons/demography.svg";
-import { Link } from "react-router-dom";
+import ModalAkun from "../../Modal/ModalAkun/ModalAkun";
+import { ModalAkunContext } from "../../../context/ModalAkunContext";
 
 const TableAkun = ({ userData }) => {
+  const { openModalAkun, showModalAkun } = useContext(ModalAkunContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -81,20 +83,19 @@ const TableAkun = ({ userData }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item, index) => (
-                  <tr className={styles.tableRow} key={index}>
+                {currentItems.map((item) => (
+                  <tr className={styles.tableRow} key={item.id}>
                     <td className="p-3">{item.username}</td>
                     <td className="p-3">{item.pengguna}</td>
                     <td className="p-3">{item.telephone}</td>
                     <td className="p-3">{item.alamat}</td>
                     <td className="p-3">
-                      <Link to={`/akun/${item.username}`}>
-                        <img
-                          src={demography}
-                          alt=""
-                          className={styles.actionButton}
-                        />
-                      </Link>
+                      <img
+                        src={demography}
+                        alt=""
+                        className={styles.actionButton}
+                        onClick={() => openModalAkun(item.id)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -157,6 +158,7 @@ const TableAkun = ({ userData }) => {
           </button>
         </div>
       </div>
+      {showModalAkun && <ModalAkun />}
     </div>
   );
 };
