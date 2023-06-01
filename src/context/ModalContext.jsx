@@ -4,7 +4,7 @@ const ModalContext = createContext();
 const ModalContextProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
+  const openModalTemp = () => {
     setShowModal(true);
     setTimeout(closeModal, 1500);
   };
@@ -13,13 +13,13 @@ const ModalContextProvider = ({ children }) => {
     setShowModal(false);
   };
 
-  const openModalLogout = () => {
+  const openModal = () => {
     setShowModal(true);
   };
 
   return (
     <ModalContext.Provider
-      value={{ showModal, openModal, closeModal, openModalLogout }}
+      value={{ showModal, openModalTemp, closeModal, openModal }}
     >
       {children}
     </ModalContext.Provider>

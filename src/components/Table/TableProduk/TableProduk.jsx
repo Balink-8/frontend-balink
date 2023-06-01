@@ -6,7 +6,7 @@ import styles from "./TableProduk.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import Gambar from "../../../assets/assetsLandingPage/bali.svg";
 import Edit from "../../../assets/icons/edit_square.svg";
-import Delete from "../../../assets/icons/delete1.png";
+import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 
