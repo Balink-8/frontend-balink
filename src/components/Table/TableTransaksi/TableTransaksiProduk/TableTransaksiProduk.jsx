@@ -1,27 +1,25 @@
 import React, { useState } from "react";
-import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
-import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
-import add from "../../../assets/icons/add.svg";
-import styles from "./TableProduk.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import Gambar from "../../../assets/assetsLandingPage/bali.svg";
-import Edit from "../../../assets/icons/edit_square.svg";
-import Delete from "../../../assets/icons/delete1.png";
-import TableSearch from "../../../elements/TableSearch/TableSearch";
-import Button from "../../../elements/Button/Button";
+import keyboard_arrow_right from "../../../../assets/icons/keyboard_arrow_right.svg";
+import btn_arrow_left from "../../../../assets/icons/btn_arrow_left.svg";
+import styles from "./TableTransaksiProduk.module.css";
+import vector from "../../../../assets/icons/Vector.svg";
+import receipt_long2 from "../../../../assets/icons/receipt_long2.svg";
+import theater_comedy from "../../../../assets/icons/theater_comedy.svg";
+import local_mall from "../../../../assets/icons/local_mall.svg";
+import { Link } from "react-router-dom";
 
-const TableProduk = ({ data }) => {
-  const navigate = useNavigate();
+const TableTransaksiProduk = ({ userDataEvent }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isClicked, setIsClicked] = useState(false);
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(userDataEvent.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = userDataEvent.slice(indexOfFirstItem, indexOfLastItem);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -49,38 +47,25 @@ const TableProduk = ({ data }) => {
     setCurrentPage(1);
   };
 
-  const handleTambahProduk = () => {
-    navigate("/produk/tambah");
-  };
-
   return (
     <div>
-      <div className="d-flex justify-content-between">
-        <TableSearch />
-
-        <Button
-          onClick={handleTambahProduk}
-          label="Tambah Produk"
-          icon={add}
-          color="brown"
-        />
-      </div>
-
       <div className="row mt-4 text-center">
-        <div className="col-12 p-0">
+        <div className="col-12 p-0 ">
           <div className="table-responsive">
-            <table className="table ">
+            <table className="table">
               {/* Render data pada halaman saat ini */}
               <thead className={styles.thead} id="thead">
                 <tr id="tr-table">
                   <th
                     className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
                   >
-                    Foto
+                    Kode Transaksi
                   </th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Judul</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Harga</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Kategori</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>Username</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>Waktu</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>Produk</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>Total</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>Status</th>
                   <th
                     className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
                   ></th>
@@ -89,21 +74,32 @@ const TableProduk = ({ data }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems.map((item, index) => (
                   <tr className={styles.tableRow} key={index}>
-                    <td className="p-3">
-                      <img src={Gambar} className={styles.image} />
+                    <td className="p-3">{item.kodetransaksi}</td>
+                    <td className="p-3">{item.username}</td>
+                    <td className="p-3">{item.waktu}</td>
+                    <td className="p-3">{item.produk}</td>
+                    <td className="p-3">{item.total}</td>
+                    <td
+                      className={`p-3 title-small-semibold ${
+                        item.status === "Sukses" ? styles.success : ""
+                      } 
+                                          ${
+                                            item.status === "Dipesan"
+                                              ? styles.order
+                                              : ""
+                                          } 
+                                          ${
+                                            item.status === "Dibatalkan"
+                                              ? styles.cancel
+                                              : ""
+                                          }`}
+                    >
+                      {item.status}
                     </td>
-                    <td className="p-3">{item.judul}</td>
-                    <td className="p-3">{item.harga}</td>
-                    <td className="p-3">{item.kategori}</td>
                     <td className="p-3">
                       <Link to={`/akun/${item.username}`}>
                         <img
-                          src={Edit}
-                          alt=""
-                          className={styles.actionButton}
-                        />
-                        <img
-                          src={Delete}
+                          src={receipt_long2}
                           alt=""
                           className={styles.actionButton}
                         />
@@ -174,4 +170,4 @@ const TableProduk = ({ data }) => {
   );
 };
 
-export default TableProduk;
+export default TableTransaksiProduk;

@@ -10,21 +10,21 @@ const Navbar = () => {
   const setTitle = (pathname) => {
     if (pathname === "/dashboard") {
       return "Dashboard";
-    } else if (pathname.includes("/akun")) {
+    } else if (pathname.includes("akun")) {
       return "Akun";
-    } else if (pathname.includes("/event")) {
+    } else if (pathname.includes("event")) {
       return "Event";
-    } else if (pathname.includes("/produk")) {
+    } else if (pathname.includes("produk")) {
       return "Produk";
-    } else if (pathname.includes("/kategori")) {
+    } else if (pathname.includes("kategori")) {
       return "Kategori";
-    } else if (pathname.includes("/transaksi")) {
+    } else if (pathname.includes("transaksi")) {
       return "Transaksi";
-    } else if (pathname.includes("/promo")) {
+    } else if (pathname.includes("promo")) {
       return "Promo";
-    } else if (pathname.includes("/artikel")) {
+    } else if (pathname.includes("artikel")) {
       return "Artikel";
-    } else if (pathname.includes("/profile")) {
+    } else if (pathname.includes("profile")) {
       return "Profile";
     } else {
       return "Dashboard";

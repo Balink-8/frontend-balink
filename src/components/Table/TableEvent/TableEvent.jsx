@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
-import vector from "../../../assets/icons/Vector.svg";
 import styles from "./TableEvent.module.css";
 import edit from "../../../assets/icons/edit.svg";
-import del from "../../../assets/icons/delete.svg"
-import { Link } from "react-router-dom";
+import del from "../../../assets/icons/delete.svg";
+import { Link, useNavigate } from "react-router-dom";
+import TableSearch from "../../../elements/TableSearch/TableSearch";
+import Button from "../../../elements/Button/Button";
+import add from "../../../assets/icons/add.svg";
 
 const TableEvent = ({ userData }) => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -45,28 +48,22 @@ const TableEvent = ({ userData }) => {
     setCurrentPage(1);
   };
 
+  const handleNavigate = () => {
+    navigate("/event/tambah");
+  };
+
   return (
     <div>
-      <div className="d-flex">
-        <div className="col-10">
-          <div className={styles.search} id="search">
-            <input
-              id="searchinput"
-              type="text"
-              className={`${styles.searchinput} form-control`}
-              placeholder="Search..."
-            />
-            <img src={vector} alt="" className={styles.vector} />
-          </div>
+      <div className="d-flex justify-content-between">
+        <TableSearch />
+        <div id="tambahEvent">
+          <Button
+            onClick={handleNavigate}
+            label="Tambah Event"
+            icon={add}
+            color="brown"
+          />
         </div>
-
-        <div className="col-2">
-                    <div id='tambahEvent'>
-                        <button type="button" className={`btn btn-dark ${styles.addEvent}`}>
-                            + Tambah Event
-                        </button>    
-                    </div>
-                </div>
       </div>
 
       <div className="row mt-4 text-center">
@@ -92,7 +89,9 @@ const TableEvent = ({ userData }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems.map((item, index) => (
                   <tr className={styles.tableRow} key={index}>
-                    <td className="p-3"><img src={item.foto}/></td>
+                    <td className="p-3">
+                      <img src={item.foto} />
+                    </td>
                     <td className="p-3">{item.nama}</td>
                     <td className="p-3">{item.deskripsi}</td>
                     <td className="p-3">{item.tanggal}</td>
@@ -105,11 +104,7 @@ const TableEvent = ({ userData }) => {
                         />
                       </Link>
                       <Link to={`/event/${item.nama}`}>
-                        <img
-                          src={del}
-                          alt=""
-                          className={styles.actionButton}
-                        />
+                        <img src={del} alt="" className={styles.actionButton} />
                       </Link>
                     </td>
                   </tr>

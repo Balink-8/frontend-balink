@@ -1,3 +1,21 @@
+.search {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  gap: 4px;
+  width: 308px;
+  height: 36px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.searchinput {
+  border: none;
+  background: var(--lightest);
+  box-shadow: var(--box-shadow-light);
+  border-radius: 0, 25rem;
+}
+
 .thead {
   box-sizing: border-box;
   background-color: var(--brown-light);
@@ -63,6 +81,13 @@
   border: none;
 }
 
+.vector {
+  cursor: pointer;
+  position: relative;
+  bottom: 32px;
+  left: 280px;
+}
+
 .tableRow:hover {
   background-color: #fffcf8;
   transition: background-color 0.3s ease;
@@ -74,7 +99,6 @@
 
 .tableRow:hover .actionButton {
   visibility: visible;
-  cursor: pointer;
 }
 
 .active {
@@ -92,4 +116,60 @@
 
 .tableHeadRow {
   border-bottom-color: transparent !important;
+}
+
+.success {
+  color: var(--green-dark);
+}
+
+.order {
+  color: var(--orange-dark);
+}
+
+.cancel {
+  color: var(--red-dark);
+}
+
+.btnevent {
+  position: absolute;
+  right: 150px;
+  width: 112px;
+  height: 36px;
+  background-color: var(--white) !important;
+  color: var(--dark-medium) !important;
+}
+.btnevent:hover {
+  background-color: var(--dark-brown) !important;
+  color: var(--white) !important;
+}
+
+.btnproduk {
+  position: absolute;
+  right: 0;
+  top: 92px;
+  height: 36px;
+  width: 112px;
+  height: 35px;
+  background-color: var(--white) !important;
+  color: var(--dark-medium) !important;
+}
+
+.btnproduk.active,
+.btnproduk:hover {
+  background-color: var(--dark-brown) !important;
+  color: var(--white) !important;
+}
+
+.theater_comedy {
+  cursor: pointer;
+  position: relative;
+  top: 28px;
+  right: 53px;
+}
+
+.local_mall {
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+  left: 93px;
 }

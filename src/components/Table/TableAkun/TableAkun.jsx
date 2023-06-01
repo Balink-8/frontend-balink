@@ -6,6 +6,7 @@ import styles from "./TableAkun.module.css";
 import demography from "../../../assets/icons/demography.svg";
 import ModalAkun from "../../Modal/ModalAkun/ModalAkun";
 import { ModalAkunContext } from "../../../context/ModalAkunContext";
+import TableSearch from "../../../elements/TableSearch/TableSearch";
 
 const TableAkun = ({ userData }) => {
   const { openModalAkun, showModalAkun } = useContext(ModalAkunContext);
@@ -48,19 +49,7 @@ const TableAkun = ({ userData }) => {
 
   return (
     <div>
-      <div className="row">
-        <div className="p-0">
-          <div className={styles.search} id="search">
-            <input
-              id="searchinput"
-              type="text"
-              className={`${styles.searchinput} form-control`}
-              placeholder="Search..."
-            />
-            <img src={vector} alt="" className={styles.vector} />
-          </div>
-        </div>
-      </div>
+      <TableSearch />
 
       <div className="row mt-4 text-center">
         <div className="col-12 p-0">

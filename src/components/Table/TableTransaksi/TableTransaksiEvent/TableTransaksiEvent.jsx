@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import keyboard_arrow_right from "../../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../../assets/icons/btn_arrow_left.svg";
-import styles from "./TableEvent.module.css";
+import styles from "./TableTransaksiEvent.module.css";
 import vector from "../../../../assets/icons/Vector.svg";
 import receipt_long2 from "../../../../assets/icons/receipt_long2.svg";
 import theater_comedy from "../../../../assets/icons/theater_comedy.svg";
 import local_mall from "../../../../assets/icons/local_mall.svg";
 import { Link } from "react-router-dom";
 
-const TableEvent = ({ userDataEvent }) => {
+const TableTransaksiEvent = ({ userDataEvent }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [isClicked, setIsClicked] = useState(false);
@@ -47,62 +47,8 @@ const TableEvent = ({ userDataEvent }) => {
     setCurrentPage(1);
   };
 
-  //activebutton
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-  };
-
   return (
     <div>
-      <div className="row">
-        <div className="col-4">
-          <div className="p-0">
-            <div className={styles.search} id="search">
-              <input
-                id="searchinput"
-                type="text"
-                className={`${styles.searchinput} form-control`}
-                placeholder="Search..."
-              />
-              <img src={vector} alt="" className={styles.vector} />
-            </div>
-          </div>
-        </div>
-
-        <div className="col-4 offset-4 text-center">
-          <div>
-            <button
-              id="btnevent"
-              type="button"
-              className={`${styles.btnevent} ${
-                isClicked ? styles.active : ""
-              } btn btn-sm mt-4 body-medium-semibold me-5`}
-              onClick={handleClick}
-            >
-              Event
-            </button>
-            <img
-              src={theater_comedy}
-              alt=""
-              className={styles.theater_comedy}
-            />
-          </div>
-
-          <Link to="/transaksi/produk">
-            <div>
-              <button
-                id="btnproduk"
-                type="button"
-                className={`${styles.btnproduk} btn btn-sm mt-1 float-end body-medium-semibold`}
-              >
-                Produk
-              </button>
-              <img src={local_mall} alt="" className={styles.local_mall} />
-            </div>
-          </Link>
-        </div>
-      </div>
-
       <div className="row mt-4 text-center">
         <div className="col-12 p-0 ">
           <div className="table-responsive">
@@ -224,4 +170,4 @@ const TableEvent = ({ userDataEvent }) => {
   );
 };
 
-export default TableEvent;
+export default TableTransaksiEvent;
