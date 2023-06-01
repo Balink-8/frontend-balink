@@ -104,7 +104,7 @@ const TambahEvent = () => {
                   <img src={Filefoto} alt="filefoto" />
                   <span className="body-medium-semibold"> Pilih Foto</span>
                 </label>
-                <Input
+                <input
                   id={"fotoEvent"}
                   className={styles.inputPhoto}
                   type={"file"}
