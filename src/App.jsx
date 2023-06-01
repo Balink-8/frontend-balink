@@ -7,7 +7,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Akun from "./pages/Akun/Akun";
 import TambahProduk from "./pages/Produk/TambahProduk";
 import Produk from "./pages/Produk/Produk";
-import DetailEvent from "./components/Event/DetailEvent";
+import DetailEvent from "./pages/Event/DetailEvent";
 import Event from "./pages/Event/Event";
 import Transaksi from "./pages/Transaksi/Transaksi";
 import { ModalAkunContextProvider } from "./context/ModalAkunContext";
