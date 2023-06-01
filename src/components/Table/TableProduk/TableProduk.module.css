@@ -1,139 +1,99 @@
-.search {
-    gap: 4px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.searchInput {
-    position: relative;
-}
-
-.searchinput {
-    border: none;
-    background: #ffffff;
-    box-shadow: var(--box-shadow-light);
-    border-radius: 0, 25rem;
-}
-
 .thead {
-    box-sizing: border-box;
-    background-color: var(--brown-light);
-    color: var(--dark-black);
+  box-sizing: border-box;
+  background-color: var(--brown-light);
+  color: var(--dark-black);
 }
 
 .tbody {
-    background-color: var(--white);
+  background-color: var(--white);
 }
 
 .container {
-    background-color: var(--light);
+  background-color: var(--light);
 }
 
 .container-fluid {
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    font-size: 14px;
-    line-height: 20px;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .tableSpan {
-    color: var(--dark-medium);
+  color: var(--dark-medium);
 }
 
 .previous {
-    background-color: var(--white);
+  background-color: var(--white);
 }
 
 .itemsPerPage {
-    width: 60px;
-    height: 35px;
-    border: 1px solid #ececec;
-    border-radius: 6px;
+  width: 60px;
+  height: 35px;
+  border: 1px solid #ececec;
+  border-radius: 6px;
 }
 
 .paginationPage {
-    border: none;
-    width: 30px;
-    height: 34px;
-    color: var(--dark-medium);
-    border-radius: 8px;
+  border: none;
+  width: 30px;
+  height: 34px;
+  color: var(--dark-medium);
+  border-radius: 8px;
 }
 
 .paginationPage:hover {
-    background-color: var(--dark-brown);
-    color: var(--white);
+  background-color: var(--dark-brown);
+  color: var(--white);
 }
 
 .btnleft {
-    width: 30px;
-    height: 34px;
-    background-color: var(--off-white);
-    border-radius: 8px;
-    border: none;
+  width: 30px;
+  height: 34px;
+  background-color: var(--off-white);
+  border-radius: 8px;
+  border: none;
 }
 
 .btnright {
-    width: 30px;
-    height: 34px;
-    background-color: var(--off-white);
-    border-radius: 8px;
-    border: none;
-}
-
-.vector {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
+  width: 30px;
+  height: 34px;
+  background-color: var(--off-white);
+  border-radius: 8px;
+  border: none;
 }
 
 .tableRow:hover {
-    background-color: #fffcf8;
-    transition: background-color 0.3s ease;
+  background-color: #fffcf8;
+  transition: background-color 0.3s ease;
 }
 
 .actionButton {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .tableRow:hover .actionButton {
-    visibility: visible;
+  visibility: visible;
 }
 
 .active {
-    background-color: var(--dark-brown);
-    color: var(--white);
+  background-color: var(--dark-brown);
+  color: var(--white);
 }
 
 .roundedLeftTop {
-    border-top-left-radius: 16px;
+  border-top-left-radius: 16px;
 }
 
 .roundedRightTop {
-    border-top-right-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 .tableHeadRow {
-    border-bottom-color: transparent !important;
+  border-bottom-color: transparent !important;
 }
 
 .image {
-    width: 60px;
-    border-radius: 5px;
-}
-
-.buttonProduk {
-    padding: 8px 16px;
-    border-radius: 5px;
-    border: none;
-    color: #FFFFFF;
-    font-size: 14px;
-    background-color: var(--dark-brown);
-}
-
-.spanAdd {
-    color: var(--white);
-    font-size: 15px;
-    margin-right: 8px;
+  width: 60px;
+  border-radius: 5px;
 }

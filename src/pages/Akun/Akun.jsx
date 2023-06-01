@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import TableAkun from "../../components/Table/TableAkun/TableAkun";
-import ModalAkun from "../../components/Modal/ModalAkun/ModalAkun";
 import { ModalAkunContext } from "../../context/ModalAkunContext";
+import Input from "../../elements/Input/Input";
 
 const Akun = () => {
   const { showModalAkun } = useContext(ModalAkunContext);
