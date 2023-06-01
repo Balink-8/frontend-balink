@@ -1,7 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./ModalAkun.module.css";
 import avatar from "../../../assets/images/avatar.png";
 import { ModalAkunContext } from "../../../context/ModalAkunContext";
+import Button from "../../../elements/Button/Button";
+import deleteIcon from "../../../assets/icons/delete.svg";
+import Input from "../../../elements/Input/Input";
+import iconVisibility from "../../../assets/icons/visibility_off.svg";
 
 const ModalAkun = () => {
   const userData = [
@@ -107,95 +111,80 @@ const ModalAkun = () => {
   ];
   const { closeModalAkun, modalId } = useContext(ModalAkunContext);
   const user = userData.find((item) => item.id === modalId);
+
+  const [showPassword, setShowPassword] = useState(false); // Toggle state for password input
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>
-        <img src={avatar} alt="" className="mb-3" />
-        <div className="d-flex mb-3 gap-5">
-          <div className="">
-            <label htmlFor="fullName" className="form-label ">
-              Nama Lengkap
-            </label>
-            <input
-              type="text"
-              className={`form-control ${styles.modalAkunInput}`}
-              id="fullName"
-              value={user?.pengguna}
-              readOnly
-            />
-          </div>
-          <div className="">
-            <label htmlFor="email" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              className={`form-control ${styles.modalAkunInput}`}
-              id="email"
-              value={user?.email}
-              readOnly
-            />
-          </div>
+        <img src={avatar} alt="" className={styles.avatar} />
+        <div className={styles.inputGroup}>
+          <Input
+            label="Nama Lengkap"
+            type="text"
+            id="fullName"
+            name="fullName"
+            value={user?.pengguna}
+            readOnly
+          />
+          <Input
+            label="Email address"
+            type="email"
+            id="email"
+            name="email"
+            value={user?.email}
+            readOnly
+          />
         </div>
-        <div className="d-flex mb-3 gap-5">
-          <div className="">
-            <label htmlFor="username" className="form-label">
-              Username
-            </label>
-            <input
-              type="text"
-              className={`form-control ${styles.modalAkunInput}`}
-              id="username"
-              value={user?.username}
-              readOnly
-            />
-          </div>
-          <div className="">
-            <label htmlFor="telephone" className="form-label">
-              Telephone
-            </label>
-            <input
-              type="text"
-              className={`form-control ${styles.modalAkunInput}`}
-              id="telephone"
-              value={user?.telephone}
-              readOnly
-            />
-          </div>
+        <div className={styles.inputGroup}>
+          <Input
+            label="Username"
+            type="text"
+            id="username"
+            name="username"
+            value={user?.username}
+            readOnly
+          />
+          <Input
+            label="Telephone"
+            type="text"
+            id="telephone"
+            name="telephone"
+            value={user?.telephone}
+            readOnly
+          />
         </div>
-        <div className="d-flex mb-3 gap-5">
-          <div className="">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className={`form-control ${styles.modalAkunInput}`}
-              id="password"
-              value={user?.password}
-              readOnly
-            />
-          </div>
-          <div className="">
-            <label htmlFor="alamat" className="form-label">
-              Alamat
-            </label>
-            <input
-              type="text"
-              className={`form-control ${styles.modalAkunInput}`}
-              id="alamat"
-              value={user?.alamat}
-              readOnly
-            />
-          </div>
+        <div className={styles.inputGroup}>
+          <Input
+            label="Password"
+            type={showPassword ? "text" : "password"} // Show password if showPassword is true
+            id="password"
+            name="password"
+            value={user?.password}
+            icon={iconVisibility}
+            onClick={togglePasswordVisibility}
+            readOnly
+          />
+
+          <Input
+            label="Alamat"
+            type="text"
+            id="alamat"
+            name="alamat"
+            value={user?.alamat}
+            readOnly
+          />
         </div>
-        <button
-          type="button"
-          className="btn btn-light"
+
+        <Button
+          label="Hapus"
           onClick={() => closeModalAkun()}
-        >
-          Close
-        </button>
+          color="white"
+          icon={deleteIcon}
+        />
       </div>
     </div>
   );

@@ -10,7 +10,15 @@
   color: var(--white);
 }
 
+.brown:hover {
+  background-color: var(--dark-medium);
+}
+
 .white {
   background-color: var(--white);
   color: #b2b3b2;
+}
+
+.white:hover {
+  background-color: var(--off-white);
 }

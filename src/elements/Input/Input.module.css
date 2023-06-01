@@ -1,5 +1,10 @@
 .inputBox {
   position: relative;
+  flex: 1;
+}
+
+.inputWrapper {
+  position: relative;
 }
 
 .input {
@@ -16,4 +21,21 @@
   padding: 0 5px;
   font-size: 11px;
   background: var(--white);
+  z-index: 1;
+}
+
+.iconButton {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
 }

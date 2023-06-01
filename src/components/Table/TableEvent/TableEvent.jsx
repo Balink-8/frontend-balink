@@ -3,7 +3,7 @@ import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import styles from "./TableEvent.module.css";
 import edit from "../../../assets/icons/edit.svg";
-import del from "../../../assets/icons/delete.svg";
+import del from "../../../assets/icons/deleteRed.svg";
 import { Link, useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";

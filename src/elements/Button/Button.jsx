@@ -6,11 +6,11 @@ const Button = ({ label, onClick, icon, color }) => {
   const dynamicIcon = `${styles[color]}`;
   return (
     <button
-      className={`d-flex justify-content-center align-items-center ${dynamicClassName}`}
+      className={`d-flex justify-content-center align-items-center ms-8 ${dynamicClassName}`}
       onClick={onClick}
     >
-      <img src={icon} alt="btn-icon" className={`me-8 ${dynamicIcon}`} />
-      <p className="body-large-semibold m-0">{label}</p>
+      <img src={icon} alt="btn-icon" />
+      <p className="body-large-semibold ms-8 mb-0">{label}</p>
     </button>
   );
 };
