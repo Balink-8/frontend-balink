@@ -1,15 +1,18 @@
 /* navbar landingpage */
+
 .navbarLandingpage {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 2%;
 }
+
 ul {
   margin-top: 0;
   margin-bottom: 0 !important;
   padding-left: 0;
 }
+
 li {
   text-decoration: none;
   color: var(--dark-black);
@@ -42,6 +45,7 @@ li {
 }
 
 /* jumbotron */
+
 .bgJumbotron {
   background-image: url(/src/assets/assetsLandingPage/background.svg);
   background-repeat: no-repeat;
@@ -60,6 +64,7 @@ li {
 }
 
 /* button */
+
 .buttonMain {
   padding-left: 40px;
   padding-right: 40px;
@@ -73,16 +78,54 @@ li {
   border-radius: 4px;
   background-color: var(--brown-dark);
 }
+
+/* jumbotron */
+
+.bgJumbotron {
+  background-image: url(/src/assets/assetsLandingPage/background.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.textJumbotron {
+  color: var(--white);
+}
+
+.spanText {
+  color: var(--brown-dark);
+}
+
+/* button */
+
+.buttonMain {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: none;
+  color: var(--white);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: var(--brown-dark);
+}
+
 .buttonMain:hover {
   color: var(--dark-black);
 }
 
 /* info */
+
 .textInformation {
   color: var(--dark-black);
 }
 
 /* fitur */
+
 .fiturBg {
   background-color: var(--brown-medium);
 }
@@ -97,11 +140,13 @@ li {
 }
 
 /* event */
+
 .textEvent {
   color: var(--dark-black);
 }
 
 /* download */
+
 .cardDownload {
   background-image: url(/src/assets/assetsLandingPage/bali.svg);
   background-position: center;
@@ -115,6 +160,7 @@ li {
 }
 
 /* rating */
+
 .star {
   color: var(--orange-dark);
 }
@@ -152,6 +198,7 @@ li {
 }
 
 /* footer */
+
 .textFooter {
   color: var(--dark-black);
 }
