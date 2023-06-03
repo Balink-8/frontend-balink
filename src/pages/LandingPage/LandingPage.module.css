@@ -151,6 +151,9 @@
 }
 
 /* footer */
+.bgFooter {
+  background-color: var(--lighter);
+}
 .textFooter {
   color: var(--dark-black);
 }
