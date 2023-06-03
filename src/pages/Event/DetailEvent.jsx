@@ -5,7 +5,7 @@ import lokasi from "../../assets/icons/location_on.svg";
 import link from "../../assets/icons/link.svg";
 import alarm from "../../assets/icons/alarm.svg";
 import rectangle from "../../assets/images/Rectangle 333.png";
-import edit from "../../assets/icons/edit_square.svg";
+import edit from "../../assets/icons/edit_square_white.svg";
 import del from "../../assets/icons/delete.svg";
 import { Switch } from "antd";
 import { useState } from "react";
