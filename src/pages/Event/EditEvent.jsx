@@ -9,19 +9,20 @@ import save from "../../assets/icons/save.svg";
 import edit from "../../assets/icons/edit_square.svg";
 import userData from "./Event"
 import Button from "../../elements/Button/Button";
+import foto from "../../assets/images/Mask group.png";
 import { Switch } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const EditEvent = () => {
   const EventList = {
-    id: 1,
-    // fotoEvent: '',
-    judulEvent: "tari bali",
-    deskripsiEvent: "tari bali adalah ...", 
-    lokasiEvent: "bali",
-    linkGoogleEvent: "google maps bali",
-    waktuEvent: "12:00",
-    hargaEvent: "20000", 
-    jumlahEvent: "10"
+    fotoEvent: foto,
+    judulEvent: "Tari Kecak",
+    deskripsiEvent: "Tari Kecak menjadi salah satu jenis tari kolosal yang melibatkan 50 sampai 150 orang penari. Jalan cerita Tari Kecak diambil dari tradisi Sanghyang dan bagian cerita Ramayana. Gerak penari Kecak akan diawali dengan masuknya para penari pria yang duduk membentuk lingkaran.Kemudian dilanjutkan dengan drama tari tentang perjuangan Rama, pasukan Hanoman dan burung Garuda untuk menyelamatkan Shinta dari sosok Rahwana. Dalam setiap pergantian penari di tiap adegan, para penari yang duduk membentuk lingkaran akan mengangkat kedua tangan dan menyerukan “cak cak ke cak cak ke” yang kemudian menjadi asal nama tarian ini. Dalam buku Keanekaragaman Seni Tari Nusantara (2012) oleh Resi Septiana Dewi dijelaskan bahwa gerakan penari Kecak tidak harus mengikuti pakem-pakem karena dalam tarian ini yang diutamakan adalah jalan cerita dan perpaduan suaranya.", 
+    lokasiEvent: "Pecatu, Kuta Selatan, Badung, Bali",
+    linkGoogleEvent: "https://goo.gl/maps/WcUWffZ9hK4CmJEu5",
+    waktuEvent: "16:00 WITA",
+    hargaEvent: "Rp. 150.000", 
+    jumlahEvent: "200"
     }
 
     const [toggle, setToggle] = useState(false);
@@ -30,10 +31,9 @@ const EditEvent = () => {
         toggle ? setToggle(false): setToggle(true);
     }
 
-    const [id, setId] = useState('')
+    const navigate = useNavigate();
     const [values, setValues] = useState({
-        // id:'',
-        // fotoEvent: '',
+        fotoEvent: '',
         judulEvent: '',
         deskripsiEvent: '', 
         lokasiEvent: '',
@@ -43,17 +43,24 @@ const EditEvent = () => {
         jumlahEvent: ''
     })
 
-    // const index = userData.map(function(e){
-    //     return e.id
-    // }).indexOf(id);
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-
-    }
+    const onSubmit = () => {
+      console.log(values);
+      setValues({
+        fotoEvent: '',
+        judulEvent: '',
+        deskripsiEvent: '', 
+        lokasiEvent: '',
+        linkGoogleEvent: '',
+        waktuEvent: '',
+        hargaEvent: '', 
+        jumlahEvent: ''
+      });
+      setFile("");
+    };
 
     useEffect(() => {
       setValues({
+        fotoEvent: EventList.fotoEvent,
         judulEvent: EventList.judulEvent,
         deskripsiEvent: EventList.deskripsiEvent,
         lokasiEvent: EventList.lokasiEvent,
@@ -95,28 +102,29 @@ const EditEvent = () => {
               {/* upload foto */}
               <div className={styles.containerEvent}>
                 <div className={styles.imgArea}>
-                  <img src={file} />
+                  <img src={file ? file : values.fotoEvent} />
                 </div>
                 <div className="d-flex justify-content-center">
-                  <label
-                    htmlFor={"fotoEvent"}
-                    className={styles.buttonMain}
-                    style={{ width: "50%" }}
-                  >
-                    <img src={Filefoto} alt="filefoto" />
-                    <span className="body-medium-semibold"> Pilih Foto</span>
+                  <label htmlFor={"fotoEvent"}>
+                    <Button
+                      label="Pilih Foto"
+                      icon={Filefoto}
+                      color="brown"
+                      onClick={() =>
+                        document.getElementById("fotoEvent").click()
+                      }
+                    />
                   </label>
                   <input
                     id={"fotoEvent"}
                     className={styles.inputPhoto}
                     type={"file"}
                     name={"fotoEvent"}
-                    value={values.fotoEvent}
                     onChange={getFile}
                   />
                 </div>
                 <div className="d-flex justify-content-center mt-3">
-                  <p> select Your Photo Profile max 2mb.</p>
+                  <p> select Your Photo max 2mb.</p>
                 </div>
               </div>
             </div>

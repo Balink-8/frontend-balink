@@ -9,12 +9,18 @@ import edit from "../../assets/icons/edit_square.svg";
 import del from "../../assets/icons/delete.svg";
 import { Switch } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../elements/Button/Button";
 
 const DetailEvent = () => {
+  const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
   const toggler = () => {
     toggle ? setToggle(false) : setToggle(true);
+  };
+
+  const onEdit = () => {
+    navigate("/event/edit");
   };
 
   const detailEvent = {
@@ -156,7 +162,7 @@ const DetailEvent = () => {
           <Button label="Hapus" color="white" icon={del} />
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Edit" color="brown" icon={edit} />
+          <Button label="Edit" color="brown" icon={edit} onClick={onEdit}/>
         </div>
       </div>
     </div>

@@ -96,7 +96,7 @@ const TableEvent = ({ userData }) => {
                     <td className="p-3">{item.deskripsi}</td>
                     <td className="p-3">{item.tanggal}</td>
                     <td className="p-3">
-                      <Link to={`/event/edit`}>
+                      <Link to={`/event/detail`}>
                         <img
                           src={edit}
                           alt=""
