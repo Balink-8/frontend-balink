@@ -475,7 +475,7 @@ const LandingPage = () => {
       </div>
 
       {/* footer */}
-      <footer className={styles.textFooter}>
+      <footer className={`${styles.bgFooter} ${styles.textFooter}`}>
         <div className="container pt-5 pb-4">
           <div className="row">
             <div className="col-lg-5">
