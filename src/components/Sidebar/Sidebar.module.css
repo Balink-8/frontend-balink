@@ -1,10 +1,25 @@
 .sidebar {
   background-color: var(--white) !important;
+  box-shadow: var(--box-shadow-light);
+  overflow-y: auto;
+  padding-right: 15px; /* Add some right padding to account for scrollbar width */
+}
+
+.sidebarContent {
+  width: calc(100% - 15px); /* Subtract the right padding from the width */
+  padding: 20px;
+}
+
+/* Hide the scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 0;
+  background-color: transparent;
 }
 
 .navLink {
   color: var(--dark-medium) !important;
   margin-top: 0.5rem;
+  width: 100%;
 }
 
 .active {
@@ -19,4 +34,8 @@
 .active:hover {
   background-color: #7d736a !important;
   color: var(--white) !important;
+}
+
+.garis {
+  width: 100%;
 }
