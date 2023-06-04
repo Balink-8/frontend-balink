@@ -16,6 +16,7 @@ import DetailArtikel from "./pages/Artikel/DetailArtikel";
 import EditArtikel from "./pages/Artikel/EditArtikel";
 import { ModalAkunContextProvider } from "./context/ModalAkunContext";
 import { ModalContextProvider } from "./context/ModalContext";
+import EditEvent from "./pages/Event/EditEvent";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/event/detail" element={<DetailEvent />} />
               <Route path="/event" element={<Event />} />
               <Route path="/event/tambah" element={<TambahEvent />} />
+              <Route path="/event/edit" element={<EditEvent />} />
               <Route path="/produk" element={<Produk />} />
               <Route path="/produk/tambah" element={<TambahProduk />} />
               <Route path="/kategori" element={<h1>kategori</h1>} />
