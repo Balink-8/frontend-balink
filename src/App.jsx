@@ -12,6 +12,10 @@ import Event from "./pages/Event/Event";
 import Transaksi from "./pages/Transaksi/Transaksi";
 import { ModalAkunContextProvider } from "./context/ModalAkunContext";
 import { ModalContextProvider } from "./context/ModalContext";
+import TambahPromo from "./pages/Promo/TambahPromo";
+import DetailPromo from "./pages/Promo/DetailPromo";
+import EditPromo from "./pages/Promo/EditPromo";
+import Promo from "./pages/Promo/Promo";
 
 function App() {
   return (
@@ -29,7 +33,10 @@ function App() {
               <Route path="/produk/tambah" element={<TambahProduk />} />
               <Route path="/kategori" element={<h1>kategori</h1>} />
               <Route path="/transaksi" element={<Transaksi />} />
-              <Route path="/promo" element={<h1>promo</h1>} />
+              <Route path="/promo" element={<Promo />} />
+              <Route path="/promo/tambah" element={<TambahPromo />} />
+              <Route path="/promo/detail" element={<DetailPromo />} />
+              <Route path="/promo/edit" element={<EditPromo />} />
               <Route path="/artikel" element={<h1>artikel</h1>} />
               <Route path="/profile" element={<h1>profile</h1>} />
             </Route>
