@@ -23,9 +23,10 @@ import Kategori from "./pages/Kategori/Kategori";
 import TambahKategori from "./pages/Kategori/TambahKategori";
 import DetailKategori from "./pages/Kategori/DetailKategori";
 import EditKategori from "./pages/Kategori/EditKategori";
+import Profil from "./pages/Profil/Profil";
+import EditProfil from "./pages/Profil/EditProfil";
 import { ModalAkunContextProvider } from "./context/ModalAkunContext";
 import { ModalContextProvider } from "./context/ModalContext";
-
 
 function App() {
   return (
@@ -55,7 +56,8 @@ function App() {
               <Route path="/artikel/tambah" element={<TambahArtikel />} />
               <Route path="/artikel/detail" element={<DetailArtikel />} />
               <Route path="/artikel/edit" element={<EditArtikel />} />
-              <Route path="/profile" element={<h1>profile</h1>} />
+              <Route path="/profile" element={<Profil />} />
+              <Route path="/profile/edit" element={<EditProfil />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<LandingPage />} />
