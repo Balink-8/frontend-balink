@@ -14,12 +14,12 @@ const TableAkun = ({ userData }) => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(userData.length / itemsPerPage);
+  const totalPages = Math.ceil(userData?.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = userData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = userData?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -72,7 +72,7 @@ const TableAkun = ({ userData }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item) => (
+                {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
                     <td className="p-3">{item.username}</td>
                     <td className="p-3">{item.pengguna}</td>
