@@ -14,13 +14,18 @@ import Artikel from "./pages/Artikel/Artikel";
 import TambahArtikel from "./pages/Artikel/TambahArtikel";
 import DetailArtikel from "./pages/Artikel/DetailArtikel";
 import EditArtikel from "./pages/Artikel/EditArtikel";
-import { ModalAkunContextProvider } from "./context/ModalAkunContext";
-import { ModalContextProvider } from "./context/ModalContext";
+import TambahPromo from "./pages/Promo/TambahPromo";
+import DetailPromo from "./pages/Promo/DetailPromo";
+import EditPromo from "./pages/Promo/EditPromo";
+import Promo from "./pages/Promo/Promo";
 import EditEvent from "./pages/Event/EditEvent";
 import Kategori from "./pages/Kategori/Kategori";
 import TambahKategori from "./pages/Kategori/TambahKategori";
 import DetailKategori from "./pages/Kategori/DetailKategori";
 import EditKategori from "./pages/Kategori/EditKategori";
+import { ModalAkunContextProvider } from "./context/ModalAkunContext";
+import { ModalContextProvider } from "./context/ModalContext";
+
 
 function App() {
   return (
@@ -42,7 +47,10 @@ function App() {
               <Route path="/kategori/detail" element={<DetailKategori />} />
               <Route path="/kategori/edit" element={<EditKategori />} />
               <Route path="/transaksi" element={<Transaksi />} />
-              <Route path="/promo" element={<h1>promo</h1>} />
+              <Route path="/promo" element={<Promo />} />
+              <Route path="/promo/tambah" element={<TambahPromo />} />
+              <Route path="/promo/detail" element={<DetailPromo />} />
+              <Route path="/promo/edit" element={<EditPromo />} />
               <Route path="/artikel" element={<Artikel />} />
               <Route path="/artikel/tambah" element={<TambahArtikel />} />
               <Route path="/artikel/detail" element={<DetailArtikel />} />
