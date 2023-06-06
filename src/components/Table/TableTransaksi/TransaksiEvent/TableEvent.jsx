@@ -55,8 +55,8 @@ const TableEvent = ({ userDataEvent }) => {
 
 
     return(
-        <div>
-        <div className="row">
+        <div>    
+        <div className="row ">
           <div className="col-4">
           <div className="p-0">
             <div className={styles.search} id="search">
@@ -95,8 +95,7 @@ const TableEvent = ({ userDataEvent }) => {
             </div>
             </Link>
           </div> 
-        </div>
-         
+        </div>     
   
         <div className="row mt-4 text-center">
           <div className="col-12 p-0 ">
@@ -134,7 +133,7 @@ const TableEvent = ({ userDataEvent }) => {
                             {item.status}
                       </td>
                       <td className="p-3">
-                        <Link to={`/akun/${item.username}`}>
+                        <Link to={`/DetailTransaksi/event/${item.username}`}>
                           <img
                             src={receipt_long2}
                             alt=""

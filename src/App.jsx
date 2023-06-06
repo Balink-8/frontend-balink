@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Akun from "./pages/Akun/Akun";
 import TransaksiEvent from "./pages/Transaksi/TransaksiEvent/TransaksiEvent"
 import TransaksiProduk from "./pages/Transaksi/TransaksiProduk/Transaksiproduk";
+import DetailEvent from "./pages/Transaksi/DetailEvent/DetailEvent";
+import DetailProduk from "./pages/Transaksi/DetailProduk/DetailProduk";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/kategori" element={<h1>kategori</h1>} />
           <Route path="/transaksi" element={<TransaksiEvent/>} />
           <Route path="/transaksi/produk" element={<TransaksiProduk/>} />
+          <Route path="/DetailTransaksi/event/:username" element={<DetailEvent/>} />
+          <Route path="/DetailTransaksi/produk/:username" element={<DetailProduk/>} />
           <Route path="/promo" element={<h1>promo</h1>} />
           <Route path="/artikel" element={<h1>artikel</h1>} />
           <Route path="/profile" element={<h1>profile</h1>} />

@@ -12,7 +12,7 @@ const TransaksiEvent = () => {
         status: "Sukses",
       },
       {
-        kodetransaksi: "ABCD1234E5F6",
+        kodetransaksi: "ABCDt1234E5F6",
         username: "JasMie77",
         waktu: "15/12/23 - 20:40:56",
         event: "Tari Kecak",

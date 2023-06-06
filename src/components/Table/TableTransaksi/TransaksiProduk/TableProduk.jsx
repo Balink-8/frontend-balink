@@ -90,7 +90,6 @@ const TableProduk = ({ userDataEvent }) => {
                 type="button" 
                 className={`${styles.btnproduk} ${isClicked ? styles.active : ''} btn btn-sm mt-4 body-medium-semibold me-4`}
                 onClick={handleClick}>
-                {/* className={`${styles.btnproduk} btn btn-sm mt-1 float-end body-medium-semibold`}> */}
                 Produk
               </button>
               <img src={local_mall} alt="" className={styles.local_mall } />
@@ -135,7 +134,7 @@ const TableProduk = ({ userDataEvent }) => {
                             {item.status}
                       </td>
                       <td className="p-3">
-                        <Link to={`/akun/${item.username}`}>
+                        <Link to={`/DetailTransaksi/produk/${item.username}`}>
                           <img
                             src={receipt_long2}
                             alt=""
