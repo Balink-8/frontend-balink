@@ -1,32 +1,35 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login/Login";
 import Layout from "./components/Layout/Layout";
+import Login from "./pages/Login/Login";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import TambahEvent from "./pages/Event/TambahEvent";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Akun from "./pages/Akun/Akun";
-import TambahProduk from "./pages/Produk/TambahProduk";
-import Produk from "./pages/Produk/Produk";
-import DetailEvent from "./pages/Event/DetailEvent";
 import Event from "./pages/Event/Event";
-import Transaksi from "./pages/Transaksi/Transaksi";
-import Artikel from "./pages/Artikel/Artikel";
-import TambahArtikel from "./pages/Artikel/TambahArtikel";
-import DetailArtikel from "./pages/Artikel/DetailArtikel";
-import EditArtikel from "./pages/Artikel/EditArtikel";
-import TambahPromo from "./pages/Promo/TambahPromo";
-import DetailPromo from "./pages/Promo/DetailPromo";
-import EditPromo from "./pages/Promo/EditPromo";
-import Promo from "./pages/Promo/Promo";
+import TambahEvent from "./pages/Event/TambahEvent";
 import EditEvent from "./pages/Event/EditEvent";
+import DetailEvent from "./pages/Event/DetailEvent";
+import Produk from "./pages/Produk/Produk";
+import TambahProduk from "./pages/Produk/TambahProduk";
+import EditProduk from "./pages/Produk/EditProduk";
+import DetailProduk from "./pages/Produk/DetailProduk";
 import Kategori from "./pages/Kategori/Kategori";
 import TambahKategori from "./pages/Kategori/TambahKategori";
 import DetailKategori from "./pages/Kategori/DetailKategori";
 import EditKategori from "./pages/Kategori/EditKategori";
-import Profil from "./pages/Profil/Profil";
-import EditProfil from "./pages/Profil/EditProfil";
+import Transaksi from "./pages/Transaksi/Transaksi";
 import DetailEventTransaksi from "./pages/Transaksi/DetailEvent/DetailEvent";
 import DetailProdukTransaksi from "./pages/Transaksi/DetailProduk/DetailProduk";
+import Promo from "./pages/Promo/Promo";
+import TambahPromo from "./pages/Promo/TambahPromo";
+import EditPromo from "./pages/Promo/EditPromo";
+import DetailPromo from "./pages/Promo/DetailPromo";
+import Artikel from "./pages/Artikel/Artikel";
+import TambahArtikel from "./pages/Artikel/TambahArtikel";
+import EditArtikel from "./pages/Artikel/EditArtikel";
+import DetailArtikel from "./pages/Artikel/DetailArtikel";
+import Profil from "./pages/Profil/Profil";
+import EditProfil from "./pages/Profil/EditProfil";
+
 import { ModalAkunContextProvider } from "./context/ModalAkunContext";
 import { ModalContextProvider } from "./context/ModalContext";
 
@@ -45,6 +48,8 @@ function App() {
               <Route path="/event/edit" element={<EditEvent />} />
               <Route path="/produk" element={<Produk />} />
               <Route path="/produk/tambah" element={<TambahProduk />} />
+              <Route path="/produk/edit" element={<EditProduk />} />
+              <Route path="/produk/detail" element={<DetailProduk />} />
               <Route path="/kategori" element={<Kategori />} />
               <Route path="/kategori/tambah" element={<TambahKategori />} />
               <Route path="/kategori/detail" element={<DetailKategori />} />

@@ -96,11 +96,11 @@ const TableProduk = ({ data }) => {
                     <td className="p-3">{item.harga}</td>
                     <td className="p-3">{item.kategori}</td>
                     <td className="p-3">
-                      <Link to={`/akun/${item.username}`}>
+                      <Link to={`/produk/edit`}>
                         <img
                           src={Edit}
                           alt=""
-                          className={styles.actionButton}
+                          className={`${styles.actionButton} pe-3`}
                         />
                         <img
                           src={Delete}

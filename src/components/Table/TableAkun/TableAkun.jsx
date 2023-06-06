@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
-import vector from "../../../assets/icons/Vector.svg";
 import styles from "./TableAkun.module.css";
 import demography from "../../../assets/icons/demography.svg";
 import ModalAkun from "../../Modal/ModalAkun/ModalAkun";
@@ -9,7 +8,8 @@ import { ModalAkunContext } from "../../../context/ModalAkunContext";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 
 const TableAkun = ({ userData }) => {
-  const { openModalAkun, showModalAkun } = useContext(ModalAkunContext);
+  const { openModalAkun, showModalAkun, modalId } =
+    useContext(ModalAkunContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -95,8 +95,8 @@ const TableAkun = ({ userData }) => {
       </div>
 
       {/* Kotak angka untuk memilih jumlah item per halaman */}
-      <div className={`${styles.previous} row`} id="previous">
-        <div className="col-10 p-3">
+      <div className={`${styles.previous}  d-flex flex-row `} id="previous">
+        <div className="p-3 me-auto">
           <span className={styles.tableSpan}>Showing</span>
           <select
             className={`${styles.itemsPerPage} ms-2 `}
@@ -110,7 +110,7 @@ const TableAkun = ({ userData }) => {
           </select>
           <span className={`${styles.tableSpan} ms-2`}>of 50</span>
         </div>
-        <div className="col-2 p-3">
+        <div className="p-3 d-flex justify-content-between">
           <button
             className={`${styles.btnleft} col-2 me-1`}
             id="btnleft"
@@ -138,7 +138,7 @@ const TableAkun = ({ userData }) => {
 
           {/* Tombol halaman berikutnya */}
           <button
-            className={styles.btnright}
+            className={`${styles.btnright} col-2 me-1`}
             id="btnright"
             onClick={nextPage}
             disabled={currentPage === totalPages}
@@ -147,7 +147,7 @@ const TableAkun = ({ userData }) => {
           </button>
         </div>
       </div>
-      {showModalAkun && <ModalAkun />}
+      {showModalAkun && <ModalAkun id={modalId} />}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import styles from "./Profil.module.css";
 import Logo from "../../assets/images/Balink 1.png";
 import Button from "../../elements/Button/Button";
-import Edit from "../../assets/icons/edit_square.svg";
+import Edit from "../../assets/icons/edit_square_white.svg";
 import { useNavigate } from "react-router-dom";
 const Profil = () => {
   const navigate = useNavigate();
