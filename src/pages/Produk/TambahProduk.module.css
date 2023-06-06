@@ -19,7 +19,6 @@
   display: flex;
   flex-direction: column;
   margin-top: 24px;
-  /* border: 2px solid green; */
 }
 
 .imageProduk {
@@ -126,8 +125,12 @@
   border-radius: 5px;
   outline: none;
   padding: 10px 15px;
-  border: 1px solid #9d968f;
+  border: 1px solid #9d968f !important;
   margin-bottom: 20px;
+}
+
+.error {
+  border: 1px solid var(--red-dark) !important;
 }
 
 .deskripsiProduk {

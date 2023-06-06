@@ -14,49 +14,105 @@ const TambahProduk = () => {
   const [namaProduk, setNamaProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [kategoriProduk, setKategoriProduk] = useState("");
-  const [harga, setHarga] = useState(50000);
+  const [harga, setHarga] = useState("");
   const [stok, setStok] = useState("");
+  const [urlError, setUrlError] = useState(false);
+  const [namaProdukError, setNamaProdukError] = useState(false);
+  const [deskripsiProdukError, setDeskripsiProdukError] = useState(false);
+  const [kategoriProdukError, setKategoriProdukError] = useState(false);
+  const [hargaError, setHargaError] = useState(false);
+  const [stokError, setStokError] = useState(false);
 
   const navigate = useNavigate();
 
   const handleChangeUrl = (e) => {
     setUrl(e.target.value);
+    setUrlError(e.target.value.trim() === "");
   };
 
   const handleChangeNama = (e) => {
     setNamaProduk(e.target.value);
+    setNamaProdukError(e.target.value.trim() === "");
   };
 
   const handleDeskripsiProduk = (e) => {
     setDeskripsiProduk(e.target.value);
+    setDeskripsiProdukError(e.target.value.trim() === "");
   };
 
   const handleKategoriProduk = (e) => {
     setKategoriProduk(e.target.value);
-  };
-  const handleStok = (e) => {
-    setStok(e.target.value);
+    setKategoriProdukError(e.target.value.trim() === "");
   };
 
-  // const handleHarga = (e) => {
-  //   setHarga(e.target.value)
-  // }
+  const handleStok = (e) => {
+    setStok(e.target.value);
+    setStokError(e.target.value.trim() === "");
+  };
+
+  const handleHarga = (e) => {
+    setHarga(e.target.value);
+    setHargaError(e.target.value.trim() === "");
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    alert("cek");
+    // Reset previous error values
+    setUrlError(false);
+    setNamaProdukError(false);
+    setDeskripsiProdukError(false);
+    setKategoriProdukError(false);
+    setHargaError(false);
+    setStokError(false);
 
-    const variables = {
-      image: url,
-      nama_produk: namaProduk,
-      deskripsi_produk: deskripsiProduk,
-      kategori_produk: kategoriProduk,
-      harga: harga,
-      stok: stok,
-      id: Math.random().toString(),
-    };
+    // Perform validation
+    if (url.trim() === "") {
+      setUrlError(true);
+    }
+
+    if (namaProduk.trim() === "") {
+      setNamaProdukError(true);
+    }
+
+    if (deskripsiProduk.trim() === "") {
+      setDeskripsiProdukError(true);
+    }
+
+    if (kategoriProduk === "") {
+      setKategoriProdukError(true);
+    }
+
+    if (harga.trim() === "") {
+      setHargaError(true);
+    }
+
+    if (stok.trim() === "") {
+      setStokError(true);
+    }
+
+    // Continue with form submission if there are no errors
+    if (
+      !urlError &&
+      !namaProdukError &&
+      !deskripsiProdukError &&
+      !kategoriProdukError &&
+      !hargaError &&
+      !stokError
+    ) {
+      const variables = {
+        image: url,
+        nama_produk: namaProduk,
+        deskripsi_produk: deskripsiProduk,
+        kategori_produk: kategoriProduk,
+        harga: harga,
+        stok: stok,
+        id: Math.random().toString(),
+      };
+      console.log(variables);
+    }
   };
+
   return (
     <form className={styles.wrapper} onSubmit={submitHandler}>
       <div className={styles.produkBaru}>
@@ -123,6 +179,7 @@ const TambahProduk = () => {
                 onChange={handleChangeNama}
                 className={`body-medium-regular ${styles.namaProduk}`}
                 label={"Nama Produk"}
+                error={namaProdukError}
               />
             </div>
           </div>
@@ -153,6 +210,7 @@ const TambahProduk = () => {
                 id="deskripsiProduk"
                 onChange={handleDeskripsiProduk}
                 className={`body-medium-regular ${styles.deskripsiProduk}`}
+                error={deskripsiProdukError}
               />
             </div>
           </div>
@@ -181,14 +239,16 @@ const TambahProduk = () => {
                 name="kategoriProduk"
                 onChange={handleKategoriProduk}
                 placeholder="masukan kategori produk"
-                className={styles.kategoriProduk}
+                className={`${styles.kategoriProduk} ${
+                  kategoriProdukError ? styles.error : ""
+                }`}
                 label={"Kategori Produk"}
               >
                 <option defaultValue={null} hidden></option>
-                <option value="Alat Masak">Pakaian</option>
-                <option value="Alat Mandi">Perhiasan</option>
-                <option value="Sport">Kerajinan Tangan</option>
-                <option value="Souvenir">Aksesoris</option>
+                <option value="Pakaian">Pakaian</option>
+                <option value="Perhiasan">Perhiasan</option>
+                <option value="Kerajinan Tangan">Kerajinan Tangan</option>
+                <option value="Aksesori">Aksesoris</option>
               </select>
             </div>
           </div>
@@ -212,12 +272,14 @@ const TambahProduk = () => {
           <div className={styles.sideRight}>
             <div className={styles.parentInput}>
               <Input
-                type="text"
+                type="number"
                 placeholder="Rp. 120000"
                 name="hargaProduk"
                 id="hargaProduk"
                 className={`body-medium-regular ${styles.hargaProduk}`}
                 label={"Harga Produk"}
+                onChange={handleHarga}
+                error={hargaError}
               />
             </div>
           </div>
@@ -242,12 +304,13 @@ const TambahProduk = () => {
             <div className={styles.parentInput}>
               <Input
                 label={"Stok Produk"}
-                type="text"
+                type="number"
                 placeholder="190"
                 name="stokProduk"
                 id="stokProduk"
                 onChange={handleStok}
                 className={`body-medium-regular ${styles.stokProduk}`}
+                error={stokError}
               />
             </div>
           </div>

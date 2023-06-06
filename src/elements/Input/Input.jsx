@@ -11,16 +11,26 @@ const Input = ({
   readOnly,
   icon,
   onClick,
+  error,
 }) => {
   return (
     <div className={styles.inputBox}>
-      <label className={styles.inputTitle} htmlFor={id}>
+      <label
+        className={`${
+          error
+            ? `${styles.inputTitle} ${styles.errorTitle}`
+            : styles.inputTitle
+        }`}
+        htmlFor={id}
+      >
         {label}
       </label>
       <div className={styles.inputWrapper}>
         <input
           type={type}
-          className={`${styles.input} body-medium-regular`}
+          className={`${
+            error ? `${styles.input} ${styles.error}` : styles.input
+          } body-medium-regular`}
           placeholder={placeholder}
           id={id}
           name={name}

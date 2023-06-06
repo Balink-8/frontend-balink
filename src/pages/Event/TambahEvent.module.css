@@ -55,6 +55,14 @@
   border: 1px solid #9d968f;
 }
 
+.input:focus {
+  outline: none;
+}
+
+.errorInput {
+  border: 1px solid var(--red-dark);
+}
+
 .inputTitle {
   position: absolute;
   top: -7px;
@@ -62,4 +70,8 @@
   padding: 0 5px;
   font-size: 11px;
   background: var(--white);
+}
+
+.errorTitle {
+  color: var(--red-dark);
 }

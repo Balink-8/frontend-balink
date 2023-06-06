@@ -13,16 +13,37 @@ const TambahArtikel = () => {
     judulArtikel: "",
     deskripsiArtikel: "",
   });
+
+  const [errors, setErrors] = useState({
+    fotoArtikel: false,
+    judulArtikel: false,
+    deskripsiArtikel: false,
+  });
   const [file, setFile] = useState();
 
   const onSubmit = () => {
-    console.log(values);
-    setValues({
-      fotoArtikel: "",
-      judulArtikel: "",
-      deskripsiArtikel: "",
+    const newErrors = {};
+
+    Object.keys(values).forEach((key) => {
+      if (values[key].trim() === "") {
+        newErrors[key] = true;
+      } else {
+        newErrors[key] = false;
+      }
     });
-    setFile("");
+
+    setErrors(newErrors);
+
+    if (!Object.values(newErrors).some((error) => error)) {
+      setValues({
+        fotoArtikel: "",
+        judulArtikel: "",
+        deskripsiArtikel: "",
+      });
+
+      setFile("");
+      console.log(values);
+    }
   };
 
   const onReset = () => {
@@ -35,10 +56,23 @@ const TambahArtikel = () => {
   };
 
   const handleOnChange = (e) => {
+    const { name, value } = e.target;
     setValues({
       ...values,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    if (value.trim() === "") {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: true,
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: false,
+      }));
+    }
   };
 
   const getFile = (e) => {
@@ -100,6 +134,7 @@ const TambahArtikel = () => {
                 value={values.judulArtikel}
                 onChange={handleOnChange}
                 label={"Judul Artikel"}
+                error={errors.judulArtikel}
               />
             </div>
           </div>
@@ -109,13 +144,25 @@ const TambahArtikel = () => {
               <Textarea
                 rows={12}
                 placeholder={"Masukkan deskripsi artikel"}
-                className={styles.input}
+                className={
+                  errors.deskripsiArtikel
+                    ? `${styles.errorInput} ${styles.input}`
+                    : styles.input
+                }
                 id={"deskripsiArtikel"}
                 name={"deskripsiArtikel"}
                 value={values.deskripsiArtikel}
                 onChange={handleOnChange}
               />
-              <label className={styles.inputTitle}>Deskripsi</label>
+              <label
+                className={
+                  errors.deskripsiArtikel
+                    ? `${styles.errorTitle} ${styles.inputTitle}`
+                    : styles.inputTitle
+                }
+              >
+                Deskripsi
+              </label>
             </div>
           </div>
         </div>

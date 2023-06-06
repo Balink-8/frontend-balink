@@ -11,13 +11,31 @@ const TambahKategori = () => {
     namaKategori: "",
     deskripsiKategori: "",
   });
+  const [errors, setErrors] = useState({
+    namaKategori: false,
+    deskripsiKategori: false,
+  });
 
   const onSubmit = () => {
-    console.log(values);
-    setValues({
-      namaKategori: "",
-      deskripsiKategori: "",
+    const newErrors = {};
+    Object.keys(values).forEach((key) => {
+      if (values[key].trim() === "") {
+        newErrors[key] = true;
+      } else {
+        newErrors[key] = false;
+      }
     });
+
+    setErrors(newErrors);
+
+    if (!Object.values(newErrors).some((error) => error)) {
+      setValues({
+        namaKategori: "",
+        deskripsiKategori: "",
+      });
+
+      console.log(values);
+    }
   };
 
   const onReset = () => {
@@ -28,10 +46,23 @@ const TambahKategori = () => {
   };
 
   const handleOnChange = (e) => {
+    const { name, value } = e.target;
     setValues({
       ...values,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    if (value.trim() === "") {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: true,
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: false,
+      }));
+    }
   };
 
   return (
@@ -46,8 +77,9 @@ const TambahKategori = () => {
           </div>
           <div>
             <p className="body-small-regular">
-              Ketik nama promo maksimal 20 kata dengan kalimat yang menarik agar Admin 
-              dapat dengan mudah memilih kategori berdasarkan barang yg dibuat.
+              Ketik nama promo maksimal 20 kata dengan kalimat yang menarik agar
+              Admin dapat dengan mudah memilih kategori berdasarkan barang yg
+              dibuat.
             </p>
             <Input
               type={"text"}
@@ -58,6 +90,7 @@ const TambahKategori = () => {
               value={values.namaKategori}
               onChange={handleOnChange}
               label={"Nama Kategori"}
+              error={errors.namaKategori}
             />
           </div>
         </div>
@@ -69,20 +102,33 @@ const TambahKategori = () => {
           </div>
           <div>
             <p className="body-small-regular">
-              Tuliskan deskripsi Kategori yang kamu buat untuk untuk lebih 
-              membantu admin mengetahui kategori yang anda buat dipakai untuk barang apa saja. 
+              Tuliskan deskripsi Kategori yang kamu buat untuk untuk lebih
+              membantu admin mengetahui kategori yang anda buat dipakai untuk
+              barang apa saja.
             </p>
             <div className={styles.inputBox}>
               <Textarea
                 rows={3}
                 placeholder={"Masukkan deskripsi kategori"}
-                className={styles.input}
+                className={
+                  errors.deskripsiKategori
+                    ? `${styles.errorInput} ${styles.input}`
+                    : styles.input
+                }
                 id={"deskripsiKategori"}
                 name={"deskripsiKategori"}
                 value={values.deskripsiKategori}
                 onChange={handleOnChange}
               />
-              <label className={styles.inputTitle}>Deskripsi</label>
+              <label
+                className={
+                  errors.deskripsiKategori
+                    ? `${styles.errorTitle} ${styles.inputTitle}`
+                    : styles.inputTitle
+                }
+              >
+                Deskripsi
+              </label>
             </div>
           </div>
         </div>

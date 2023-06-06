@@ -29,7 +29,6 @@ import EditArtikel from "./pages/Artikel/EditArtikel";
 import DetailArtikel from "./pages/Artikel/DetailArtikel";
 import Profil from "./pages/Profil/Profil";
 import EditProfil from "./pages/Profil/EditProfil";
-
 import { ModalAkunContextProvider } from "./context/ModalAkunContext";
 import { ModalContextProvider } from "./context/ModalContext";
 
@@ -42,18 +41,18 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/akun" element={<Akun />} />
-              <Route path="/event/detail" element={<DetailEvent />} />
               <Route path="/event" element={<Event />} />
               <Route path="/event/tambah" element={<TambahEvent />} />
               <Route path="/event/edit" element={<EditEvent />} />
+              <Route path="/event/detail" element={<DetailEvent />} />
               <Route path="/produk" element={<Produk />} />
               <Route path="/produk/tambah" element={<TambahProduk />} />
               <Route path="/produk/edit" element={<EditProduk />} />
               <Route path="/produk/detail" element={<DetailProduk />} />
               <Route path="/kategori" element={<Kategori />} />
               <Route path="/kategori/tambah" element={<TambahKategori />} />
-              <Route path="/kategori/detail" element={<DetailKategori />} />
               <Route path="/kategori/edit" element={<EditKategori />} />
+              <Route path="/kategori/detail" element={<DetailKategori />} />
               <Route path="/transaksi" element={<Transaksi />} />
               <Route
                 path="/transaksi/event/detail"
@@ -65,12 +64,12 @@ function App() {
               />
               <Route path="/promo" element={<Promo />} />
               <Route path="/promo/tambah" element={<TambahPromo />} />
-              <Route path="/promo/detail" element={<DetailPromo />} />
               <Route path="/promo/edit" element={<EditPromo />} />
+              <Route path="/promo/detail" element={<DetailPromo />} />
               <Route path="/artikel" element={<Artikel />} />
               <Route path="/artikel/tambah" element={<TambahArtikel />} />
-              <Route path="/artikel/detail" element={<DetailArtikel />} />
               <Route path="/artikel/edit" element={<EditArtikel />} />
+              <Route path="/artikel/detail" element={<DetailArtikel />} />
               <Route path="/profile" element={<Profil />} />
               <Route path="/profile/edit" element={<EditProfil />} />
             </Route>
