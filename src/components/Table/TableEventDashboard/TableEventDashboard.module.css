@@ -173,3 +173,8 @@
   top: 5px;
   left: 93px;
 }
+
+.tableBrown {
+  background-color: var(--brown-light) !important;
+  color: var(--dark-black) !important;
+}
