@@ -16,7 +16,7 @@ const Sidebar = () => {
   return (
     <div className={`${styles.sidebar} d-flex`}>
       <div
-        className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
+        className="d-flex flex-column flex-shrink-0 p-3"
         style={{ width: 280, height: "100vh" }}
       >
         <Link
