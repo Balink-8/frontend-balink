@@ -47,6 +47,10 @@
   background-color: var(--brown-light) !important;
 }
 
+.tableHeadRowBody {
+  border-bottom-color: transparent !important;
+}
+
 .success {
   color: var(--green-dark) !important;
 }
