@@ -68,7 +68,7 @@ function App() {
               <Route path="/promo/detail" element={<DetailPromo />} />
               <Route path="/artikel" element={<Artikel />} />
               <Route path="/artikel/tambah" element={<TambahArtikel />} />
-              <Route path="/artikel/edit" element={<EditArtikel />} />
+              <Route path="/artikel/:id" element={<EditArtikel />} />
               <Route path="/artikel/detail" element={<DetailArtikel />} />
               <Route path="/profile" element={<Profil />} />
               <Route path="/profile/edit" element={<EditProfil />} />

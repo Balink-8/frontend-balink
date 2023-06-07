@@ -6,8 +6,11 @@ import reset from "../../assets/icons/restart_alt.svg";
 import save from "../../assets/icons/save.svg";
 import Filefoto from "../../assets/icons/drive_folder_upload.svg";
 import Button from "../../elements/Button/Button";
+import useApi from "../../api/useApi";
+import { useNavigate } from "react-router-dom";
 
 const TambahArtikel = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     fotoArtikel: "",
     judulArtikel: "",
@@ -19,6 +22,9 @@ const TambahArtikel = () => {
     judulArtikel: false,
     deskripsiArtikel: false,
   });
+
+  const { response: artikel, loading, error, post } = useApi();
+
   const [file, setFile] = useState();
 
   const onSubmit = () => {
@@ -35,14 +41,12 @@ const TambahArtikel = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      setValues({
-        fotoArtikel: "",
-        judulArtikel: "",
-        deskripsiArtikel: "",
-      });
-
+      post(
+        "https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article",
+        values
+      );
+      navigate(-1);
       setFile("");
-      console.log(values);
     }
   };
 
