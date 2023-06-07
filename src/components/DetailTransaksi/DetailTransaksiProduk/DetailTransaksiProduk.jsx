@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import young_bearded_man_with_striped_shirt1 from "../../../assets/images/young_bearded_man_with_striped_shirt1.PNG";
+import young_bearded_man_with_striped_shirt1 from "../../../assets/images/young_bearded_man_with_striped_shirt1.png";
 import styles from "./DetailTransaksiProduk.module.css";
 
 const DetailTransaksiProduk = ({
