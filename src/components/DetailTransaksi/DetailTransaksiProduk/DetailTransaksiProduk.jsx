@@ -107,36 +107,36 @@ const DetailTransaksiProduk = ({
                       key={index}
                     >
                       <td
-                        className={`p-3 ${styles.tableHeadRow}`}
+                        className={`p-3 ${styles.tableHeadRowBody}`}
                         id="td-kodetransaksi"
                       >
                         {item.kodetransaksi}
                       </td>
                       <td
-                        className={`p-3 ${styles.tableHeadRow}`}
+                        className={`p-3 ${styles.tableHeadRowBody}`}
                         id="td-namaproduk"
                       >
                         {item.namaproduk}
                       </td>
                       <td
-                        className={`p-3 ${styles.tableHeadRow}`}
+                        className={`p-3 ${styles.tableHeadRowBody}`}
                         id="td-hargaproduk"
                       >
                         {item.hargaproduk}
                       </td>
                       <td
-                        className={`p-3 ${styles.tableHeadRow}`}
+                        className={`p-3 ${styles.tableHeadRowBody}`}
                         id="td-jumlah"
                       >
                         {item.jumlah}
                       </td>
                       <td
-                        className={`p-3 ${styles.tableHeadRow}`}
+                        className={`p-3 ${styles.tableHeadRowBody}`}
                         id="td-total"
                       >
                         {item.total}
                       </td>
-                      <td className={`p-3 ${styles.tableHeadRow}`}></td>
+                      <td className={`p-3 ${styles.tableHeadRowBody}`}></td>
                     </tr>
                   ))}
                 </tbody>
@@ -193,16 +193,16 @@ const DetailTransaksiProduk = ({
                       key={index}
                     >
                       <td
-                        className={`p-3 ${styles.tableHeadRow}  ${styles.roundedLeftBot}`}
+                        className={`p-3 ${styles.tableHeadRowBody}  ${styles.roundedLeftBot}`}
                       >
                         {item.tanggal}
                       </td>
-                      <td className={`p-3 ${styles.tableHeadRow}`}>
+                      <td className={`p-3 ${styles.tableHeadRowBody}`}>
                         {item.jam}
                       </td>
                       <td
                         className={`p-3 title-small-semibold ${
-                          styles.tableHeadRow
+                          styles.tableHeadRowBody
                         } ${styles.roundedRightBot} ${
                           item.status === "Sukses" ? styles.success : ""
                         } 
