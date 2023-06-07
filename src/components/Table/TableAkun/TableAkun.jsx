@@ -5,11 +5,21 @@ import styles from "./TableAkun.module.css";
 import demography from "../../../assets/icons/demography.svg";
 import ModalAkun from "../../Modal/ModalAkun/ModalAkun";
 import { ModalAkunContext } from "../../../context/ModalAkunContext";
+import { ModalContext } from "../../../context/ModalContext";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
+import ModalKonfirmasi from "../../Modal/ModalKonfirmasi/ModalKonfirmasi";
+import ModalTerhapus from "../../Modal/ModalTerhapus/ModalTerhapus";
 
 const TableAkun = ({ userData }) => {
   const { openModalAkun, showModalAkun, modalId } =
     useContext(ModalAkunContext);
+  const {
+    showModal,
+    closeModal,
+    openModalTemp,
+    closeModalTemp,
+    showModalTemp,
+  } = useContext(ModalContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -148,6 +158,8 @@ const TableAkun = ({ userData }) => {
         </div>
       </div>
       {showModalAkun && <ModalAkun id={modalId} />}
+      {showModal && <ModalKonfirmasi />}
+      {showModalTemp && <ModalTerhapus />}
     </div>
   );
 };

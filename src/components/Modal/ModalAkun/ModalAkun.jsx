@@ -1,16 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
 import styles from "./ModalAkun.module.css";
-import avatar from "../../../assets/images/avatar.png";
 import { ModalAkunContext } from "../../../context/ModalAkunContext";
+import { ModalContext } from "../../../context/ModalContext";
 import Button from "../../../elements/Button/Button";
 import deleteIcon from "../../../assets/icons/delete.svg";
 import Input from "../../../elements/Input/Input";
 import iconVisibility from "../../../assets/icons/visibility_off.svg";
 import useApi from "../../../api/useApi";
+import close from "../../../assets/icons/close_black.svg";
 
 const ModalAkun = ({ id }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { closeModalAkun } = useContext(ModalAkunContext);
+  const { openModal } = useContext(ModalContext);
   const { response, error, loading, get } = useApi();
   console.log(response);
   console.log(error);
@@ -29,6 +31,7 @@ const ModalAkun = ({ id }) => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>
@@ -38,7 +41,19 @@ const ModalAkun = ({ id }) => {
           <p>Error: {error}</p>
         ) : (
           <div>
-            <img src={avatar} alt="" className={styles.avatar} />
+            <div className="d-flex justify-content-between align-items-start">
+              <img
+                src={response?.image}
+                alt="avatar-img"
+                className={styles.avatar}
+              />
+              <img
+                src={close}
+                alt="close-button"
+                className={styles.close}
+                onClick={() => closeModalAkun()}
+              />
+            </div>
             <div className={styles.inputGroup}>
               <Input
                 label="Nama Lengkap"
@@ -99,7 +114,7 @@ const ModalAkun = ({ id }) => {
 
             <Button
               label="Hapus"
-              onClick={() => closeModalAkun()}
+              onClick={() => openModal()}
               color="white"
               icon={deleteIcon}
             />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import styles from "./TableEvent.module.css";
@@ -8,11 +8,14 @@ import { Link, useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import add from "../../../assets/icons/add.svg";
+import { ModalContext } from "../../../context/ModalContext";
+import ModalKonfirmasi from "../../../components/Modal/ModalKonfirmasi/ModalKonfirmasi";
 
 const TableEvent = ({ userData }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const { showModal, closeModal, openModal } = useContext(ModalContext);
 
   // Menghitung jumlah halaman
   const totalPages = Math.ceil(userData.length / itemsPerPage);
@@ -103,7 +106,7 @@ const TableEvent = ({ userData }) => {
                           className={styles.actionButton}
                         />
                       </Link>
-                      <Link to={`/event/${item.nama}`}>
+                      <Link onClick={() => openModal()}>
                         <img src={del} alt="" className={styles.actionButton} />
                       </Link>
                     </td>
@@ -168,6 +171,7 @@ const TableEvent = ({ userData }) => {
           </button>
         </div>
       </div>
+      {showModal && <ModalKonfirmasi />}
     </div>
   );
 };

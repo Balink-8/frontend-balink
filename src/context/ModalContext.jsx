@@ -1,12 +1,21 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
+import { ModalAkunContext } from "./ModalAkunContext";
 const ModalContext = createContext();
 
 const ModalContextProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalTemp, setShowModalTemp] = useState(false);
+  const { closeModalAkun } = useContext(ModalAkunContext);
 
   const openModalTemp = () => {
-    setShowModal(true);
-    setTimeout(closeModal, 1500);
+    setShowModalTemp(true);
+    setTimeout(closeModalTemp, 1500);
+  };
+
+  const closeModalTemp = () => {
+    setShowModalTemp(false);
+    setShowModal(false);
+    closeModalAkun();
   };
 
   const closeModal = () => {
@@ -19,7 +28,14 @@ const ModalContextProvider = ({ children }) => {
 
   return (
     <ModalContext.Provider
-      value={{ showModal, openModalTemp, closeModal, openModal }}
+      value={{
+        showModal,
+        openModalTemp,
+        closeModal,
+        openModal,
+        closeModalTemp,
+        showModalTemp,
+      }}
     >
       {children}
     </ModalContext.Provider>

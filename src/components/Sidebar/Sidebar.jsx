@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import logo from "../../assets/logo/Balink 2 1.svg";
 import dashboard from "../../assets/icons/dashboard.svg";
 import person from "../../assets/icons/person.svg";
@@ -11,13 +12,18 @@ import storefront from "../../assets/icons/storefront.svg";
 import folder_copy from "../../assets/icons/folder_copy.svg";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Sidebar.module.css";
+import { ModalLogoutContext } from "../../context/ModalLogoutContext";
+import ModalLogout from "../Modal/ModalLogout/ModalLogout";
 
 const Sidebar = () => {
+  const { showModalLogout, closeModalLogout, openModalLogout } =
+    useContext(ModalLogoutContext);
+
   return (
-    <div className={`${styles.sidebar} d-flex`}>
+    <div className={`${styles.sidebar} d-flex position-fixed col-2`}>
       <div
-        className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
-        style={{ width: 280, height: "100vh" }}
+        className="d-flex flex-column p-3 bg-body-tertiary w-100"
+        style={{ height: "100vh" }}
       >
         <Link
           to="/dashboard"
@@ -150,6 +156,7 @@ const Sidebar = () => {
           <Link
             to="#"
             className="d-flex align-item-center gap-3 text-decoration-none"
+            onClick={() => openModalLogout()}
           >
             <img src={logout} alt="" className="img" />
             <span className="text-danger" id="keluar">
@@ -158,6 +165,7 @@ const Sidebar = () => {
           </Link>
         </div>
       </div>
+      {showModalLogout && <ModalLogout />}
     </div>
   );
 };

@@ -2,7 +2,8 @@
   background-color: var(--white) !important;
   box-shadow: var(--box-shadow-light);
   overflow-y: auto;
-  padding-right: 15px; /* Add some right padding to account for scrollbar width */
+  padding-right: 15px;
+  width: 100%;
 }
 
 .sidebarContent {
