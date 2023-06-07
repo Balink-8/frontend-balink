@@ -18,8 +18,8 @@
 
 .thead {
   box-sizing: border-box;
-  background-color: var(--brown-light);
-  color: var(--dark-black);
+  background-color: var(--brown-light) !important;
+  color: var(--dark-black) !important;
 }
 
 .tbody {
