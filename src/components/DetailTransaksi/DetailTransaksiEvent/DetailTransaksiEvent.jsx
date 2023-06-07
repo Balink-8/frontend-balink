@@ -1,6 +1,6 @@
 import styles from "./DetailTransaksiEvent.module.css";
 import React, { useState } from "react";
-import young_bearded_man_with_striped_shirt1 from "../../../assets/images/young_bearded_man_with_striped_shirt1.PNG";
+import young_bearded_man_with_striped_shirt1 from "../../../assets/images/young_bearded_man_with_striped_shirt1.png";
 
 const DetailTransaksiEvent = ({ userDataDetailEvent, userDataEventStatus }) => {
   const [currentPage, setCurrentPage] = useState(1);
