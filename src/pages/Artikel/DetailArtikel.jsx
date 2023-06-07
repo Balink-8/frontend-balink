@@ -10,18 +10,27 @@ const DetailArtikel = () => {
   };
   const paragraphs = article.description.split("\n\n");
   return (
-    <div className={styles.container}>
-      <h1 className="headline-small-semibold mb-16">Detail Artikel</h1>
+    <div id="detailArtikelContainer" className={styles.container}>
+      <h1 id="detailArtikelTitle" className="headline-small-semibold mb-16">
+        Detail Artikel
+      </h1>
       <div className="d-flex justify-content-center align-items-center mb-24">
         <img
+          id="articleImage"
           src={article.image}
           alt="article-img"
           className={`${styles.imgArticle} w-25`}
         />
       </div>
-      <h4 className="title-large-semibold mb-24">{article.title}</h4>
+      <h4 id="articleTitle" className="title-large-semibold mb-24">
+        {article.title}
+      </h4>
       {paragraphs.map((paragraph, index) => (
-        <p className="body-medium-regular" key={index}>
+        <p
+          id={`articleParagraph_${index}`}
+          className="body-medium-regular"
+          key={index}
+        >
           {paragraph}
         </p>
       ))}

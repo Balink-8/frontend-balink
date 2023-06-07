@@ -97,7 +97,7 @@ const TableTransaksiProduk = ({ userDataEvent }) => {
                       {item.status}
                     </td>
                     <td className="p-3">
-                      <Link to={`/akun/${item.username}`}>
+                      <Link to={`/transaksi/produk/detail`}>
                         <img
                           src={receipt_long2}
                           alt=""

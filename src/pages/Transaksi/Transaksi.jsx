@@ -197,7 +197,7 @@ const Transaksi = () => {
 
   return (
     <div>
-      <div className="d-flex align-items-center">
+      <div className="d-flex">
         <TableSearch />
         <div className="d-flex gap-4">
           <Button

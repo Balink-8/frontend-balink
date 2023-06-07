@@ -49,8 +49,10 @@ const EditArtikel = () => {
   };
 
   return (
-    <div className={styles.tambahEventContainer}>
-      <h1 className="headline-small-semibold">Edit Artikel</h1>
+    <div id="editArtikelContainer" className={styles.tambahEventContainer}>
+      <h1 id="editArtikelTitle" className="headline-small-semibold">
+        Edit Artikel
+      </h1>
 
       <div className="row">
         <div className="col-4">
@@ -58,10 +60,13 @@ const EditArtikel = () => {
             {/* upload foto */}
             <div className={styles.containerEvent}>
               <div className={styles.imgArea}>
-                <img src={file ? file : values.fotoArtikel} />
+                <img
+                  id="uploadedImage"
+                  src={file ? file : values.fotoArtikel}
+                />
               </div>
               <div className="d-flex justify-content-center">
-                <label htmlFor={"fotoArtikel"}>
+                <label htmlFor="fotoArtikel">
                   <Button
                     label="Pilih Foto"
                     icon={Filefoto}
@@ -72,10 +77,10 @@ const EditArtikel = () => {
                   />
                 </label>
                 <input
-                  id={"fotoArtikel"}
+                  id="fotoArtikel"
                   className={styles.inputPhoto}
-                  type={"file"}
-                  name={"fotoArtikel"}
+                  type="file"
+                  name="fotoArtikel"
                   onChange={getFile}
                 />
               </div>
@@ -90,14 +95,14 @@ const EditArtikel = () => {
           <div className="mt-3">
             <div className={styles.inputBox}>
               <Input
-                type={"text"}
-                placeholder={"Masukkan judul artikel"}
+                type="text"
+                placeholder="Masukkan judul artikel"
                 className={styles.input}
-                id={"judulArtikel"}
-                name={"judulArtikel"}
+                id="judulArtikel"
+                name="judulArtikel"
                 value={values.judulArtikel}
                 onChange={handleOnChange}
-                label={"Judul Artikel"}
+                label="Judul Artikel"
               />
             </div>
           </div>
@@ -106,11 +111,11 @@ const EditArtikel = () => {
             <div className={styles.inputBox}>
               <Textarea
                 rows={12}
-                placeholder={"Masukkan deskripsi artikel"}
+                placeholder="Masukkan deskripsi artikel"
                 className={styles.input}
-                id={"deskripsiArtikel"}
-                name={"deskripsiArtikel"}
-                value={paragraphs}
+                id="deskripsiArtikel"
+                name="deskripsiArtikel"
+                value={values.deskripsiArtikel}
                 onChange={handleOnChange}
               />
               <label className={styles.inputTitle}>Deskripsi</label>
@@ -121,16 +126,23 @@ const EditArtikel = () => {
 
       {/* button */}
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
-        <div className="d-grid col-3 ">
+        <div className="d-grid col-3">
           <Button
+            id="cancelButton"
             label="Batal"
             color="white"
             icon={cancel}
             onClick={onCancel}
           />
         </div>
-        <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+        <div className="d-grid col-3">
+          <Button
+            id="saveButton"
+            label="Simpan"
+            color="brown"
+            icon={save}
+            onClick={onSubmit}
+          />
         </div>
       </div>
     </div>
