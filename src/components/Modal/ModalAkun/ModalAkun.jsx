@@ -30,16 +30,21 @@ const ModalAkun = ({ id }) => {
     setShowPassword(!showPassword);
   };
   return (
-    <div className={styles.modalContainer}>
-      <div className={styles.modalContent}>
+    <div id="modalAkunContainer" className={styles.modalContainer}>
+      <div id="modalAkunContent" className={styles.modalContent}>
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>Error: {error}</p>
         ) : (
           <div>
-            <img src={avatar} alt="" className={styles.avatar} />
-            <div className={styles.inputGroup}>
+            <img
+              id="avatarImage"
+              src={avatar}
+              alt=""
+              className={styles.avatar}
+            />
+            <div id="inputGroup1" className={styles.inputGroup}>
               <Input
                 label="Nama Lengkap"
                 type="text"
@@ -57,7 +62,7 @@ const ModalAkun = ({ id }) => {
                 readOnly
               />
             </div>
-            <div className={styles.inputGroup}>
+            <div id="inputGroup2" className={styles.inputGroup}>
               <Input
                 label="Username"
                 type="text"
@@ -75,7 +80,7 @@ const ModalAkun = ({ id }) => {
                 readOnly
               />
             </div>
-            <div className={styles.inputGroup}>
+            <div id="inputGroup3" className={styles.inputGroup}>
               <Input
                 label="Password"
                 type={showPassword ? "text" : "password"}
@@ -98,6 +103,7 @@ const ModalAkun = ({ id }) => {
             </div>
 
             <Button
+              id="hapusButton"
               label="Hapus"
               onClick={() => closeModalAkun()}
               color="white"

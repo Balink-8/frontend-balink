@@ -84,20 +84,23 @@ const TambahArtikel = () => {
   };
 
   return (
-    <div className={styles.tambahEventContainer}>
-      <h1 className="headline-small-semibold">Tambah Artikel</h1>
+    <div id="tambahArtikelContainer" className={styles.tambahEventContainer}>
+      <h1 id="tambahArtikelTitle" className="headline-small-semibold">
+        Tambah Artikel
+      </h1>
 
       <div className="row">
         <div className="col-4">
           <div className="d-flex justify-content-center">
             {/* upload foto */}
-            <div className={styles.containerEvent}>
+            <div id="containerEvent" className={styles.containerEvent}>
               <div className={styles.imgArea}>
-                <img src={file} />
+                <img id="uploadedImage" src={file} />
               </div>
               <div className="d-flex justify-content-center">
-                <label htmlFor={"fotoArtikel"}>
+                <label htmlFor="fotoArtikel">
                   <Button
+                    id="pilihFotoButton"
                     label="Pilih Foto"
                     icon={Filefoto}
                     color="brown"
@@ -107,10 +110,10 @@ const TambahArtikel = () => {
                   />
                 </label>
                 <input
-                  id={"fotoArtikel"}
+                  id="fotoArtikel"
                   className={styles.inputPhoto}
-                  type={"file"}
-                  name={"fotoArtikel"}
+                  type="file"
+                  name="fotoArtikel"
                   value={values.fotoArtikel}
                   onChange={getFile}
                 />
@@ -126,14 +129,14 @@ const TambahArtikel = () => {
           <div className="mt-3">
             <div className={styles.inputBox}>
               <Input
-                type={"text"}
-                placeholder={"Masukkan judul artikel"}
+                type="text"
+                placeholder="Masukkan judul artikel"
                 className={styles.input}
-                id={"judulArtikel"}
-                name={"judulArtikel"}
+                id="judulArtikel"
+                name="judulArtikel"
                 value={values.judulArtikel}
                 onChange={handleOnChange}
-                label={"Judul Artikel"}
+                label="Judul Artikel"
                 error={errors.judulArtikel}
               />
             </div>
@@ -143,14 +146,14 @@ const TambahArtikel = () => {
             <div className={styles.inputBox}>
               <Textarea
                 rows={12}
-                placeholder={"Masukkan deskripsi artikel"}
+                placeholder="Masukkan deskripsi artikel"
                 className={
                   errors.deskripsiArtikel
                     ? `${styles.errorInput} ${styles.input}`
                     : styles.input
                 }
-                id={"deskripsiArtikel"}
-                name={"deskripsiArtikel"}
+                id="deskripsiArtikel"
+                name="deskripsiArtikel"
                 value={values.deskripsiArtikel}
                 onChange={handleOnChange}
               />
@@ -171,10 +174,22 @@ const TambahArtikel = () => {
       {/* button */}
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button label="Reset" color="white" icon={reset} onClick={onReset} />
+          <Button
+            id="resetButton"
+            label="Reset"
+            color="white"
+            icon={reset}
+            onClick={onReset}
+          />
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+          <Button
+            id="submitButton"
+            label="Simpan"
+            color="brown"
+            icon={save}
+            onClick={onSubmit}
+          />
         </div>
       </div>
     </div>

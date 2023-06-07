@@ -90,35 +90,85 @@ const Dashboard = () => {
     },
   ];
   return (
-    <div className={styles.dashboardContainer}>
-      <div className={`${styles.userAmount} ${styles.card}`}>
-        <Statistics label="Jumlah Pengguna" total="100.000" newAmount="200" />
+    <div className={styles.dashboardContainer} id="dashboardContainer">
+      <div
+        id="userAmountContainer"
+        className={`${styles.userAmount} ${styles.card}`}
+      >
+        <Statistics
+          label="Jumlah Pengguna"
+          total="100.000"
+          newAmount="200"
+          id="jumlah-pengguna"
+        />
       </div>
-      <div className={`${styles.ticketSold} ${styles.card}`}>
-        <Statistics label="Ticket Terjual" total="200.000" newAmount="50" />
+      <div
+        id="ticketSoldContainer"
+        className={`${styles.ticketSold} ${styles.card}`}
+      >
+        <Statistics
+          label="Ticket Terjual"
+          total="200.000"
+          newAmount="50"
+          id="ticket-terjual"
+        />
       </div>
-      <div className={`${styles.productSold} ${styles.card}`}>
-        <Statistics label="Barang Terjual" total="150.000" newAmount="700" />
+      <div
+        id="productSoldContainer"
+        className={`${styles.productSold} ${styles.card}`}
+      >
+        <Statistics
+          label="Barang Terjual"
+          total="150.000"
+          newAmount="700"
+          id="barang-terjual"
+        />
       </div>
-      <div className={`${styles.articleTotal} ${styles.card}`}>
-        <Statistics label="Jumlah Artikel" total="25" newAmount="5" />
+      <div
+        id="articleTotalContainer"
+        className={`${styles.articleTotal} ${styles.card}`}
+      >
+        <Statistics
+          label="Jumlah Artikel"
+          total="25"
+          newAmount="5"
+          id="jumlah-artikel"
+        />
       </div>
-      <div className={`${styles.articlesContainer} ${styles.card}`}>
+      <div
+        id="articlesContainer"
+        className={`${styles.articlesContainer} ${styles.card}`}
+      >
         <NewArticles articles={articlesData} />
       </div>
-      <div className={`${styles.productsContainer} ${styles.card}`}>
+      <div
+        id="productsContainer"
+        className={`${styles.productsContainer} ${styles.card}`}
+      >
         <BestProduct products={products} />
       </div>
-      <div className={`${styles.usersContainer} ${styles.card}`}>
+      <div
+        id="usersContainer"
+        className={`${styles.usersContainer} ${styles.card}`}
+      >
         <NewUser users={users} />
       </div>
-      <div className={`${styles.transactionsContainer} ${styles.card}`}>
+      <div
+        id="transactionsContainer"
+        className={`${styles.transactionsContainer} ${styles.card}`}
+      >
         <Transaction />
       </div>
-      <div className={`${styles.orderStatusContainer} ${styles.card}`}>
+      <div
+        id="orderStatusContainer"
+        className={`${styles.orderStatusContainer} ${styles.card}`}
+      >
         <OrderStatus />
       </div>
-      <div className={`${styles.eventContainer} ${styles.card}`}>
+      <div
+        id="eventContainer"
+        className={`${styles.eventContainer} ${styles.card}`}
+      >
         <ClosestEvent events={events} />
       </div>
     </div>
