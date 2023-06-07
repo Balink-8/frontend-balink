@@ -116,6 +116,7 @@
 
 .tableHeadRow {
   border-bottom-color: transparent !important;
+  background-color: var(--brown-light) !important;
 }
 
 .success {
