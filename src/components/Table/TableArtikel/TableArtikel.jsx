@@ -8,19 +8,21 @@ import Edit from "../../../assets/icons/edit_square.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
+import useApi from "../../../api/useApi";
 
 const TableArtikel = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const { response: artikel, loading, error, del } = useApi();
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -88,13 +90,13 @@ const TableArtikel = ({ data }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item, index) => (
-                  <tr className={styles.tableRow} key={index}>
+                {currentItems?.map((item) => (
+                  <tr className={styles.tableRow} key={item.id}>
                     <td className="p-3" onClick={() => handleDetailArticle()}>
-                      <img src={item.foto} className={styles.image} />
+                      <img src={item.fotoArtikel} className={styles.image} />
                     </td>
                     <td className="p-3" onClick={() => handleDetailArticle()}>
-                      {item.nama}
+                      {item.judulArtikel}
                     </td>
                     <td
                       className="p-3"
@@ -106,19 +108,24 @@ const TableArtikel = ({ data }) => {
                       }}
                       onClick={() => handleDetailArticle()}
                     >
-                      {item.keterangan}
+                      {item.deskripsiArtikel}
                     </td>
                     <td className="p-3">
                       <img
                         src={Edit}
                         alt=""
                         className={`${styles.actionButton} me-16`}
-                        onClick={() => navigate("/artikel/edit")}
+                        onClick={() => navigate(`/artikel/${item.id}`)}
                       />
                       <img
                         src={Delete}
                         alt=""
                         className={styles.actionButton}
+                        onClick={() =>
+                          del(
+                            `https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article/${item.id}`
+                          )
+                        }
                       />
                     </td>
                   </tr>
