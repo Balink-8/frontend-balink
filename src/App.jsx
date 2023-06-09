@@ -43,8 +43,8 @@ function App() {
               <Route path="/akun" element={<Akun />} />
               <Route path="/event" element={<Event />} />
               <Route path="/event/tambah" element={<TambahEvent />} />
-              <Route path="/event/edit" element={<EditEvent />} />
-              <Route path="/event/detail" element={<DetailEvent />} />
+              <Route path="/event/edit/:id" element={<EditEvent />} />
+              <Route path="/event/detail/:id" element={<DetailEvent />} />
               <Route path="/produk" element={<Produk />} />
               <Route path="/produk/tambah" element={<TambahProduk />} />
               <Route path="/produk/edit" element={<EditProduk />} />

@@ -1,88 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TableEvent from "../../components/Table/TableEvent/TableEvent";
-import TariKecak from "../../assets/images/tari-kecak.png";
+import useApi from "../../api/useApi";
 
 const Event = () => {
-  const userData = [
-    {
-      id: "1",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "2",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "3",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "4",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "5",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "6",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "7",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "8",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "9",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "10",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "11",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-  ];
-  return <TableEvent userData={userData} />;
+  const { response: event, loading, error, get } = useApi();
+
+  useEffect(() => {
+    get("https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event").catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    );
+  }, []);
+
+  console.log(event);
+  console.log(error);
+  console.log(loading);
+
+  return (
+    <div>
+      <div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <TableEvent data={event} />
+        )}
+      </div>
+    </div>
+  );
+
 };
 
 export default Event;

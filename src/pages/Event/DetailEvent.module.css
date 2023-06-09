@@ -1,53 +1,33 @@
-.autoLayout {
-    display: flex;
-    flex-direction: column;
-    align-self: flex-start;
+.tambahEventContainer {
+    background: var(--white);
     padding: 24px;
-    gap: 24px;
-    background-color: #FDFDFD;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow-light);
+  }
+  
+  /* photo */
+  .containerEvent {
+    width: 100%;
+    background: var(--white);
+    padding: 16px;
     border-radius: 8px;
-}
-
-.detailIsi {
-    margin-top: 10px;
-    margin-left: 15px;
+    box-shadow: var(--box-shadow-light);
+  }
+  .imgArea {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    /* background: var(--dark-gray); */
     margin-bottom: 30px;
-}
-
-.desc {
-    margin-left: 30px;
-}
-
-.layoutImg {
+    border-radius: 15px;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px;
-    gap: 8px;
-    width: 355px;
-    height: 297px;
-    background: #FDFDFD;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
+    justify-content: center;
+  }
+  .inputPhoto {
+    display: none;
+  }
 
-.detailJudul {
-    margin-left: 10px;
-}
-
-.layoutDetail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 16px;
-    gap: 16px;
-    background: #FDFDFD;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.layoutInfo {
+  .layoutInfo {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -59,61 +39,4 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
-
-.layoutTiket {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    gap: 24px;
-    background: #FDFDFD;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.isiTiket {
-    display: flex;
-    flex-direction: row;
-    margin-top: 25px;
-    margin-left: 10px;
-    gap: 450px;
-}
-
-.toggle {
-    align-items: center;
-    text-align: center;
-}
-
-.button {
-    display: flex;
-    flex-direction: row;
-    margin-top: 50px;
-    margin-left: 500px;
-    gap: 20px;
-}
-
-.btnEdit {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    padding: 8px 16px !important;
-    gap: 8px !important;
-    width: 258px !important;
-    height: 36px !important;
-    background: #5C5045 !important;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1) !important;
-}
-
-.btnEdit:hover {
-    background-color: #1f1b17 !important;
-}
-
-.btnHapus {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    padding: 8px 16px !important;
-    gap: 8px !important;
-    width: 258px !important;
-    height: 36px !important;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1) !important;
-}
+  
