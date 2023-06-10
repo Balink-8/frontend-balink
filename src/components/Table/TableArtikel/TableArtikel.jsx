@@ -54,10 +54,6 @@ const TableArtikel = ({ data }) => {
     navigate("/artikel/tambah");
   };
 
-  const handleDetailArticle = () => {
-    navigate("/artikel/detail");
-  };
-
   return (
     <div>
       <div className="d-flex justify-content-between">
@@ -92,10 +88,16 @@ const TableArtikel = ({ data }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
-                    <td className="p-3" onClick={() => handleDetailArticle()}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/artikel/detail/${item.id}`)}
+                    >
                       <img src={item.fotoArtikel} className={styles.image} />
                     </td>
-                    <td className="p-3" onClick={() => handleDetailArticle()}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/artikel/detail/${item.id}`)}
+                    >
                       {item.judulArtikel}
                     </td>
                     <td
@@ -106,7 +108,7 @@ const TableArtikel = ({ data }) => {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                       }}
-                      onClick={() => handleDetailArticle()}
+                      onClick={() => navigate(`/artikel/detail/${item.id}`)}
                     >
                       {item.deskripsiArtikel}
                     </td>
@@ -115,7 +117,7 @@ const TableArtikel = ({ data }) => {
                         src={Edit}
                         alt=""
                         className={`${styles.actionButton} me-16`}
-                        onClick={() => navigate(`/artikel/${item.id}`)}
+                        onClick={() => navigate(`/artikel/edit/${item.id}`)}
                       />
                       <img
                         src={Delete}
