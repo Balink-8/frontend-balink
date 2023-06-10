@@ -68,8 +68,8 @@ function App() {
               <Route path="/promo/detail/:id" element={<DetailPromo />} />
               <Route path="/artikel" element={<Artikel />} />
               <Route path="/artikel/tambah" element={<TambahArtikel />} />
-              <Route path="/artikel/:id" element={<EditArtikel />} />
-              <Route path="/artikel/detail" element={<DetailArtikel />} />
+              <Route path="/artikel/edit/:id" element={<EditArtikel />} />
+              <Route path="/artikel/detail/:id" element={<DetailArtikel />} />
               <Route path="/profile" element={<Profil />} />
               <Route path="/profile/edit" element={<EditProfil />} />
             </Route>
