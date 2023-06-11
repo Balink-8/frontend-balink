@@ -9,19 +9,22 @@ import Edit from "../../../assets/icons/edit_square.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
+import useApi from "../../../api/useApi";
 
 const TableProduk = ({ data }) => {
+  const { response: produk, loading, error, del } = useApi();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+  console.log("current items", currentItems)
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -78,7 +81,7 @@ const TableProduk = ({ data }) => {
                   >
                     Foto
                   </th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Judul</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
                   <th className={`p-3 ${styles.tableHeadRow}`}>Harga</th>
                   <th className={`p-3 ${styles.tableHeadRow}`}>Kategori</th>
                   <th
@@ -87,27 +90,33 @@ const TableProduk = ({ data }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item, index) => (
-                  <tr className={styles.tableRow} key={index}>
-                    <td className="p-3">
-                      <img src={Gambar} className={styles.image} />
+                {currentItems?.map((item) => (
+                  <tr className={styles.tableRow} key={item.id}>
+                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>
+                      <img src={item.fotoProduk} className={styles.image} />
                     </td>
-                    <td className="p-3">{item.judul}</td>
-                    <td className="p-3">{item.harga}</td>
-                    <td className="p-3">{item.kategori}</td>
+                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>{item.namaProduk}</td>
+                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>{item.hargaProduk}</td>
+                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>{item.kategoriProduk}</td>
                     <td className="p-3">
-                      <Link to={`/produk/edit`}>
+          
                         <img
                           src={Edit}
                           alt=""
                           className={`${styles.actionButton} pe-3`}
+                           onClick={() => navigate(`/produk/edit/${item.id}`)}
                         />
+                      
                         <img
                           src={Delete}
                           alt=""
                           className={styles.actionButton}
+                          onClick={() =>
+                          del(
+                            `https://64328e2b3e05ff8b3728907e.mockapi.io/products/products/${item.id}`
+                          )
+                        }
                         />
-                      </Link>
                     </td>
                   </tr>
                 ))}
