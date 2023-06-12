@@ -92,7 +92,16 @@ const TablePromo = ({ data }) => {
                 {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
                     <td className="p-3" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.NamaPromo}</td>
-                    <td className="p-3" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.DeskripsiPromo}</td>
+                    <td className="p-3"
+                      style={{
+                        maxWidth: "400px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                      onClick={() => navigate(`/promo/detail/${item.id}`)}>
+                        {item.DeskripsiPromo}
+                    </td>
                     <td className="p-3 body-medium-semibold" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.KodePromo}</td>
                     <td className="p-3" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.PotonganHarga}</td>
                     <td className="p-3">
