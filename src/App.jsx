@@ -51,8 +51,8 @@ function App() {
               <Route path="/produk/detail/:id" element={<DetailProduk />} />
               <Route path="/kategori" element={<Kategori />} />
               <Route path="/kategori/tambah" element={<TambahKategori />} />
-              <Route path="/kategori/edit" element={<EditKategori />} />
-              <Route path="/kategori/detail" element={<DetailKategori />} />
+              <Route path="/kategori/edit/:id" element={<EditKategori />} />
+              <Route path="/kategori/detail/:id" element={<DetailKategori />} />
               <Route path="/transaksi" element={<Transaksi />} />
               <Route
                 path="/transaksi/event/detail"
