@@ -6,18 +6,87 @@ import Gambar3 from "../../assets/assetsLandingPage/wisata.svg";
 import Cancel from "../../assets/icons/cancel.svg";
 import save from "../../assets/icons/save.svg";
 import Button from "../../elements/Button/Button";
-
-const data = {
-  judul: "Kaos Barong",
-  deskripsi: "Pakaian",
-  kategori: "Busana",
-  harga: "120000",
-  stok: "190"
-}
+import useApi from "../../api/useApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const EditProduk = () => {
+
+  const { response: produk, loading, error, get, put } = useApi();
+  const [values, setValues] = useState({
+    fotoProduk: "",
+    namaProduk: "",
+    deskripsiProduk: "",
+    kategoriProduk: "",
+    hargaProduk: "",
+    stokProduk: ""
+  });
+
+  const [file, setFile] = useState();
+  const navigate = useNavigate();
+  const { id } = useParams(); 
+
+  useEffect(() => {
+    get(
+      `https://64328e2b3e05ff8b3728907e.mockapi.io/products/products/${id}`
+    ).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (produk) {
+      setValues({
+        fotoProduk: produk.fotoProduk,
+        namaProduk: produk.namaProduk,
+        deskripsiProduk: produk.deskripsiProduk,
+        kategoriProduk: produk.kategoriProduk,
+        hargaProduk: produk.hargaProduk,
+        stokProduk: produk.stokProduk
+      });
+    }
+  }, [produk]);
+
+   const onSubmit = () => {
+    put(
+      `https://64328e2b3e05ff8b3728907e.mockapi.io/products/products/${id}`,
+      values
+    );
+    navigate(-1);
+    setFile("");
+  };
+
+  const onCancel = () => {
+    navigate(-1);
+  };
+
+  const handleOnChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const getFile = (e) => {
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
   return (
+    <div>
+      {
+        loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
     <form className={styles.wrapper}>
+      
       <div className={styles.produkBaru}>
         <h1 className="headline-small-semibold">Edit Produk</h1>
         <div className={styles.rowTambahProduk}>
@@ -47,7 +116,8 @@ const EditProduk = () => {
               <input
                 className={styles.boxFile}
                 id="boxFile"
-                type="file"     
+                type="file" 
+                onChange={getFile}    
               />
             </div>
           </div>
@@ -75,11 +145,12 @@ const EditProduk = () => {
             <div className={styles.parentInput}>
               <Input
                 type="text"
-                value={data.judul}
+                value={values.namaProduk}
                 name="namaProduk"
                 id="namaProduk"
                 className={`body-medium-regular ${styles.namaProduk}`}
                 label={"Nama Produk"}
+                onChange={handleOnChange}
               />
             </div>
           </div>
@@ -105,10 +176,10 @@ const EditProduk = () => {
               <Input
                 label={"Deskripsi Produk"}
                 type="text"
-                value={data.deskripsi}
+                value={values.deskripsiProduk}
                 name="deskripsiProduk"
                 id="deskripsiProduk"
-               
+                onChange={handleOnChange}              
                 className={`body-medium-regular ${styles.deskripsiProduk}`}
               />
             </div>
@@ -136,9 +207,10 @@ const EditProduk = () => {
                 type="select"
                 id="kategoriProduk"
                 name="kategoriProduk"  
-                value={data.kategori}
+                value={values.kategoriProduk}
                 className={styles.kategoriProduk}
                 label={"Kategori Produk"}
+                onChange={handleOnChange}
               >
                 <option defaultValue={null} hidden></option>
                 <option value="Alat Masak">Pakaian</option>
@@ -169,11 +241,12 @@ const EditProduk = () => {
             <div className={styles.parentInput}>
               <Input
                 type="text"
-                value={data.harga}
+                value={values.hargaProduk}
                 name="hargaProduk"
                 id="hargaProduk"
                 className={`body-medium-regular ${styles.hargaProduk}`}
                 label={"Harga Produk"}
+                onChange={handleOnChange}
               />
             </div>
           </div>
@@ -199,10 +272,10 @@ const EditProduk = () => {
               <Input
                 label={"Stok Produk"}
                 type="text"
-                value={data.stok}
-                name="stokProduk"
+                value={values.stokProduk}
+                name="stokProduk" 
                 id="stokProduk"
-                
+                onChange={handleOnChange}
                 className={`body-medium-regular ${styles.stokProduk}`}
               />
             </div>
@@ -211,13 +284,15 @@ const EditProduk = () => {
       </div>
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button label="Batal" color="white" icon={Cancel} />
+          <Button label="Batal" color="white" icon={Cancel} onClick={onCancel}/>
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} />
+          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit}/>
         </div>
       </div>
     </form>
+      )}
+  </div>
   );
 };
 export default EditProduk;

@@ -1,23 +1,34 @@
 import TableProduk from "../../components/Table/TableProduk/TableProduk"
-import Gambar from '../../assets/assetsLandingPage/bali.svg'
+import useApi from '../../api/useApi'
+import React, { useEffect } from "react";
 const Produk = () => {
-   const dataProduk = [
-    { foto:  <img src={Gambar}/>, judul: 'Kaos Barong', harga: '100000', kategori: 'Pakaian' },
-    { foto:  <img src={Gambar}/>, judul: 'Sarung Tenun', harga: '250000', kategori: 'Pakaian'},
-    { foto:  <img src={Gambar}/>, judul: 'Blankon', harga: '50000', kategori: 'Atasan'},
-    { foto:  <img src={Gambar}/>, judul: 'Selendang', harga: '150000', kategori: 'Pakaian Aksesoris'},
-    { foto:  <img src={Gambar}/>, judul: 'Gantungan', harga: '45000', kategori: 'Aksesoris'},
-    { foto:  <img src={Gambar}/>, judul: 'Celana Bali', harga: '79000', kategori: 'Pakaian'},
-    { foto:  <img src={Gambar}/>, judul: 'Peci', harga: '35000', kategori: 'Atasan'},
-    { foto:  <img src={Gambar}/>, judul: 'Kaos Batik', harga: '60000', kategori: 'Pakaian'},
-    { foto:  <img src={Gambar}/>, judul: 'Patunng Perhiasan', harga: '75000', kategori: 'Aksesoris'},
-    { foto:  <img src={Gambar}/>, judul: 'Cendi', harga: '55000', kategori: 'Perhiasan'},
-    { foto: 'tes', judul: 'tes', harga: '082121213434', kategori: 'Jl. Hidup Damai'},
-  
-  ];
+   const { response: produk, loading, error, get } = useApi();
+
+  useEffect(() => {
+    get("https://64328e2b3e05ff8b3728907e.mockapi.io/products/products").catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    ); 
+  }, []);
+
+  console.log(produk);
+  console.log(error); 
+  console.log(loading);
    return(
-      <TableProduk data={dataProduk}/>
-   )
-}
+     <div>
+      <div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <TableProduk data={produk} />
+        )}
+      </div>
+    </div>
+   ) ;
+};
 
 export default Produk

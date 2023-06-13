@@ -9,8 +9,11 @@ import save from "../../assets/icons/save.svg";
 import add from "../../assets/icons/add.svg";
 import { Switch } from "antd";
 import Button from "../../elements/Button/Button";
+import useApi from "../../api/useApi";
+import { useNavigate } from "react-router";
 
 const TambahEvent = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     fotoEvent: "",
     judulEvent: "",
@@ -32,6 +35,8 @@ const TambahEvent = () => {
     hargaEvent: false,
     jumlahEvent: false,
   });
+
+  const { response: event, loading, error, post } = useApi();
 
   const [toggle, setToggle] = useState(false);
   const [file, setFile] = useState();
@@ -80,6 +85,15 @@ const TambahEvent = () => {
 
       setFile("");
       console.log(values);
+    }
+
+    if (!Object.values(newErrors).some((error) => error)) {
+      post(
+        "https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event",
+        values
+      );
+      navigate(-1);
+      setFile("");
     }
   };
 

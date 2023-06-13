@@ -43,16 +43,16 @@ function App() {
               <Route path="/akun" element={<Akun />} />
               <Route path="/event" element={<Event />} />
               <Route path="/event/tambah" element={<TambahEvent />} />
-              <Route path="/event/edit" element={<EditEvent />} />
-              <Route path="/event/detail" element={<DetailEvent />} />
+              <Route path="/event/edit/:id" element={<EditEvent />} />
+              <Route path="/event/detail/:id" element={<DetailEvent />} />
               <Route path="/produk" element={<Produk />} />
               <Route path="/produk/tambah" element={<TambahProduk />} />
-              <Route path="/produk/edit" element={<EditProduk />} />
-              <Route path="/produk/detail" element={<DetailProduk />} />
+              <Route path="/produk/edit/:id" element={<EditProduk />} />
+              <Route path="/produk/detail/:id" element={<DetailProduk />} />
               <Route path="/kategori" element={<Kategori />} />
               <Route path="/kategori/tambah" element={<TambahKategori />} />
-              <Route path="/kategori/edit" element={<EditKategori />} />
-              <Route path="/kategori/detail" element={<DetailKategori />} />
+              <Route path="/kategori/edit/:id" element={<EditKategori />} />
+              <Route path="/kategori/detail/:id" element={<DetailKategori />} />
               <Route path="/transaksi" element={<Transaksi />} />
               <Route
                 path="/transaksi/event/detail"
@@ -64,12 +64,12 @@ function App() {
               />
               <Route path="/promo" element={<Promo />} />
               <Route path="/promo/tambah" element={<TambahPromo />} />
-              <Route path="/promo/edit" element={<EditPromo />} />
-              <Route path="/promo/detail" element={<DetailPromo />} />
+              <Route path="/promo/:id" element={<EditPromo />} />
+              <Route path="/promo/detail/:id" element={<DetailPromo />} />
               <Route path="/artikel" element={<Artikel />} />
               <Route path="/artikel/tambah" element={<TambahArtikel />} />
-              <Route path="/artikel/:id" element={<EditArtikel />} />
-              <Route path="/artikel/detail" element={<DetailArtikel />} />
+              <Route path="/artikel/edit/:id" element={<EditArtikel />} />
+              <Route path="/artikel/detail/:id" element={<DetailArtikel />} />
               <Route path="/profile" element={<Profil />} />
               <Route path="/profile/edit" element={<EditProfil />} />
             </Route>

@@ -5,21 +5,26 @@ import Textarea from "../../elements/Textarea/Textarea";
 import Button from "../../elements/Button/Button";
 import restart from "../../assets/icons/restart_alt.svg";
 import save from "../../assets/icons/save.svg";
+import useApi from "../../api/useApi";
+import { useNavigate } from "react-router-dom";
 
 const TambahPromo = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
-    namaPromo: "",
-    deskripsiPromo: "",
-    kodePromo: "",
-    potonganHarga: "",
+    NamaPromo: "",
+    DeskripsiPromo: "",
+    KodePromo: "",
+    PotonganHarga: "",
   });
 
   const [errors, setErrors] = useState({
-    namaPromo: false,
-    deskripsiPromo: false,
-    kodePromo: false,
-    potonganHarga: false,
+    NamaPromo: false,
+    DeskripsiPromo: false,
+    KodePromo: false,
+    PotonganHarga: false,
   });
+
+  const { response: promo, loading, error, post } = useApi();
 
   const onSubmit = () => {
     const newErrors = {};
@@ -34,22 +39,20 @@ const TambahPromo = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      setValues({
-        namaPromo: "",
-        deskripsiPromo: "",
-        kodePromo: "",
-        potonganHarga: "",
-      });
-
-      console.log(values);
+      post(
+        "https://648179fd29fa1c5c503172c3.mockapi.io/promo",
+        values
+      );
+      console.log(values)
+      navigate(-1);
     }
   };
   const onReset = (e) => {
     setValues({
-      namaPromo: "",
-      deskripsiPromo: "",
-      kodePromo: "",
-      potonganHarga: "",
+      NamaPromo: "",
+      DeskripsiPromo: "",
+      KodePromo: "",
+      PotonganHarga: "",
     });
   };
 
@@ -99,10 +102,10 @@ const TambahPromo = () => {
               id={"addNamaPromo"}
               label={"Nama Promo"}
               placeholder={"Masukkan Nama Promo"}
-              name={"namaPromo"}
-              value={values.namaPromo}
+              name={"NamaPromo"}
+              value={values.NamaPromo}
               onChange={handleOnChange}
-              error={errors.namaPromo}
+              error={errors.NamaPromo}
             />
             <br />
           </div>
@@ -129,18 +132,18 @@ const TambahPromo = () => {
               required={"required"}
               placeholder={"Masukkan Deskripsi Promo"}
               className={
-                errors.deskripsiPromo
+                errors.DeskripsiPromo
                   ? `${styles.errorInput} ${styles.textArea}`
                   : styles.textArea
               }
               id={"addDeskripsiPromo"}
-              name={"deskripsiPromo"}
-              value={values.deskripsiPromo}
+              name={"DeskripsiPromo"}
+              value={values.DeskripsiPromo}
               onChange={handleOnChange}
             />
             <label
               className={
-                errors.deskripsiPromo
+                errors.DeskripsiPromo
                   ? `${styles.errorTitle} ${styles.inputTitle}`
                   : styles.inputTitle
               }
@@ -171,10 +174,10 @@ const TambahPromo = () => {
               id={"addKodePromo"}
               label={"Kode Promo"}
               placeholder={"Masukkan Kode Promo"}
-              name={"kodePromo"}
-              value={values.kodePromo}
+              name={"KodePromo"}
+              value={values.KodePromo}
               onChange={handleOnChange}
-              error={errors.kodePromo}
+              error={errors.KodePromo}
             />
             <br />
           </div>
@@ -203,10 +206,10 @@ const TambahPromo = () => {
               id={"addPotonganHarga"}
               label={"Potongan Harga"}
               placeholder={"Rp. 0"}
-              name={"potonganHarga"}
-              value={values.potonganHarga}
+              name={"PotonganHarga"}
+              value={values.PotonganHarga}
               onChange={handleOnChange}
-              error={errors.potonganHarga}
+              error={errors.PotonganHarga}
             />
             <br />
           </div>
