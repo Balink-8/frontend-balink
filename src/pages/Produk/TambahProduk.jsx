@@ -1,64 +1,111 @@
 import styles from "./TambahProduk.module.css";
+import Gunung from "../../assets/icons/plain-triangle.png"
 import Input from "../../elements/Input/Input";
-import Gambar1 from "../../assets/assetsLandingPage/wisata.svg";
-import Gambar2 from "../../assets/assetsLandingPage/wisata.svg";
-import Gambar3 from "../../assets/assetsLandingPage/wisata.svg";
 import Undo from "../../assets/icons/undo.png";
 import save from "../../assets/icons/save.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Button from "../../elements/Button/Button";
+import useApi from "../../api/useApi";
 
 const TambahProduk = () => {
-  const [url, setUrl] = useState("");
-  const [namaProduk, setNamaProduk] = useState("");
-  const [deskripsiProduk, setDeskripsiProduk] = useState("");
-  const [kategoriProduk, setKategoriProduk] = useState("");
-  const [harga, setHarga] = useState(50000);
-  const [stok, setStok] = useState("");
+   const navigate = useNavigate();
+   const [file, setFile] = useState();
 
-  const navigate = useNavigate();
+  const [values, setValues] = useState({
+    fotoProduk: "",
+    namaProduk: "",
+    deskripsiProduk: "",
+    kategoriProduk: "",
+    hargaProduk: "",
+    stokProduk: "",
+  });
+  const [errors, setErrors] = useState({
+    fotoProduk: false,
+    namaProduk: false,
+    deskripsiProduk: false,
+    kategoriProduk: false,
+    hargaProduk: false,
+    stokProduk: false
+  });
 
-  const handleChangeUrl = (e) => {
-    setUrl(e.target.value);
+  const { response: produk, loading, error, post } = useApi();
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    const newErrors = {};
+
+
+    Object.keys(values).forEach((key) => {
+      if (values[key].trim() === "") {
+        newErrors[key] = true;
+      } else {
+        newErrors[key] = false;
+      }
+    }); 
+
+    setErrors(newErrors);
+
+     console.log(newErrors)
+    if (!Object.values(newErrors).some((error) => error)) {
+      console.log(values)
+      post(
+        "https://64328e2b3e05ff8b3728907e.mockapi.io/products/products",
+        values
+      );
+      navigate(-1);
+      setFile("");
+      
+    }
   };
 
-  const handleChangeNama = (e) => {
-    setNamaProduk(e.target.value);
+
+
+ const onReset = () => {
+    setValues({
+    fotoProduk: "",
+    namaProduk: "",
+    deskripsiProduk: "",
+    kategoriProduk: "",
+    hargaProduk: "",
+    stokProduk: ""
+    });
+    setFile("");
   };
 
-  const handleDeskripsiProduk = (e) => {
-    setDeskripsiProduk(e.target.value);
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+
+    if (value.trim() === "") {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: true,
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: false,
+      }));
+    }
   };
 
-  const handleKategoriProduk = (e) => {
-    setKategoriProduk(e.target.value);
+
+  const getFile = (e) => {
+    console.log("random")
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
   };
-  const handleStok = (e) => {
-    setStok(e.target.value);
-  };
 
-  // const handleHarga = (e) => {
-  //   setHarga(e.target.value)
-  // }
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    alert("cek");
-
-    const variables = {
-      image: url,
-      nama_produk: namaProduk,
-      deskripsi_produk: deskripsiProduk,
-      kategori_produk: kategoriProduk,
-      harga: harga,
-      stok: stok,
-      id: Math.random().toString(),
-    };
-  };
   return (
-    <form className={styles.wrapper} onSubmit={submitHandler}>
+    <form className={styles.wrapper} onSubmit={onSubmit}>
       <div className={styles.produkBaru}>
         <h1 className="headline-small-semibold">Buat Produk Baru</h1>
         <div className={styles.rowTambahProduk}>
@@ -72,14 +119,24 @@ const TambahProduk = () => {
           </div>
           <div className={styles.sideGambar}>
             <div className={styles.boxImage}>
-              <img src={Gambar1} className={styles.imageProduk} />
+              <img src={file} className={styles.imageProduk} />
+              <div className={styles.gunung}>
+                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
+              </div>
             </div>
             <div className={styles.boxImage}>
-              <img src={Gambar2} className={styles.imageProduk} />
+              <img src={file} className={styles.imageProduk} />
+              <div className={styles.gunung}>
+                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
+              </div>
             </div>
             <div className={styles.boxImage}>
-              <img src={Gambar3} className={styles.imageProduk} />
+              <img src={file} className={styles.imageProduk} />
+              <div className={styles.gunung}>
+                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
+              </div>
             </div>
+
             <div className={styles.parentBoxFile}>
               <label htmlFor="boxFile" className={styles.AddBoxImage}>
                 {" "}
@@ -89,7 +146,9 @@ const TambahProduk = () => {
                 className={styles.boxFile}
                 id="boxFile"
                 type="file"
-                onChange={handleChangeUrl}
+                name={"fotoProduk"}
+                value={values.fotoProduk}
+                onChange={getFile}
               />
             </div>
           </div>
@@ -120,9 +179,11 @@ const TambahProduk = () => {
                 placeholder="Masukan nama produk"
                 name="namaProduk"
                 id="namaProduk"
-                onChange={handleChangeNama}
+                onChange={handleOnChange}
                 className={`body-medium-regular ${styles.namaProduk}`}
                 label={"Nama Produk"}
+                error={errors.namaProduk}
+                value={values.namaProduk}
               />
             </div>
           </div>
@@ -149,10 +210,12 @@ const TambahProduk = () => {
                 label={"Deskripsi Produk"}
                 type="text"
                 placeholder="Masukan Deskripsi produk"
+                value={values.deskripsiProduk}
                 name="deskripsiProduk"
                 id="deskripsiProduk"
-                onChange={handleDeskripsiProduk}
+                onChange={handleOnChange}
                 className={`body-medium-regular ${styles.deskripsiProduk}`}
+                error={errors.deskripsiProduk}
               />
             </div>
           </div>
@@ -179,17 +242,20 @@ const TambahProduk = () => {
                 type="select"
                 id="kategoriProduk"
                 name="kategoriProduk"
-                onChange={handleKategoriProduk}
+                value={values.kategoriProduk}
+                onChange={handleOnChange}
                 placeholder="masukan kategori produk"
-                className={styles.kategoriProduk}
-                label={"Kategori Produk"}
+                className={`${styles.kategoriProduk}`}
               >
                 <option defaultValue={null} hidden></option>
-                <option value="Alat Masak">Pakaian</option>
-                <option value="Alat Mandi">Perhiasan</option>
-                <option value="Sport">Kerajinan Tangan</option>
-                <option value="Souvenir">Aksesoris</option>
+                <option value="Pakaian">Pakaian</option>
+                <option value="Perhiasan">Perhiasan</option>
+                <option value="Kerajinan Tangan">Kerajinan Tangan</option>
+                <option value="Aksesori">Aksesoris</option>
               </select>
+              <div className={styles.kategori}>
+                <span style={{fontSize: "11px"}}>Kategori Produk</span>
+              </div>
             </div>
           </div>
         </div>
@@ -212,12 +278,15 @@ const TambahProduk = () => {
           <div className={styles.sideRight}>
             <div className={styles.parentInput}>
               <Input
-                type="text"
+                type="number"
                 placeholder="Rp. 120000"
                 name="hargaProduk"
                 id="hargaProduk"
+                value={values.hargaProduk}
                 className={`body-medium-regular ${styles.hargaProduk}`}
                 label={"Harga Produk"}
+                onChange={handleOnChange}
+                error={errors.hargaProduk}
               />
             </div>
           </div>
@@ -242,12 +311,14 @@ const TambahProduk = () => {
             <div className={styles.parentInput}>
               <Input
                 label={"Stok Produk"}
-                type="text"
+                type="number"
                 placeholder="190"
                 name="stokProduk"
                 id="stokProduk"
-                onChange={handleStok}
+                value={values.stokProduk}
+                onChange={handleOnChange}
                 className={`body-medium-regular ${styles.stokProduk}`}
+                error={errors.stokProduk}
               />
             </div>
           </div>
@@ -255,10 +326,10 @@ const TambahProduk = () => {
       </div>
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button label="Reset" color="white" icon={Undo} />
+          <Button label="Reset" color="white" icon={Undo} onClick={onReset}/>
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} />
+          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit}/>
         </div>
       </div>
     </form>

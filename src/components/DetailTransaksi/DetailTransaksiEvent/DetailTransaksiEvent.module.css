@@ -1,25 +1,24 @@
-
-.row{
-    background-color: var(--off-white);
-    border-radius: 8px;
+.row {
+  background-color: var(--off-white);
+  border-radius: 8px;
 }
 
-.textJasMie77{
-    color: var(--dark);
+.textJasMie77 {
+  color: var(--dark);
 }
 
 .container {
-    background-color: var(--white);
+  background-color: var(--white);
 }
 
 .thead {
-    box-sizing: border-box;
-    background-color: var(--brown-light);
-    color: var(--dark-black);
+  box-sizing: border-box;
+  background-color: var(--brown-light) !important;
+  color: var(--dark-black);
 }
-  
+
 .tbody {
-    background-color: var(--white);
+  background-color: var(--white);
 }
 
 .tableRow:hover {
@@ -29,16 +28,15 @@
 
 .roundedLeftTop {
   border-top-left-radius: 16px;
- 
 }
 
-.roundedRightBot{
+.roundedRightBot {
   border-bottom-right-radius: 16px;
 }
 
-.roundedLeftBot{
+.roundedLeftBot {
   border-bottom-left-radius: 16px;
- }
+}
 
 .roundedRightTop {
   border-top-right-radius: 16px;
@@ -46,34 +44,35 @@
 
 .tableHeadRow {
   border-bottom-color: transparent !important;
- 
+  background-color: var(--brown-light) !important;
 }
 
-.success{
-  color: var(--green-dark);
- }
+.tableHeadRowBody {
+  border-bottom-color: transparent !important;
+}
 
- .order{
-   color: var(--orange-dark);
- }
+.success {
+  color: var(--green-dark) !important;
+}
 
- .cancel{
-   color: var(--red-dark);
- }
+.order {
+  color: var(--orange-dark) !important;
+}
 
- .tableRow2{
-  background-color: var(--brown-light);
- }
+.cancel {
+  color: var(--red-dark) !important;
+}
 
+.tableRow2 {
+  background-color: var(--brown-light) !important;
+}
 
- .tablestatus{
+.tablestatus {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px
- }
+  border-radius: 8px;
+}
 
- .rowtransaksi{
-  background-color: var(--brown-light);
-  border-radius: 8px ; 
- }
-
-
+.rowtransaksi {
+  background-color: var(--brown-light) !important;
+  border-radius: 8px;
+}

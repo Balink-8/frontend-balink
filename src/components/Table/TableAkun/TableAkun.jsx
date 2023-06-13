@@ -4,22 +4,18 @@ import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import styles from "./TableAkun.module.css";
 import demography from "../../../assets/icons/demography.svg";
 import ModalAkun from "../../Modal/ModalAkun/ModalAkun";
-import { ModalAkunContext } from "../../../context/ModalAkunContext";
-import { ModalContext } from "../../../context/ModalContext";
-import TableSearch from "../../../elements/TableSearch/TableSearch";
-import ModalKonfirmasi from "../../Modal/ModalKonfirmasi/ModalKonfirmasi";
 import ModalTerhapus from "../../Modal/ModalTerhapus/ModalTerhapus";
+import TableSearch from "../../../elements/TableSearch/TableSearch";
+import { ModalAkunContext } from "../../../context/ModalAkunContext";
+import { ModalTempContext } from "../../../context/ModalTempContext";
+import EmptyTable from "../../EmptyTable/EmptyTable";
 
 const TableAkun = ({ userData }) => {
   const { openModalAkun, showModalAkun, modalId } =
     useContext(ModalAkunContext);
-  const {
-    showModal,
-    closeModal,
-    openModalTemp,
-    closeModalTemp,
-    showModalTemp,
-  } = useContext(ModalContext);
+
+  const { showModalTemp } = useContext(ModalTempContext);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -83,17 +79,17 @@ const TableAkun = ({ userData }) => {
               </thead>
               <tbody className={styles.tbody} id="tbody">
                 {currentItems?.map((item) => (
-                  <tr className={styles.tableRow} key={item.id}>
-                    <td className="p-3">{item.username}</td>
-                    <td className="p-3">{item.pengguna}</td>
-                    <td className="p-3">{item.telephone}</td>
+                  <tr className={styles.tableRow} key={item.ID}>
+                    <td className="p-3">{item.email}</td>
+                    <td className="p-3">{item.nama}</td>
+                    <td className="p-3">{item.no_telepon}</td>
                     <td className="p-3">{item.alamat}</td>
                     <td className="p-3">
                       <img
                         src={demography}
                         alt=""
                         className={styles.actionButton}
-                        onClick={() => openModalAkun(item.id)}
+                        onClick={() => openModalAkun(item.ID)}
                       />
                     </td>
                   </tr>
@@ -158,7 +154,6 @@ const TableAkun = ({ userData }) => {
         </div>
       </div>
       {showModalAkun && <ModalAkun id={modalId} />}
-      {showModal && <ModalKonfirmasi />}
       {showModalTemp && <ModalTerhapus />}
     </div>
   );

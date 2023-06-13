@@ -1,77 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TableArtikel from "../../components/Table/TableArtikel/TableArtikel";
-import TariKecak from "../../assets/images/tari-kecak.png";
+import useApi from "../../api/useApi";
+import Spinner from "../../components/Spinner/Spinner";
+import EmptyTable from "../../components/EmptyTable/EmptyTable";
 
 const Artikel = () => {
-  const userData = [
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-    {
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      keterangan:
-        "Tari Kecak merupakan tari tradisional drama tari khas dari Bali. Tarian ini menggambarkan cerita pewayangan, khususnya Ramayanan yang disajikan dengan seni gerak dan tarian. Tari Kecak menjadi salah satu kesenian tradisional yang masih terkenal hingga saat ini.",
-    },
-  ];
-  return <TableArtikel data={userData} />;
+  const { response: artikel, loading, error, get } = useApi();
+
+  useEffect(() => {
+    get("/artikel").catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, []);
+
+  console.log(artikel?.data?.data);
+  console.log(error);
+  console.log(loading);
+
+  return (
+    <div>
+      <div>
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : artikel?.data?.data?.length === 0 ? (
+          <EmptyTable />
+        ) : (
+          <TableArtikel data={artikel} />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Artikel;

@@ -29,57 +29,75 @@ import EditArtikel from "./pages/Artikel/EditArtikel";
 import DetailArtikel from "./pages/Artikel/DetailArtikel";
 import Profil from "./pages/Profil/Profil";
 import EditProfil from "./pages/Profil/EditProfil";
+import PrivateRoute from "./pages/PrivateRoute";
 import { ModalAkunContextProvider } from "./context/ModalAkunContext";
-import { ModalContextProvider } from "./context/ModalContext";
+import { ModalConfirmationContextProvider } from "./context/ModalConfirmationContext";
 import { ModalLogoutContextProvider } from "./context/ModalLogoutContext";
+import { ModalTempContextProvider } from "./context/ModalTempContext";
 
 function App() {
   return (
     <BrowserRouter>
       <ModalAkunContextProvider>
-        <ModalContextProvider>
+        <ModalConfirmationContextProvider>
           <ModalLogoutContextProvider>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/akun" element={<Akun />} />
-                <Route path="/event/detail" element={<DetailEvent />} />
-                <Route path="/event" element={<Event />} />
-                <Route path="/event/tambah" element={<TambahEvent />} />
-                <Route path="/event/edit" element={<EditEvent />} />
-                <Route path="/produk" element={<Produk />} />
-                <Route path="/produk/tambah" element={<TambahProduk />} />
-                <Route path="/produk/edit" element={<EditProduk />} />
-                <Route path="/produk/detail" element={<DetailProduk />} />
-                <Route path="/kategori" element={<Kategori />} />
-                <Route path="/kategori/tambah" element={<TambahKategori />} />
-                <Route path="/kategori/detail" element={<DetailKategori />} />
-                <Route path="/kategori/edit" element={<EditKategori />} />
-                <Route path="/transaksi" element={<Transaksi />} />
-                <Route
-                  path="/transaksi/event/detail"
-                  element={<DetailEventTransaksi />}
-                />
-                <Route
-                  path="/transaksi/produk/detail"
-                  element={<DetailProdukTransaksi />}
-                />
-                <Route path="/promo" element={<Promo />} />
-                <Route path="/promo/tambah" element={<TambahPromo />} />
-                <Route path="/promo/detail" element={<DetailPromo />} />
-                <Route path="/promo/edit" element={<EditPromo />} />
-                <Route path="/artikel" element={<Artikel />} />
-                <Route path="/artikel/tambah" element={<TambahArtikel />} />
-                <Route path="/artikel/detail" element={<DetailArtikel />} />
-                <Route path="/artikel/edit" element={<EditArtikel />} />
-                <Route path="/profile" element={<Profil />} />
-                <Route path="/profile/edit" element={<EditProfil />} />
-              </Route>
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<LandingPage />} />
-            </Routes>
+            <ModalTempContextProvider>
+              <Routes>
+                <Route element={<PrivateRoute />}>
+                  <Route element={<Layout />}>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/akun" element={<Akun />} />
+                    <Route path="/event" element={<Event />} />
+                    <Route path="/event/tambah" element={<TambahEvent />} />
+                    <Route path="/event/edit/:id" element={<EditEvent />} />
+                    <Route path="/event/detail/:id" element={<DetailEvent />} />
+                    <Route path="/produk" element={<Produk />} />
+                    <Route path="/produk/tambah" element={<TambahProduk />} />
+                    <Route path="/produk/edit/:id" element={<EditProduk />} />
+                    <Route
+                      path="/produk/detail/:id"
+                      element={<DetailProduk />}
+                    />
+                    <Route path="/kategori" element={<Kategori />} />
+                    <Route
+                      path="/kategori/tambah"
+                      element={<TambahKategori />}
+                    />
+                    <Route path="/kategori/edit" element={<EditKategori />} />
+                    <Route
+                      path="/kategori/detail"
+                      element={<DetailKategori />}
+                    />
+                    <Route path="/transaksi" element={<Transaksi />} />
+                    <Route
+                      path="/transaksi/event/detail"
+                      element={<DetailEventTransaksi />}
+                    />
+                    <Route
+                      path="/transaksi/produk/detail"
+                      element={<DetailProdukTransaksi />}
+                    />
+                    <Route path="/promo" element={<Promo />} />
+                    <Route path="/promo/tambah" element={<TambahPromo />} />
+                    <Route path="/promo/:id" element={<EditPromo />} />
+                    <Route path="/promo/detail/:id" element={<DetailPromo />} />
+                    <Route path="/artikel" element={<Artikel />} />
+                    <Route path="/artikel/tambah" element={<TambahArtikel />} />
+                    <Route path="/artikel/edit/:id" element={<EditArtikel />} />
+                    <Route
+                      path="/artikel/detail/:id"
+                      element={<DetailArtikel />}
+                    />
+                    <Route path="/profile" element={<Profil />} />
+                    <Route path="/profile/edit" element={<EditProfil />} />
+                  </Route>
+                </Route>
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<LandingPage />} />
+              </Routes>
+            </ModalTempContextProvider>
           </ModalLogoutContextProvider>
-        </ModalContextProvider>
+        </ModalConfirmationContextProvider>
       </ModalAkunContextProvider>
     </BrowserRouter>
   );

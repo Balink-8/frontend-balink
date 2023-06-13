@@ -12,7 +12,7 @@ const useApi = () => {
     try {
       const config = {
         method: method,
-        url: url,
+        url: `http://167.172.66.247:8002${url}`,
         data: data,
       };
 
@@ -20,7 +20,7 @@ const useApi = () => {
       setResponse(result.data);
       setError(null);
     } catch (error) {
-      setError(error.response.data);
+      setError(error);
       setResponse(null);
     } finally {
       setLoading(false);

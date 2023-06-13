@@ -12,8 +12,8 @@
 
 .thead {
   box-sizing: border-box;
-  background-color: var(--brown-light);
-  color: var(--dark-black);
+  background-color: var(--brown-light) !important;
+  color: var(--dark-black) !important;
 }
 
 .tbody {
@@ -85,6 +85,7 @@
 .tableRow:hover {
   background-color: #fffcf8;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .actionButton {
@@ -111,6 +112,7 @@
 
 .tableHeadRow {
   border-bottom-color: transparent !important;
+  background-color: var(--brown-light) !important;
 }
 
 .addEvent {
@@ -123,4 +125,9 @@
   height: 40px !important;
   background: #5c5045 !important;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.image {
+  width: 60px;
+  border-radius: 5px;
 }

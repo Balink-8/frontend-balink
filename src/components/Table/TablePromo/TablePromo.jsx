@@ -1,26 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import styles from "./TablePromo.module.css";
 import edit from "../../../assets/icons/edit.svg";
-import del from "../../../assets/icons/deleteRed.svg";
+import hapus from "../../../assets/icons/deleteRed.svg";
 import { Link, useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import add from "../../../assets/icons/add.svg";
+import useApi from "../../../api/useApi";
 
-const TablePromo = ({ userData }) => {
+const TablePromo = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const { response: promo, loading, error, del } = useApi();
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(userData.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = userData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -87,23 +89,38 @@ const TablePromo = ({ userData }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item, index) => (
-                  <tr className={styles.tableRow} key={index}>
-                    <td className="p-3">{item.nama}</td>
-                    <td className="p-3">{item.desc}</td>
-                    <td className="p-3 body-medium-semibold">{item.kode}</td>
-                    <td className="p-3">{item.disc}</td>
+                {currentItems?.map((item) => (
+                  <tr className={styles.tableRow} key={item.id}>
+                    <td className="p-3" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.NamaPromo}</td>
+                    <td className="p-3"
+                      style={{
+                        maxWidth: "400px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                      onClick={() => navigate(`/promo/detail/${item.id}`)}>
+                        {item.DeskripsiPromo}
+                    </td>
+                    <td className="p-3 body-medium-semibold" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.KodePromo}</td>
+                    <td className="p-3" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.PotonganHarga}</td>
                     <td className="p-3">
-                      <Link to={`/promo/detail`}>
-                        <img
-                          src={edit}
-                          alt=""
-                          className={styles.actionButton}
-                        />
-                      </Link>
-                      <Link to={`/promo/${item.nama}`}>
-                        <img src={del} alt="" className={styles.actionButton} />
-                      </Link>
+                      <img
+                        src={edit}
+                        alt=""
+                        className={styles.actionButton}
+                        onClick={() => navigate(`/promo/${item.id}`)}
+                      />
+                      <img 
+                        src={hapus} 
+                        alt="" 
+                        className={styles.actionButton} 
+                        onClick={() =>
+                          del(
+                            `https://648179fd29fa1c5c503172c3.mockapi.io/promo/${item.id}`
+                          )
+                        }
+                      />
                     </td>
                   </tr>
                 ))}

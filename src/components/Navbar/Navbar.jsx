@@ -31,17 +31,25 @@ const Navbar = () => {
     }
   };
   return (
-    <nav className={`${styles.navbar} navbar`} id="navbar">
-      <div className="container-fluid">
-        <a className="navbar-brand headline-small-semibold">
+    <nav id="navbar" className={`${styles.navbar} fixed-top offset-2`}>
+      <div className="d-flex align-items-center justify-content-between">
+        <a
+          id="navbarBrand"
+          className={`${styles.navbarBrand} headline-small-semibold`}
+        >
           {setTitle(pathname)}
         </a>
-        <div className="user">
-          <a href="">
-            <img src={notification} alt="notification-icon" className="me-16" />
+        <div id="userContainer">
+          <a id="notificationLink" href="">
+            <img
+              id="notificationIcon"
+              src={notification}
+              alt="notification-icon"
+              className="me-16"
+            />
           </a>
-          <a href="">
-            <img src={avatar} alt="avatar-img" />
+          <a id="avatarLink" href="">
+            <img id="avatarImage" src={avatar} alt="avatar-img" />
           </a>
         </div>
       </div>

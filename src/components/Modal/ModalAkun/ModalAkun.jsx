@@ -1,42 +1,57 @@
 import React, { useContext, useState, useEffect } from "react";
 import styles from "./ModalAkun.module.css";
 import { ModalAkunContext } from "../../../context/ModalAkunContext";
-import { ModalContext } from "../../../context/ModalContext";
+import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
 import Button from "../../../elements/Button/Button";
 import deleteIcon from "../../../assets/icons/delete.svg";
 import Input from "../../../elements/Input/Input";
 import iconVisibility from "../../../assets/icons/visibility_off.svg";
 import useApi from "../../../api/useApi";
 import close from "../../../assets/icons/close_black.svg";
+import ModalKonfirmasi from "../ModalKonfirmasi/ModalKonfirmasi";
+import Spinner from "../../Spinner/Spinner";
 
 const ModalAkun = ({ id }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { closeModalAkun } = useContext(ModalAkunContext);
-  const { openModal } = useContext(ModalContext);
+  const { showModalConfirmation, openModalConfirmation } = useContext(
+    ModalConfirmationContext
+  );
   const { response, error, loading, get } = useApi();
-  console.log(response);
-  console.log(error);
-  console.log(loading);
-  console.log(id);
+  const {
+    response: delResponse,
+    error: delError,
+    loading: delLoading,
+    del,
+  } = useApi();
 
   useEffect(() => {
-    get(`https://647ca813c0bae2880ad10a5f.mockapi.io/balink/user/${id}`).catch(
-      (error) => {
-        // Handle error
-        console.error(error);
-      }
-    );
-  }, []);
+    get(`/user/${id}`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, [id]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const deleteAkun = () => {
+    del(`/user/${id}`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  };
+
+  console.error(error);
+  console.error(response?.data?.data?.nama);
+  console.error(loading);
+
   return (
-    <div className={styles.modalContainer}>
-      <div className={styles.modalContent}>
+    <div id="modalAkunContainer" className={styles.modalContainer}>
+      <div id="modalAkunContent" className={styles.modalContent}>
         {loading ? (
-          <p>Loading...</p>
+          <Spinner />
         ) : error ? (
           <p>Error: {error}</p>
         ) : (
@@ -54,13 +69,14 @@ const ModalAkun = ({ id }) => {
                 onClick={() => closeModalAkun()}
               />
             </div>
-            <div className={styles.inputGroup}>
+
+            <div id="inputGroup1" className={styles.inputGroup}>
               <Input
                 label="Nama Lengkap"
                 type="text"
                 id="fullName"
                 name="fullName"
-                value={response?.pengguna}
+                value={response?.data?.data?.nama}
                 readOnly
               />
               <Input
@@ -72,7 +88,7 @@ const ModalAkun = ({ id }) => {
                 readOnly
               />
             </div>
-            <div className={styles.inputGroup}>
+            <div id="inputGroup2" className={styles.inputGroup}>
               <Input
                 label="Username"
                 type="text"
@@ -90,7 +106,7 @@ const ModalAkun = ({ id }) => {
                 readOnly
               />
             </div>
-            <div className={styles.inputGroup}>
+            <div id="inputGroup3" className={styles.inputGroup}>
               <Input
                 label="Password"
                 type={showPassword ? "text" : "password"}
@@ -113,11 +129,13 @@ const ModalAkun = ({ id }) => {
             </div>
 
             <Button
+              id="hapusButton"
               label="Hapus"
-              onClick={() => openModal()}
+              onClick={() => openModalConfirmation()}
               color="white"
               icon={deleteIcon}
             />
+            {showModalConfirmation && <ModalKonfirmasi onClick={deleteAkun} />}
           </div>
         )}
       </div>

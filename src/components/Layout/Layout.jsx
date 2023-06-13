@@ -1,5 +1,6 @@
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
+import styles from "./Layout.module.css";
 import { Outlet } from "react-router";
 
 const Layout = () => {
@@ -10,7 +11,7 @@ const Layout = () => {
       </div>
       <div className="col-10">
         <Navbar />
-        <div className="m-32">
+        <div className={styles.mainContent}>
           <Outlet />
         </div>
       </div>

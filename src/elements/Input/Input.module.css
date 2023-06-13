@@ -14,6 +14,14 @@
   border: 1px solid #9d968f;
 }
 
+.input:focus {
+  outline: none;
+}
+
+.error {
+  border: 1px solid var(--red-dark);
+}
+
 .inputTitle {
   position: absolute;
   top: -7px;
@@ -22,6 +30,10 @@
   font-size: 11px;
   background: var(--white);
   z-index: 1;
+}
+
+.errorTitle {
+  color: var(--red-dark);
 }
 
 .iconButton {

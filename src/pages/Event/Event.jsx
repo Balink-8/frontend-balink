@@ -1,88 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TableEvent from "../../components/Table/TableEvent/TableEvent";
-import TariKecak from "../../assets/images/tari-kecak.png";
+import useApi from "../../api/useApi";
+import Spinner from "../../components/Spinner/Spinner";
+import EmptyTable from "../../components/EmptyTable/EmptyTable";
 
 const Event = () => {
-  const userData = [
-    {
-      id: "1",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "2",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "3",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "4",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "5",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "6",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "7",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "8",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "9",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "10",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-    {
-      id: "11",
-      foto: TariKecak,
-      nama: "Tari Kecak",
-      deskripsi: "Tari kecak merupakan tari...",
-      tanggal: "6 April 2023",
-    },
-  ];
-  return <TableEvent userData={userData} />;
+  const { response: event, loading, error, get } = useApi();
+
+  useEffect(() => {
+    get("/event").catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, []);
+
+  console.log(event?.data?.data);
+  console.log(error);
+  console.log(loading);
+
+  return (
+    <div>
+      <div>
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : event?.data?.data.length === 0 ? (
+          <EmptyTable />
+        ) : (
+          <TableEvent data={event?.data?.data} />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Event;

@@ -11,12 +11,17 @@ const ModalLogout = () => {
   const { closeModalLogout } = useContext(ModalLogoutContext);
   return (
     <div
+      id="modalLogoutContainer"
       className={`${styles.modalContainer} d-flex justify-content-center align-items-center`}
     >
       <div
+        id="modalLogoutContent"
         className={`${styles.modalContent} d-flex flex-column justify-content-center align-items-center`}
       >
-        <h4 className="title-large-semibold mb-32 text-center">
+        <h4
+          id="modalLogoutTitle"
+          className="title-large-semibold mb-32 text-center"
+        >
           Apakah anda yakin Logout?
         </h4>
         <p className="body-small-regular ">
@@ -27,6 +32,7 @@ const ModalLogout = () => {
         <div className="d-flex gap-5 justify-content-center mt-32">
           <div className="d-grid col-6">
             <Button
+              id="modalLogoutYesButton"
               label="Yes"
               color="white"
               icon={check}
@@ -35,6 +41,7 @@ const ModalLogout = () => {
           </div>
           <div className="d-grid col-6">
             <Button
+              id="modalLogoutCancelButton"
               label="Cancel"
               color="brown"
               icon={close}

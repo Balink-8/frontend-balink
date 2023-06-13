@@ -48,7 +48,7 @@ const TableEventDashboard = ({ userDataEvent }) => {
             <table className="table">
               {/* Render data pada halaman saat ini */}
               <thead className={styles.thead} id="thead">
-                <tr id="tr-table">
+                <tr id="tr-table" className={styles.tableBrown}>
                   <th
                     className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
                   >

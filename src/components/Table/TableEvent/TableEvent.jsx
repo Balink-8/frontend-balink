@@ -2,28 +2,37 @@ import React, { useState, useContext } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import styles from "./TableEvent.module.css";
-import edit from "../../../assets/icons/edit.svg";
-import del from "../../../assets/icons/deleteRed.svg";
-import { Link, useNavigate } from "react-router-dom";
+import Edit from "../../../assets/icons/edit.svg";
+import Delete from "../../../assets/icons/deleteRed.svg";
+import { useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import add from "../../../assets/icons/add.svg";
-import { ModalContext } from "../../../context/ModalContext";
-import ModalKonfirmasi from "../../../components/Modal/ModalKonfirmasi/ModalKonfirmasi";
+import ModalKonfirmasi from "../../Modal/ModalKonfirmasi/ModalKonfirmasi";
+import ModalTerhapus from "../../Modal/ModalTerhapus/ModalTerhapus";
+import useApi from "../../../api/useApi";
+import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
+import { ModalTempContext } from "../../../context/ModalTempContext";
+import Spinner from "../../Spinner/Spinner";
 
-const TableEvent = ({ userData }) => {
+const TableEvent = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const { showModal, closeModal, openModal } = useContext(ModalContext);
+
+  const { showModalConfirmation, openModalConfirmation, id, setId } =
+    useContext(ModalConfirmationContext);
+  const { showModalTemp } = useContext(ModalTempContext);
+
+  const { response: event, loading, error, del } = useApi();
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(userData.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = userData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -51,8 +60,17 @@ const TableEvent = ({ userData }) => {
     setCurrentPage(1);
   };
 
-  const handleNavigate = () => {
+  const handleTambahEvent = () => {
     navigate("/event/tambah");
+  };
+
+  const handleDelete = (id) => {
+    del(`https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`).catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    );
   };
 
   return (
@@ -61,7 +79,7 @@ const TableEvent = ({ userData }) => {
         <TableSearch />
         <div id="tambahEvent">
           <Button
-            onClick={handleNavigate}
+            onClick={handleTambahEvent}
             label="Tambah Event"
             icon={add}
             color="brown"
@@ -90,25 +108,51 @@ const TableEvent = ({ userData }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item, index) => (
-                  <tr className={styles.tableRow} key={index}>
-                    <td className="p-3">
-                      <img src={item.foto} />
+                {currentItems?.map((item) => (
+                  <tr className={styles.tableRow} key={item.id}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
+                      <img src={item.fotoEvent} className={styles.image} />
                     </td>
-                    <td className="p-3">{item.nama}</td>
-                    <td className="p-3">{item.deskripsi}</td>
-                    <td className="p-3">{item.tanggal}</td>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
+                      {item.judulEvent}
+                    </td>
+                    <td
+                      className="p-3"
+                      style={{
+                        maxWidth: "400px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
+                      {item.deskripsiEvent}
+                    </td>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
+                      {item.waktuEvent}
+                    </td>
                     <td className="p-3">
-                      <Link to={`/event/detail`}>
-                        <img
-                          src={edit}
-                          alt=""
-                          className={styles.actionButton}
-                        />
-                      </Link>
-                      <Link onClick={() => openModal()}>
-                        <img src={del} alt="" className={styles.actionButton} />
-                      </Link>
+                      <img
+                        src={Edit}
+                        alt=""
+                        className={`${styles.actionButton} me-16`}
+                        onClick={() => navigate(`/event/edit/${item.id}`)}
+                      />
+                      <img
+                        src={Delete}
+                        alt=""
+                        className={styles.actionButton}
+                        onClick={() => openModalConfirmation(item.id)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -117,7 +161,8 @@ const TableEvent = ({ userData }) => {
           </div>
         </div>
       </div>
-
+      {showModalConfirmation && <ModalKonfirmasi onClick={handleDelete} />}
+      {showModalTemp && <ModalTerhapus />}
       {/* Kotak angka untuk memilih jumlah item per halaman */}
       <div className={`${styles.previous} row`} id="previous">
         <div className="col-10 p-3">
@@ -171,7 +216,6 @@ const TableEvent = ({ userData }) => {
           </button>
         </div>
       </div>
-      {showModal && <ModalKonfirmasi />}
     </div>
   );
 };

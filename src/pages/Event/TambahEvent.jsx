@@ -9,14 +9,11 @@ import save from "../../assets/icons/save.svg";
 import add from "../../assets/icons/add.svg";
 import { Switch } from "antd";
 import Button from "../../elements/Button/Button";
+import useApi from "../../api/useApi";
+import { useNavigate } from "react-router";
 
 const TambahEvent = () => {
-  const [toggle, setToggle] = useState(false);
-
-  const toggler = () => {
-    toggle ? setToggle(false) : setToggle(true);
-  };
-
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     fotoEvent: "",
     judulEvent: "",
@@ -28,29 +25,76 @@ const TambahEvent = () => {
     jumlahEvent: "",
   });
 
-  const onSubmit = () => {
-    const eventBaru = {
-      fotoEvent: values.fotoEvent,
-      judulEvent: values.judulEvent,
-      deskripsiEvent: values.deskripsiEvent,
-      lokasiEvent: values.lokasiEvent,
-      linkGoogleEvent: values.linkGoogleEvent,
-      waktuEvent: values.waktuEvent,
-      hargaEvent: values.hargaEvent,
-      jumlahEvent: values.jumlahEvent,
-    };
-    setValues({
-      fotoEvent: "",
-      judulEvent: "",
-      deskripsiEvent: "",
-      lokasiEvent: "",
-      linkGoogleEvent: "",
-      waktuEvent: "",
-      hargaEvent: "",
-      jumlahEvent: "",
+  const [errors, setErrors] = useState({
+    fotoEvent: false,
+    judulEvent: false,
+    deskripsiEvent: false,
+    lokasiEvent: false,
+    linkGoogleEvent: false,
+    waktuEvent: false,
+    hargaEvent: false,
+    jumlahEvent: false,
+  });
+
+  const { response: event, loading, error, post } = useApi();
+
+  const [toggle, setToggle] = useState(false);
+  const [file, setFile] = useState();
+
+  const toggler = () => {
+    toggle ? setToggle(false) : setToggle(true);
+    console.log(toggle);
+  };
+
+  const onSubmit = (e) => {
+    const newErrors = {};
+
+    Object.keys(values).forEach((key) => {
+      if (values[key].trim() === "") {
+        newErrors[key] = true;
+      } else {
+        newErrors[key] = false;
+      }
     });
-    setFile("");
-    console.log(values);
+
+    if (toggle) {
+      if (values.hargaEvent.trim() === "") {
+        newErrors.hargaEvent = true;
+      }
+      if (values.jumlahEvent.trim() === "") {
+        newErrors.jumlahEvent = true;
+      }
+      setErrors(newErrors);
+    } else {
+      newErrors.hargaEvent = false;
+      newErrors.jumlahEvent = false;
+      setErrors(newErrors);
+    }
+
+    if (!Object.values(newErrors).some((error) => error)) {
+      setValues({
+        fotoEvent: "",
+        judulEvent: "",
+        deskripsiEvent: "",
+        lokasiEvent: "",
+        linkGoogleEvent: "",
+        waktuEvent: "",
+        hargaEvent: "",
+        jumlahEvent: "",
+      });
+
+      setFile("");
+      console.log(values);
+    }
+
+    if (!Object.values(newErrors).some((error) => error)) {
+      post(
+        "https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event",
+        values
+      );
+      navigate(-1);
+      setFile("");
+    }
   };
 
   const onReset = (e) => {
@@ -68,13 +112,25 @@ const TambahEvent = () => {
   };
 
   const handleOnChange = (e) => {
+    const { name, value } = e.target;
     setValues({
       ...values,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    if (value.trim() === "") {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: true,
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: false,
+      }));
+    }
   };
 
-  const [file, setFile] = useState();
   const getFile = (e) => {
     setFile(URL.createObjectURL(e.target.files[0]));
     setValues({
@@ -133,6 +189,7 @@ const TambahEvent = () => {
                 value={values.judulEvent}
                 onChange={handleOnChange}
                 label={"Judul Event"}
+                error={errors.judulEvent}
               />
             </div>
           </div>
@@ -143,13 +200,25 @@ const TambahEvent = () => {
                 rows={12}
                 required={"required"}
                 placeholder={"Masukkan deskripsi event"}
-                className={styles.input}
+                className={
+                  errors.deskripsiEvent
+                    ? `${styles.errorInput} ${styles.input}`
+                    : styles.input
+                }
                 id={"deskripsiEvent"}
                 name={"deskripsiEvent"}
                 value={values.deskripsiEvent}
                 onChange={handleOnChange}
               />
-              <label className={styles.inputTitle}>Deskripsi</label>
+              <label
+                className={
+                  errors.deskripsiEvent
+                    ? `${styles.errorTitle} ${styles.inputTitle}`
+                    : styles.inputTitle
+                }
+              >
+                Deskripsi
+              </label>
             </div>
           </div>
         </div>
@@ -165,13 +234,6 @@ const TambahEvent = () => {
               <div className="col-lg-6">
                 <img src={info} alt="info" />
                 <span className="body-medium-semibold"> Info Lengkap</span>
-                {/* <button
-                  type="button"
-                  className={styles.buttonMain}
-                  style={{ width: "100%" }}
-                >
-                  + Tambah Artikel
-                </button> */}
                 <div className="d-grid col-12 ">
                   <Button label="Tambah Artikel" color="brown" icon={add} />
                 </div>
@@ -190,6 +252,7 @@ const TambahEvent = () => {
                       value={values.lokasiEvent}
                       onChange={handleOnChange}
                       label={"Lokasi"}
+                      error={errors.lokasiEvent}
                     />
                   </div>
                 </div>
@@ -206,6 +269,7 @@ const TambahEvent = () => {
                       value={values.linkGoogleEvent}
                       onChange={handleOnChange}
                       label={"Google Maps"}
+                      error={errors.linkGoogleEvent}
                     />
                   </div>
                 </div>
@@ -222,6 +286,7 @@ const TambahEvent = () => {
                       value={values.waktuEvent}
                       onChange={handleOnChange}
                       label={"Waktu"}
+                      error={errors.waktuEvent}
                     />
                   </div>
                 </div>
@@ -256,7 +321,7 @@ const TambahEvent = () => {
                   <div className="m-2">
                     <div className={styles.inputBox}>
                       <Input
-                        type={"text"}
+                        type={"number"}
                         required={"required"}
                         placeholder={"masukkan harga jenis"}
                         className={styles.input}
@@ -265,6 +330,7 @@ const TambahEvent = () => {
                         value={values.hargaEvent}
                         onChange={handleOnChange}
                         label={"Harga"}
+                        error={toggle ? errors.hargaEvent : false}
                       />
                     </div>
                   </div>
@@ -274,7 +340,7 @@ const TambahEvent = () => {
                   <div className="m-2">
                     <div className={styles.inputBox}>
                       <Input
-                        type={"text"}
+                        type={"number"}
                         required={"required"}
                         placeholder={"masukkan jumlah"}
                         className={styles.input}
@@ -283,6 +349,7 @@ const TambahEvent = () => {
                         value={values.jumlahEvent}
                         onChange={handleOnChange}
                         label={"Jumlah"}
+                        error={toggle ? errors.jumlahEvent : false}
                       />
                     </div>
                   </div>

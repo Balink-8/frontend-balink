@@ -16,14 +16,13 @@ import { ModalLogoutContext } from "../../context/ModalLogoutContext";
 import ModalLogout from "../Modal/ModalLogout/ModalLogout";
 
 const Sidebar = () => {
-  const { showModalLogout, closeModalLogout, openModalLogout } =
-    useContext(ModalLogoutContext);
+  const { showModalLogout, openModalLogout } = useContext(ModalLogoutContext);
 
   return (
     <div className={`${styles.sidebar} d-flex position-fixed col-2`}>
       <div
-        className="d-flex flex-column p-3 bg-body-tertiary w-100"
-        style={{ height: "100vh" }}
+        className="d-flex flex-column flex-shrink-0 p-3"
+        style={{ width: "100%", height: "100vh" }}
       >
         <Link
           to="/dashboard"

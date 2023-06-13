@@ -18,8 +18,8 @@
 
 .thead {
   box-sizing: border-box;
-  background-color: var(--brown-light);
-  color: var(--dark-black);
+  background-color: var(--brown-light) !important;
+  color: var(--dark-black) !important;
 }
 
 .tbody {
@@ -116,18 +116,19 @@
 
 .tableHeadRow {
   border-bottom-color: transparent !important;
+  background-color: var(--brown-light) !important;
 }
 
 .success {
-  color: var(--green-dark);
+  color: var(--green-dark) !important;
 }
 
 .order {
-  color: var(--orange-dark);
+  color: var(--orange-dark) !important;
 }
 
 .cancel {
-  color: var(--red-dark);
+  color: var(--red-dark) !important;
 }
 
 .btnevent {
