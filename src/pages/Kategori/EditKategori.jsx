@@ -1,26 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./TambahKategori.module.css";
 import Input from "../../elements/Input/Input";
 import Textarea from "../../elements/Textarea/Textarea";
 import save from "../../assets/icons/save.svg";
 import cancel from "../../assets/icons/cancel.svg";
 import Button from "../../elements/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useApi from "../../api/useApi";
 
 const EditKategori = () => {
-  const [values, setValues] = useState({
-    namaKategori: "Pakaian",
-    deskripsiKategori: `Isi di kategori ini semua jenis pakaian termasuk didalamnya, baik itu dari kategori pakaian pria, wanita, anak anak dan lain sebagainya `,
-    });
   const navigate = useNavigate();
-  const paragraphs = values.deskripsiKategori.split("\n\n");
-  const onSubmit = () => {
-    console.log(values);
-    setValues({
+  const { response: kategori, loading, error, get, put } = useApi();
+  const [values, setValues] = useState ({
       namaKategori: "",
-      deskripsiKategori: "",
+      deskripsiKategori: "",  
+  });
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    get(
+      `https://6486e617beba6297278f6c94.mockapi.io/kategori/${id}`
+    ).catch((error) => {
+      // Handle error
+      console.error(error);
     });
+    }, []);
+
+  useEffect(() => {
+    if (kategori) {
+        setValues({
+            namaKategori: kategori.namaKategori,
+            deskripsiKategori: kategori.deskripsiKategori,
+      });
+    }
+  }, [kategori]);
+
+  const paragraphs = values.deskripsiKategori.split("\n\n");
+
+  const onSubmit = () => {
+        put(
+          `https://6486e617beba6297278f6c94.mockapi.io/kategori/${id}`,
+          values
+        );
+        navigate(-1);
+    };
+
+  const onCancel = () => {
+    navigate(-1);
   };
+  
 
   const handleOnChange = (e) => {
     setValues({
@@ -29,10 +58,7 @@ const EditKategori = () => {
     });
   };
 
-  const onCancel = (e) => {
-    e.preventDefault();
-  
-  }
+ 
 
 
   return (
@@ -90,10 +116,18 @@ const EditKategori = () => {
       {/* button */}
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button label="Batal" color="white" icon={cancel} onClick={onCancel}/>
+            <Button 
+            label="Batal" 
+            color="white" 
+            icon={cancel} 
+            onClick={onCancel}/>
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+            <Button 
+            label="Simpan" 
+            color="brown" 
+            icon={save} 
+            onClick={onSubmit} />
         </div>
       </div>
     </div>

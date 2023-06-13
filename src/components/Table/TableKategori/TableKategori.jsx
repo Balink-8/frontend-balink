@@ -8,19 +8,21 @@ import Edit from "../../../assets/icons/edit_square.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
+import useApi from "../../../api/useApi";
 
 const TableKategori = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const { response: kategori, loading, error, del } = useApi();
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -52,9 +54,9 @@ const TableKategori = ({ data }) => {
     navigate("/kategori/tambah");
   };
 
-  const handleDetailKategori = () => {
-    navigate("/kategori/detail");
-  };
+  // const handleDetailKategori = () => {
+  //   navigate("/kategori/detail");
+  // };
 
   return (
     <div>
@@ -83,10 +85,11 @@ const TableKategori = ({ data }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item, index) => (
-                  <tr className={styles.tableRow} key={index}>
-                    <td className="p-3" onClick={() => handleDetailKategori()}>
-                      {item.nama}
+                {currentItems?.map((item) => (
+                  <tr className={styles.tableRow} key={item.id}>
+                    <td className="p-3" 
+                      onClick={() => navigate(`/kategori/detail/${item.id}`)}>
+                      {item.namaKategori}
                     </td>
                     <td
                       className="p-3"
@@ -96,21 +99,26 @@ const TableKategori = ({ data }) => {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                       }}
-                      onClick={() => handleDetailKategori()}
+                      onClick={() => navigate(`/kategori/detail/${item.id}`)}
                     >
-                      {item.deskripsi}
+                      {item.deskripsiKategori}
                     </td>
                     <td className="p-3">
                       <img
                         src={Edit}
                         alt=""
                         className={`${styles.actionButton} me-16`}
-                        onClick={() => navigate("/kategori/edit")}
+                        onClick={() => navigate(`/kategori/edit/${item.id}`)}
                       />
                       <img
                         src={Delete}
                         alt=""
                         className={styles.actionButton}
+                        onClick={() =>
+                          del(
+                            `https://6486e617beba6297278f6c94.mockapi.io/kategori/${item.id}`
+                          )
+                        }
                       />
                     </td>
                   </tr>
