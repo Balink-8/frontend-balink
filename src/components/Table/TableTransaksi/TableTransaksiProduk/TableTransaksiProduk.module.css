@@ -128,7 +128,7 @@
 }
 
 .cancel {
-  color: var(--red-dark) !;
+  color: var(--red-dark) !important;
 }
 
 .btnevent {
