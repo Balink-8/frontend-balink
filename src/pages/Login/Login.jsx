@@ -49,25 +49,29 @@ const Login = () => {
   };
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" id="login-wrapper">
       <div className={styles.backgroundImage}>
-        <img src={Gambar} className={styles.gambar} />
+        <img src={Gambar} className={styles.gambar} id="background-image" />
       </div>
-      <form className={styles.form}>
+      <form className={styles.form} id="login-form">
         <div className={styles.logo} id="logo">
-          <img src={Logo} className={styles.imageLogo} />
+          <img src={Logo} className={styles.imageLogo} id="logo-image" />
           <p className="body-large-regular mt-2 text-center">
             Nikmati kegiatan dan wisata anda dengan{" "}
             <span className="body-large-semibold">Balink</span>. Aman, Nyaman
             dan Mudah untuk kita bersama.
           </p>
           {usernameError && passwordError && (
-            <p className={styles.errorText}>Invalid username or password</p>
+            <p className={styles.errorText} id="error-text">
+              Invalid username or password
+            </p>
           )}
         </div>
         <div className="input-patern" id="input-patern">
           <div className="username">
-            <label className="body-large-semibold label">Username</label>
+            <label className="body-large-semibold label" htmlFor="username">
+              Username
+            </label>
             <InputLogin
               type="text"
               className={`${styles.input} ${usernameError ? styles.error : ""}`}
@@ -78,7 +82,9 @@ const Login = () => {
               value={username}
             />
           </div>
-          <label className="body-large-semibold label">Password</label>
+          <label className="body-large-semibold label" htmlFor="password">
+            Password
+          </label>
           <div className={styles.password}>
             <InputLogin
               type={showPassword ? "text" : "password"}
@@ -93,13 +99,16 @@ const Login = () => {
               src={icon}
               className={styles.iconvisibility}
               onClick={toggleShowPassword}
+              alt="Toggle Password Visibility"
+              id="toggle-password-visibility"
             />
           </div>
           <div className={styles.button}>
             <button
               type="button"
               className={styles.btnLogin}
-              onClick={() => onSubmit()}
+              onClick={onSubmit}
+              id="login-button"
             >
               Masuk
             </button>
