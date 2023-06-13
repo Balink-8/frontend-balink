@@ -84,6 +84,7 @@ const TableAkun = ({ userData }) => {
                         alt=""
                         className={styles.actionButton}
                         onClick={() => openModalAkun(item.id)}
+                        id="detail-icon"
                       />
                     </td>
                   </tr>
