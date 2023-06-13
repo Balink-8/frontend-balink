@@ -23,7 +23,7 @@ const Produk = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <p>Error: {error}</p>
+          <p>Error: {error.message}</p>
         ) : produk?.data?.data?.length === 0 ? (
           <EmptyTable />
         ) : (

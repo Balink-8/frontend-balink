@@ -24,7 +24,7 @@ const Event = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <p>Error: {error}</p>
+          <p>Error: {error.message}</p>
         ) : event?.data?.data.length === 0 ? (
           <EmptyTable />
         ) : (

@@ -118,7 +118,7 @@ const TableAkun = ({ userData }) => {
         </div>
         <div className="p-3 d-flex justify-content-between">
           <button
-            className={`${styles.btnleft} col-2 me-1`}
+            className={`${styles.btnleft} col-2 me-1 px-3`}
             id="btnleft"
             onClick={previousPage}
             disabled={currentPage === 1}
@@ -144,7 +144,7 @@ const TableAkun = ({ userData }) => {
 
           {/* Tombol halaman berikutnya */}
           <button
-            className={`${styles.btnright} col-2 me-1`}
+            className={`${styles.btnright} col-2 me-1 px-3`}
             id="btnright"
             onClick={nextPage}
             disabled={currentPage === totalPages}

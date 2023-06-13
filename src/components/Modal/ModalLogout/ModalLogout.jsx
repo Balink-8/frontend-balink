@@ -5,10 +5,19 @@ import close from "../../../assets/icons/close.svg";
 import check from "../../../assets/icons/check.svg";
 import { ModalLogoutContext } from "../../../context/ModalLogoutContext";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const ModalLogout = () => {
   const navigate = useNavigate();
   const { closeModalLogout } = useContext(ModalLogoutContext);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"];
+    closeModalLogout();
+    navigate("/login");
+  };
+
   return (
     <div
       id="modalLogoutContainer"
@@ -36,7 +45,7 @@ const ModalLogout = () => {
               label="Yes"
               color="white"
               icon={check}
-              onClick={() => navigate("/login")}
+              onClick={() => handleLogout()}
             />
           </div>
           <div className="d-grid col-6">

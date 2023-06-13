@@ -28,7 +28,7 @@ const ModalAkun = ({ id }) => {
   useEffect(() => {
     get(`/user/${id}`).catch((error) => {
       // Handle error
-      console.error(error);
+      // console.error(error);
     });
   }, [id]);
 
@@ -39,13 +39,13 @@ const ModalAkun = ({ id }) => {
   const deleteAkun = () => {
     del(`/user/${id}`).catch((error) => {
       // Handle error
-      console.error(error);
+      // console.error(error);
     });
   };
 
-  console.error(error);
-  console.error(response?.data?.data?.nama);
-  console.error(loading);
+  console.log(response?.data);
+  console.log(error);
+  console.log(loading);
 
   return (
     <div id="modalAkunContainer" className={styles.modalContainer}>
@@ -58,7 +58,7 @@ const ModalAkun = ({ id }) => {
           <div>
             <div className="d-flex justify-content-between align-items-start">
               <img
-                src={response?.image}
+                src={response?.data.foto_profile}
                 alt="avatar-img"
                 className={styles.avatar}
               />
@@ -76,7 +76,7 @@ const ModalAkun = ({ id }) => {
                 type="text"
                 id="fullName"
                 name="fullName"
-                value={response?.data?.data?.nama}
+                value={response?.data.nama}
                 readOnly
               />
               <Input
@@ -84,7 +84,7 @@ const ModalAkun = ({ id }) => {
                 type="email"
                 id="email"
                 name="email"
-                value={response?.email}
+                value={response?.data.email}
                 readOnly
               />
             </div>
@@ -94,7 +94,7 @@ const ModalAkun = ({ id }) => {
                 type="text"
                 id="username"
                 name="username"
-                value={response?.username}
+                value={response?.data.nama}
                 readOnly
               />
               <Input
@@ -102,7 +102,7 @@ const ModalAkun = ({ id }) => {
                 type="text"
                 id="telephone"
                 name="telephone"
-                value={response?.telephone}
+                value={response?.data.no_telepon}
                 readOnly
               />
             </div>
@@ -112,7 +112,7 @@ const ModalAkun = ({ id }) => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
-                value={response?.password}
+                value={response?.data.password}
                 icon={iconVisibility}
                 onClick={togglePasswordVisibility}
                 readOnly
@@ -123,7 +123,7 @@ const ModalAkun = ({ id }) => {
                 type="text"
                 id="alamat"
                 name="alamat"
-                value={response?.alamat}
+                value={response?.data.alamat}
                 readOnly
               />
             </div>

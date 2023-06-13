@@ -9,6 +9,7 @@ import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import useApi from "../../../api/useApi";
+import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 
 const TableArtikel = ({ data }) => {
   const navigate = useNavigate();
@@ -66,77 +67,81 @@ const TableArtikel = ({ data }) => {
         />
       </div>
 
-      <div className="row mt-4 text-center">
-        <div className="col-12 p-0">
-          <div className="table-responsive">
-            <table className="table ">
-              {/* Render data pada halaman saat ini */}
-              <thead className={styles.thead} id="thead">
-                <tr id="tr-table">
-                  <th
-                    className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
-                  >
-                    Foto
-                  </th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Keterangan</th>
-                  <th
-                    className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
-                  ></th>
-                </tr>
-              </thead>
-              <tbody className={styles.tbody} id="tbody">
-                {currentItems?.map((item) => (
-                  <tr className={styles.tableRow} key={item.id}>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/artikel/detail/${item.id}`)}
+      {data?.length === 0 ? (
+        <EmptyTable />
+      ) : (
+        <div className="row mt-4 text-center">
+          <div className="col-12 p-0">
+            <div className="table-responsive">
+              <table className="table ">
+                {/* Render data pada halaman saat ini */}
+                <thead className={styles.thead} id="thead">
+                  <tr id="tr-table">
+                    <th
+                      className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
                     >
-                      <img src={item.fotoArtikel} className={styles.image} />
-                    </td>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/artikel/detail/${item.id}`)}
-                    >
-                      {item.judulArtikel}
-                    </td>
-                    <td
-                      className="p-3"
-                      style={{
-                        maxWidth: "400px",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                      onClick={() => navigate(`/artikel/detail/${item.id}`)}
-                    >
-                      {item.deskripsiArtikel}
-                    </td>
-                    <td className="p-3">
-                      <img
-                        src={Edit}
-                        alt=""
-                        className={`${styles.actionButton} me-16`}
-                        onClick={() => navigate(`/artikel/edit/${item.id}`)}
-                      />
-                      <img
-                        src={Delete}
-                        alt=""
-                        className={styles.actionButton}
-                        onClick={() =>
-                          del(
-                            `https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article/${item.id}`
-                          )
-                        }
-                      />
-                    </td>
+                      Foto
+                    </th>
+                    <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
+                    <th className={`p-3 ${styles.tableHeadRow}`}>Keterangan</th>
+                    <th
+                      className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
+                    ></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className={styles.tbody} id="tbody">
+                  {currentItems?.map((item) => (
+                    <tr className={styles.tableRow} key={item.ID}>
+                      <td
+                        className="p-3"
+                        onClick={() => navigate(`/artikel/detail/${item.id}`)}
+                      >
+                        <img src={item.gambar} className={styles.image} />
+                      </td>
+                      <td
+                        className="p-3"
+                        onClick={() => navigate(`/artikel/detail/${item.id}`)}
+                      >
+                        {item.judul}
+                      </td>
+                      <td
+                        className="p-3"
+                        style={{
+                          maxWidth: "400px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                        onClick={() => navigate(`/artikel/detail/${item.id}`)}
+                      >
+                        {item.isi}
+                      </td>
+                      <td className="p-3">
+                        <img
+                          src={Edit}
+                          alt=""
+                          className={`${styles.actionButton} me-16`}
+                          onClick={() => navigate(`/artikel/edit/${item.id}`)}
+                        />
+                        <img
+                          src={Delete}
+                          alt=""
+                          className={styles.actionButton}
+                          onClick={() =>
+                            del(
+                              `https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article/${item.id}`
+                            )
+                          }
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Kotak angka untuk memilih jumlah item per halaman */}
       <div className={`${styles.previous}  d-flex flex-row `} id="previous">

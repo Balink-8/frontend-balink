@@ -5,16 +5,22 @@ import Textarea from "../../elements/Textarea/Textarea";
 import reset from "../../assets/icons/restart_alt.svg";
 import save from "../../assets/icons/save.svg";
 import Button from "../../elements/Button/Button";
+import useApi from "../../api/useApi";
+import { useNavigate } from "react-router-dom";
 
 const TambahKategori = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     namaKategori: "",
     deskripsiKategori: "",
   });
+
   const [errors, setErrors] = useState({
     namaKategori: false,
     deskripsiKategori: false,
   });
+
+  const { response: kategori, loading, error, post } = useApi();
 
   const onSubmit = () => {
     const newErrors = {};
@@ -29,16 +35,16 @@ const TambahKategori = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      setValues({
-        namaKategori: "",
-        deskripsiKategori: "",
-      });
-
-      console.log(values);
+      post(
+        "https://6486e617beba6297278f6c94.mockapi.io/kategori",
+        values
+      );
+      console.log(values)
+      navigate(-1);
     }
   };
 
-  const onReset = () => {
+  const onReset = (e) => {
     setValues({
       namaKategori: "",
       deskripsiKategori: "",
@@ -137,10 +143,18 @@ const TambahKategori = () => {
       {/* button */}
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button label="Reset" color="white" icon={reset} onClick={onReset} />
+          <Button 
+          label="Reset" 
+          color="white" 
+          icon={reset} 
+          onClick={onReset} />
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+          <Button 
+          label="Simpan" 
+          color="brown" 
+          icon={save} 
+          onClick={onSubmit} />
         </div>
       </div>
     </div>

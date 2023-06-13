@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import TablePromo from "../../components/Table/TablePromo/TablePromo";
 import useApi from "../../api/useApi";
 import Spinner from "../../components/Spinner/Spinner";
+import EmptyTable from "../../components/EmptyTable/EmptyTable";
 
 const Promo = () => {
   const { response: promo, loading, error, get } = useApi();
 
   useEffect(() => {
-    get("https://648179fd29fa1c5c503172c3.mockapi.io/promo").catch((error) => {
+    get("/promo").catch((error) => {
       // Handle error
       console.error(error);
     });
@@ -19,9 +20,11 @@ const Promo = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <p>Error: {error}</p>
+          <p>Error: {error.message}</p>
+        ) : promo?.data?.data?.length === 0 ? (
+          <EmptyTable />
         ) : (
-          <TablePromo data={promo} />
+          <TablePromo data={promo?.data?.data} />
         )}
       </div>
     </div>

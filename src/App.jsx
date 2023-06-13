@@ -63,9 +63,12 @@ function App() {
                       path="/kategori/tambah"
                       element={<TambahKategori />}
                     />
-                    <Route path="/kategori/edit" element={<EditKategori />} />
                     <Route
-                      path="/kategori/detail"
+                      path="/kategori/edit/:id"
+                      element={<EditKategori />}
+                    />
+                    <Route
+                      path="/kategori/detail/:id"
                       element={<DetailKategori />}
                     />
                     <Route path="/transaksi" element={<Transaksi />} />

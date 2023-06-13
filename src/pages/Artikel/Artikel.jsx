@@ -24,11 +24,11 @@ const Artikel = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <p>Error: {error}</p>
+          <p>Error: {error.message}</p>
         ) : artikel?.data?.data?.length === 0 ? (
           <EmptyTable />
         ) : (
-          <TableArtikel data={artikel} />
+          <TableArtikel data={artikel?.data?.data} />
         )}
       </div>
     </div>

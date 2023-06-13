@@ -21,6 +21,9 @@ const ModalKonfirmasi = ({ id, onClick }) => {
     closeModalConfirmation();
     closeModalAkun();
     openModalTemp();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   };
   return (
     <div
