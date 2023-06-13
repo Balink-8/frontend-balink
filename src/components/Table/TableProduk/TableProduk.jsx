@@ -24,7 +24,7 @@ const TableProduk = ({ data }) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
-  console.log("current items", currentItems)
+  console.log("current items", currentItems);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -92,31 +92,50 @@ const TableProduk = ({ data }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
-                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/produk/detail/${item.id}`)}
+                    >
                       <img src={item.fotoProduk} className={styles.image} />
                     </td>
-                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>{item.namaProduk}</td>
-                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>{item.hargaProduk}</td>
-                    <td className="p-3" onClick={() => navigate(`/produk/detail/${item.id}`)}>{item.kategoriProduk}</td>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/produk/detail/${item.id}`)}
+                    >
+                      {item.namaProduk}
+                    </td>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/produk/detail/${item.id}`)}
+                    >
+                      {item.hargaProduk}
+                    </td>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/produk/detail/${item.id}`)}
+                    >
+                      {item.kategoriProduk}
+                    </td>
                     <td className="p-3">
-          
-                        <img
-                          src={Edit}
-                          alt=""
-                          className={`${styles.actionButton} pe-3`}
-                           onClick={() => navigate(`/produk/edit/${item.id}`)}
-                        />
-                      
-                        <img
-                          src={Delete}
-                          alt=""
-                          className={styles.actionButton}
-                          onClick={() =>
+                      <img
+                        src={Edit}
+                        alt=""
+                        className={`${styles.actionButton} pe-3`}
+                        onClick={() => navigate(`/produk/edit/${item.id}`)}
+                        id="edit-icon"
+                      />
+
+                      <img
+                        src={Delete}
+                        alt=""
+                        className={styles.actionButton}
+                        onClick={() =>
                           del(
                             `https://64328e2b3e05ff8b3728907e.mockapi.io/products/products/${item.id}`
                           )
                         }
-                        />
+                        id="delete-icon"
+                      />
                     </td>
                   </tr>
                 ))}

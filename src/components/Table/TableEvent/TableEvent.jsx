@@ -91,24 +91,34 @@ const TableEvent = ({ data }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
-                    <td className="p-3" onClick={() => navigate(`/event/detail/${item.id}`)}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
                       <img src={item.fotoEvent} className={styles.image} />
                     </td>
-                    <td className="p-3" onClick={() => navigate(`/event/detail/${item.id}`)}>
-                      {item.judulEvent} 
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
+                      {item.judulEvent}
                     </td>
-                    <td 
-                    className="p-3" 
-                    style={{
-                      maxWidth: "400px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    onClick={() => navigate(`/event/detail/${item.id}`)}>
+                    <td
+                      className="p-3"
+                      style={{
+                        maxWidth: "400px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
                       {item.deskripsiEvent}
                     </td>
-                    <td className="p-3" onClick={() => navigate(`/event/detail/${item.id}`)}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/event/detail/${item.id}`)}
+                    >
                       {item.waktuEvent}
                     </td>
                     <td className="p-3">
@@ -116,17 +126,19 @@ const TableEvent = ({ data }) => {
                         src={Edit}
                         alt=""
                         className={`${styles.actionButton} me-16`}
-                        onClick ={() => navigate(`/event/edit/${item.id}`)}
+                        onClick={() => navigate(`/event/edit/${item.id}`)}
+                        id="edit-icon"
                       />
-                      <img 
-                        src={Delete} 
-                        alt="" 
-                        className={styles.actionButton} 
+                      <img
+                        src={Delete}
+                        alt=""
+                        className={styles.actionButton}
                         onClick={() =>
                           del(
                             `https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${item.id}`
                           )
                         }
+                        id="delete-icon"
                       />
                     </td>
                   </tr>

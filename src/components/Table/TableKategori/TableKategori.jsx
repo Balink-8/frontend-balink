@@ -77,8 +77,14 @@ const TableKategori = ({ data }) => {
               {/* Render data pada halaman saat ini */}
               <thead className={styles.thead} id="thead">
                 <tr id="tr-table">
-                  <th className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}>Nama Kategori</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Deskripsi Kategori</th>
+                  <th
+                    className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
+                  >
+                    Nama Kategori
+                  </th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>
+                    Deskripsi Kategori
+                  </th>
                   <th
                     className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
                   ></th>
@@ -87,8 +93,10 @@ const TableKategori = ({ data }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
-                    <td className="p-3" 
-                      onClick={() => navigate(`/kategori/detail/${item.id}`)}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/kategori/detail/${item.id}`)}
+                    >
                       {item.namaKategori}
                     </td>
                     <td
@@ -109,6 +117,7 @@ const TableKategori = ({ data }) => {
                         alt=""
                         className={`${styles.actionButton} me-16`}
                         onClick={() => navigate(`/kategori/edit/${item.id}`)}
+                        id="edit-icon"
                       />
                       <img
                         src={Delete}
@@ -119,6 +128,7 @@ const TableKategori = ({ data }) => {
                             `https://6486e617beba6297278f6c94.mockapi.io/kategori/${item.id}`
                           )
                         }
+                        id="delete-icon"
                       />
                     </td>
                   </tr>

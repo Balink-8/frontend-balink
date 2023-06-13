@@ -118,6 +118,7 @@ const TableArtikel = ({ data }) => {
                         alt=""
                         className={`${styles.actionButton} me-16`}
                         onClick={() => navigate(`/artikel/edit/${item.id}`)}
+                        id="edit-icon"
                       />
                       <img
                         src={Delete}
@@ -128,6 +129,7 @@ const TableArtikel = ({ data }) => {
                             `https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article/${item.id}`
                           )
                         }
+                        id="delete-icon"
                       />
                     </td>
                   </tr>
