@@ -8,23 +8,25 @@ import ModalTerhapus from "../ModalTerhapus/ModalTerhapus";
 import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
 import { ModalAkunContext } from "../../../context/ModalAkunContext";
 import { ModalTempContext } from "../../../context/ModalTempContext";
+import { useNavigate } from "react-router-dom";
 
-const ModalKonfirmasi = ({ id, onClick }) => {
-  const { closeModalConfirmation, selectedId, setSelectedId } = useContext(
-    ModalConfirmationContext
-  );
+const ModalKonfirmasi = ({ onClick, path }) => {
+  const { closeModalConfirmation } = useContext(ModalConfirmationContext);
   const { closeModalAkun } = useContext(ModalAkunContext);
   const { showModalTemp, openModalTemp } = useContext(ModalTempContext);
-  setSelectedId(id);
+  const navigate = useNavigate();
+
   const handleDelete = () => {
     onClick();
+    openModalTemp();
     closeModalConfirmation();
     closeModalAkun();
-    openModalTemp();
     setTimeout(() => {
+      navigate(`/${path}`);
       window.location.reload();
     }, 1500);
   };
+
   return (
     <div
       id="modalKonfirmasiContainer"

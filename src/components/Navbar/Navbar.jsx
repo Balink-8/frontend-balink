@@ -39,19 +39,6 @@ const Navbar = () => {
         >
           {setTitle(pathname)}
         </a>
-        <div id="userContainer">
-          <a id="notificationLink" href="">
-            <img
-              id="notificationIcon"
-              src={notification}
-              alt="notification-icon"
-              className="me-16"
-            />
-          </a>
-          <a id="avatarLink" href="">
-            <img id="avatarImage" src={avatar} alt="avatar-img" />
-          </a>
-        </div>
       </div>
     </nav>
   );

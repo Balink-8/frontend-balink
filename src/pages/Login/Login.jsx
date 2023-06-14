@@ -52,7 +52,6 @@ const Login = () => {
           password,
         });
 
-        console.log(response);
         const token = response.data.data.token;
         const userRole = response.data.data.user.role;
 

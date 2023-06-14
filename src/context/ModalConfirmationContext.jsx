@@ -10,8 +10,9 @@ const ModalConfirmationContextProvider = ({ children }) => {
     setShowModalConfirmation(false);
   };
 
-  const openModalConfirmation = () => {
+  const openModalConfirmation = (id) => {
     setShowModalConfirmation(true);
+    setSelectedId(id);
   };
 
   return (

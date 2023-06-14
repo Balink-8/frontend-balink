@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import TableArtikel from "../../components/Table/TableArtikel/TableArtikel";
 import useApi from "../../api/useApi";
 import Spinner from "../../components/Spinner/Spinner";
-import EmptyTable from "../../components/EmptyTable/EmptyTable";
+import ModalTerhapus from "../../components/Modal/ModalTerhapus/ModalTerhapus";
+import { ModalTempContext } from "../../context/ModalTempContext";
+import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 
 const Artikel = () => {
   const { response: artikel, loading, error, get } = useApi();
+  const { showModalTemp, openModalTemp } = useContext(ModalTempContext);
 
   useEffect(() => {
     get("/artikel").catch((error) => {
@@ -14,7 +17,7 @@ const Artikel = () => {
     });
   }, []);
 
-  console.log(artikel?.data?.data);
+  console.log(artikel);
   console.log(error);
   console.log(loading);
 
@@ -24,13 +27,12 @@ const Artikel = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <p>Error: {error.message}</p>
-        ) : artikel?.data?.data?.length === 0 ? (
-          <EmptyTable />
+          <ErrorDisplay errorMessage={error.message} />
         ) : (
           <TableArtikel data={artikel?.data?.data} />
         )}
       </div>
+      {showModalTemp && <ModalTerhapus />}
     </div>
   );
 };
