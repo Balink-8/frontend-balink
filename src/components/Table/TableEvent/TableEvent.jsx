@@ -146,12 +146,18 @@ const TableEvent = ({ data }) => {
                         alt=""
                         className={`${styles.actionButton} me-16`}
                         onClick={() => navigate(`/event/edit/${item.id}`)}
+                        id="edit-icon"
                       />
                       <img
                         src={Delete}
                         alt=""
                         className={styles.actionButton}
-                        onClick={() => openModalConfirmation(item.id)}
+                        onClick={() =>
+                          del(
+                            `https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${item.id}`
+                          )
+                        }
+                        id="delete-icon"
                       />
                     </td>
                   </tr>

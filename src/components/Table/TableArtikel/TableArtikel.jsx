@@ -80,6 +80,7 @@ const TableArtikel = ({ data }) => {
               icon={add}
               color="brown"
             />
+
           </div>
           <EmptyTable />
         </div>

@@ -99,6 +99,7 @@ const Login = () => {
             <span className="body-large-semibold">Balink</span>. Aman, Nyaman
             dan Mudah untuk kita bersama.
           </p>
+
           {errorMessage && (
             <p className={styles.errorText} id="error-text">
               {errorMessage}

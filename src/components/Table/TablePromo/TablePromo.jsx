@@ -80,9 +80,13 @@ const TablePromo = ({ data }) => {
                   >
                     Nama Promo
                   </th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Deskripsi Promo</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>
+                    Deskripsi Promo
+                  </th>
                   <th className={`p-3 ${styles.tableHeadRow}`}>Kode Promo</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Potongan Harga</th>
+                  <th className={`p-3 ${styles.tableHeadRow}`}>
+                    Potongan Harga
+                  </th>
                   <th
                     className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
                   ></th>
@@ -91,35 +95,54 @@ const TablePromo = ({ data }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
-                    <td className="p-3" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.NamaPromo}</td>
-                    <td className="p-3"
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/promo/detail/${item.id}`)}
+                    >
+                      {item.NamaPromo}
+                    </td>
+                    <td
+                      className="p-3"
                       style={{
                         maxWidth: "400px",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                       }}
-                      onClick={() => navigate(`/promo/detail/${item.id}`)}>
-                        {item.DeskripsiPromo}
+                      onClick={() => navigate(`/promo/detail/${item.id}`)}
+                    >
+                      {item.DeskripsiPromo}
                     </td>
-                    <td className="p-3 body-medium-semibold" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.KodePromo}</td>
-                    <td className="p-3" onClick={() => navigate(`/promo/detail/${item.id}`)}>{item.PotonganHarga}</td>
+                    <td
+                      className="p-3 body-medium-semibold"
+                      onClick={() => navigate(`/promo/detail/${item.id}`)}
+                    >
+                      {item.KodePromo}
+                    </td>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/promo/detail/${item.id}`)}
+                    >
+                      {item.PotonganHarga}
+                    </td>
                     <td className="p-3">
                       <img
                         src={edit}
                         alt=""
                         className={styles.actionButton}
                         onClick={() => navigate(`/promo/${item.id}`)}
+                        id="edit-icon"
                       />
-                      <img 
-                        src={hapus} 
-                        alt="" 
-                        className={styles.actionButton} 
+                      <img
+                        src={hapus}
+                        alt=""
+                        className={styles.actionButton}
                         onClick={() =>
                           del(
                             `https://648179fd29fa1c5c503172c3.mockapi.io/promo/${item.id}`
                           )
                         }
+                        id="delete-icon"
                       />
                     </td>
                   </tr>

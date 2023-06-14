@@ -102,6 +102,7 @@ const TableTransaksiEvent = ({ userDataEvent }) => {
                           src={receipt_long2}
                           alt=""
                           className={styles.actionButton}
+                          id="detail-icon"
                         />
                       </Link>
                     </td>
