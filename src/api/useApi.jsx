@@ -1,10 +1,24 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const useApi = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+      return Promise.reject(error);
+    }
+  );
 
   const makeRequest = async (method, url, data = null) => {
     setLoading(true);
@@ -12,15 +26,17 @@ const useApi = () => {
     try {
       const config = {
         method: method,
-        url: url,
+        url: `http://167.172.66.247:8002${url}`,
         data: data,
       };
 
       const result = await axios(config);
+
       setResponse(result.data);
       setError(null);
     } catch (error) {
-      setError(error.response.data);
+      console.log(error);
+      setError(error);
       setResponse(null);
     } finally {
       setLoading(false);

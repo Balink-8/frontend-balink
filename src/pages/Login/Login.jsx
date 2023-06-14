@@ -1,19 +1,21 @@
 import styles from "./Login.module.css";
 import Logo from "../../assets/images/Balink 1.png";
-import Gambar from "../../assets/images/bg.jpg";
+import Gambar from "../../assets/images/loginBg.png";
 import InputLogin from "../../elements/InputLogin/InputLogin";
 import IconVisibility from "../../assets/icons/visibility_off.svg";
 import IconVisibilityOpen from "../../assets/images/eyes3.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [icon, setIcon] = useState(IconVisibility);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handlePasswordChange = (event) => {
@@ -21,9 +23,9 @@ const Login = () => {
     setPasswordError(event.target.value.trim() === "");
   };
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-    setUsernameError(event.target.value.trim() === "");
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError(event.target.value.trim() === "");
   };
 
   const toggleShowPassword = () => {
@@ -35,51 +37,88 @@ const Login = () => {
     }
   };
 
-  const onSubmit = () => {
-    if (username.trim() === "") {
-      setUsernameError(true);
+  const onSubmit = async () => {
+    if (email.trim() === "") {
+      setEmailError(true);
     }
     if (password.trim() === "") {
       setPasswordError(true);
     }
 
-    if (username.trim() !== "" && password.trim() !== "") {
-      navigate("/dashboard");
+    if (email.trim() !== "" && password.trim() !== "") {
+      try {
+        const response = await axios.post("http://167.172.66.247:8002/login", {
+          email,
+          password,
+        });
+
+        const token = response.data.data.token;
+        const userRole = response.data.data.user.role;
+
+        if (userRole === "admin") {
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          navigate("/dashboard");
+        } else {
+          console.log("User is not an admin. Access denied to the dashboard.");
+          setErrorMessage(
+            "Access denied. You are not authorized to access the dashboard."
+          );
+          setEmailError(true);
+          setPasswordError(true);
+        }
+      } catch (error) {
+        // Handle login error here
+        setErrorMessage("Login failed. Please check your email and password.");
+        setEmailError(true);
+        setPasswordError(true);
+      }
     }
   };
 
   return (
     <div className="wrapper" id="login-wrapper">
       <div className={styles.backgroundImage}>
-        <img src={Gambar} className={styles.gambar} id="background-image" />
+        <img
+          src={Gambar}
+          className={styles.gambar}
+          alt="Background"
+          id="background-image"
+        />
       </div>
       <form className={styles.form} id="login-form">
         <div className={styles.logo} id="logo">
-          <img src={Logo} className={styles.imageLogo} id="logo-image" />
+          <img
+            src={Logo}
+            className={styles.imageLogo}
+            alt="Logo"
+            id="logo-image"
+          />
           <p className="body-large-regular mt-2 text-center">
             Nikmati kegiatan dan wisata anda dengan{" "}
             <span className="body-large-semibold">Balink</span>. Aman, Nyaman
             dan Mudah untuk kita bersama.
           </p>
-          {usernameError && passwordError && (
+
+          {errorMessage && (
             <p className={styles.errorText} id="error-text">
-              Invalid username or password
+              {errorMessage}
             </p>
           )}
         </div>
         <div className="input-patern" id="input-patern">
           <div className="username">
             <label className="body-large-semibold label" htmlFor="username">
-              Username
+              Email
             </label>
             <InputLogin
               type="text"
-              className={`${styles.input} ${usernameError ? styles.error : ""}`}
-              placeholder="Masukan Username"
-              id="username"
-              name="username"
-              onChange={handleUsernameChange}
-              value={username}
+              className={`${styles.input} ${emailError ? styles.error : ""}`}
+              placeholder="Enter your email"
+              id="email"
+              name="email"
+              onChange={handleEmailChange}
+              value={email}
             />
           </div>
           <label className="body-large-semibold label" htmlFor="password">
@@ -89,7 +128,7 @@ const Login = () => {
             <InputLogin
               type={showPassword ? "text" : "password"}
               className={`${styles.input} ${passwordError ? styles.error : ""}`}
-              placeholder="Masukan Password"
+              placeholder="Enter your password"
               id="password"
               name="password"
               value={password}
@@ -110,7 +149,7 @@ const Login = () => {
               onClick={onSubmit}
               id="login-button"
             >
-              Masuk
+              Login
             </button>
           </div>
         </div>

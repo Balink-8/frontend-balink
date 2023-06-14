@@ -5,6 +5,7 @@ import edit from "../../assets/icons/edit_square_white.svg";
 import hapus from "../../assets/icons/delete.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../../api/useApi";
+import Spinner from "../../components/Spinner/Spinner";
 
 const DetailPromo = () => {
   const navigate = useNavigate();
@@ -21,16 +22,14 @@ const DetailPromo = () => {
   }, []);
 
   const onDelete = () => {
-    del(
-      `https://648179fd29fa1c5c503172c3.mockapi.io/promo/${id}`
-    );
+    del(`https://648179fd29fa1c5c503172c3.mockapi.io/promo/${id}`);
     navigate(-1);
   };
 
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : error ? (
         <p>Error: {error}</p>
       ) : (

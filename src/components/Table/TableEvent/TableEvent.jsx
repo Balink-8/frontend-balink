@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import styles from "./TableEvent.module.css";
@@ -8,12 +8,22 @@ import { useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import add from "../../../assets/icons/add.svg";
+import ModalKonfirmasi from "../../Modal/ModalKonfirmasi/ModalKonfirmasi";
+import ModalTerhapus from "../../Modal/ModalTerhapus/ModalTerhapus";
 import useApi from "../../../api/useApi";
+import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
+import { ModalTempContext } from "../../../context/ModalTempContext";
+import Spinner from "../../Spinner/Spinner";
 
 const TableEvent = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  const { showModalConfirmation, openModalConfirmation, id, setId } =
+    useContext(ModalConfirmationContext);
+  const { showModalTemp } = useContext(ModalTempContext);
+
   const { response: event, loading, error, del } = useApi();
 
   // Menghitung jumlah halaman
@@ -52,6 +62,15 @@ const TableEvent = ({ data }) => {
 
   const handleTambahEvent = () => {
     navigate("/event/tambah");
+  };
+
+  const handleDelete = (id) => {
+    del(`https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`).catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    );
   };
 
   return (
@@ -148,7 +167,8 @@ const TableEvent = ({ data }) => {
           </div>
         </div>
       </div>
-
+      {showModalConfirmation && <ModalKonfirmasi onClick={handleDelete} />}
+      {showModalTemp && <ModalTerhapus />}
       {/* Kotak angka untuk memilih jumlah item per halaman */}
       <div className={`${styles.previous} row`} id="previous">
         <div className="col-10 p-3">
