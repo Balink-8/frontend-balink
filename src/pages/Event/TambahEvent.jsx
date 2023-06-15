@@ -15,25 +15,32 @@ import { useNavigate } from "react-router";
 const TambahEvent = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    fotoEvent: "",
-    judulEvent: "",
-    deskripsiEvent: "",
-    lokasiEvent: "",
-    linkGoogleEvent: "",
-    waktuEvent: "",
-    hargaEvent: "",
-    jumlahEvent: "",
+    artikel_id: "2",
+    gambar: "",
+    nama: "",
+    deskripsi: "",
+    lokasi: "",
+    link_lokasi: "",
+    waktu_mulai: "",
+    waktu_selesai: "",
+    tanggal_mulai: "12 Desember 2023",
+    tanggal_selesai: "12 Desember 2023",
+    harga_tiket: "",
+    stok_tiket: "",
   });
 
   const [errors, setErrors] = useState({
-    fotoEvent: false,
-    judulEvent: false,
-    deskripsiEvent: false,
-    lokasiEvent: false,
-    linkGoogleEvent: false,
-    waktuEvent: false,
-    hargaEvent: false,
-    jumlahEvent: false,
+    gambar: false,
+    nama: false,
+    deskripsi: false,
+    lokasi: false,
+    link_lokasi: false,
+    waktu_mulai: false,
+    waktu_selesai: false,
+    tanggal_mulai: false,
+    tanggal_selesai: false,
+    harga_tiket: false,
+    stok_tiket: false,
   });
 
   const { response: event, loading, error, post } = useApi();
@@ -58,40 +65,41 @@ const TambahEvent = () => {
     });
 
     if (toggle) {
-      if (values.hargaEvent.trim() === "") {
-        newErrors.hargaEvent = true;
+      if (values.harga_tiket.trim() === "") {
+        newErrors.harga_tiket = true;
       }
-      if (values.jumlahEvent.trim() === "") {
-        newErrors.jumlahEvent = true;
+      if (values.stok_tiket.trim() === "") {
+        newErrors.stok_tiket = true;
       }
       setErrors(newErrors);
     } else {
-      newErrors.hargaEvent = false;
-      newErrors.jumlahEvent = false;
+      newErrors.harga_tiket = false;
+      newErrors.stok_tiket = false;
       setErrors(newErrors);
     }
 
-    if (!Object.values(newErrors).some((error) => error)) {
-      setValues({
-        fotoEvent: "",
-        judulEvent: "",
-        deskripsiEvent: "",
-        lokasiEvent: "",
-        linkGoogleEvent: "",
-        waktuEvent: "",
-        hargaEvent: "",
-        jumlahEvent: "",
-      });
+    // if (!Object.values(newErrors).some((error) => error)) {
+    //   setValues({
+    //     artikel_id: "2",
+    //     gambar: "",
+    //     nama: "",
+    //     deskripsi: "",
+    //     lokasi: "",
+    //     link_lokasi: "",
+    //     waktu_mulai: "",
+    //     waktu_selesai: "",
+    //     tanggal_mulai: "12 Desember 2023",
+    //     tanggal_selesai: "12 Desember 2023",
+    //     harga_tiket: "",
+    //     stok_tiket: "",
+    //   });
 
-      setFile("");
-      console.log(values);
-    }
+    //   setFile("");
+    //   console.log(values);
+    // }
 
     if (!Object.values(newErrors).some((error) => error)) {
-      post(
-        "https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event",
-        values
-      );
+      post("/event", values);
       navigate(-1);
       setFile("");
     }
@@ -99,14 +107,18 @@ const TambahEvent = () => {
 
   const onReset = (e) => {
     setValues({
-      fotoEvent: "",
-      judulEvent: "",
-      deskripsiEvent: "",
-      lokasiEvent: "",
-      linkGoogleEvent: "",
-      waktuEvent: "",
-      hargaEvent: "",
-      jumlahEvent: "",
+      // artikel_id: "",
+      gambar: "",
+      nama: "",
+      deskripsi: "",
+      lokasi: "",
+      link_lokasi: "",
+      waktu_mulai: "",
+      waktu_selesai: "",
+      // tanggal_mulai: "12 Desember 2023",
+      // tanggal_selesai: "12 Desember 2023",
+      harga_tiket: "",
+      stok_tiket: "",
     });
     setFile("");
   };
@@ -149,23 +161,24 @@ const TambahEvent = () => {
             {/* upload foto */}
             <div className={styles.containerEvent}>
               <div className={styles.imgArea}>
-                <img src={file} />
+                <img id="uploadedImage" src={file} />
               </div>
               <div className="d-flex justify-content-center">
-                <label
-                  htmlFor={"fotoEvent"}
-                  className={styles.buttonMain}
-                  style={{ width: "50%" }}
-                >
-                  <img src={Filefoto} alt="filefoto" />
-                  <span className="body-medium-semibold"> Pilih Foto</span>
+                <label htmlFor="gambar">
+                  <Button
+                    id="pilihFotoButton"
+                    label="Pilih Foto"
+                    icon={Filefoto}
+                    color="brown"
+                    onClick={() => document.getElementById("gambar").click()}
+                  />
                 </label>
                 <input
-                  id={"fotoEvent"}
+                  id="gambar"
                   className={styles.inputPhoto}
-                  type={"file"}
-                  name={"fotoEvent"}
-                  value={values.fotoEvent}
+                  type="file"
+                  name="gambar"
+                  value={values.gambar}
                   onChange={getFile}
                 />
               </div>
@@ -181,15 +194,14 @@ const TambahEvent = () => {
             <div className={styles.inputBox}>
               <Input
                 type={"text"}
-                required={"required"}
                 placeholder={"Masukkan judul event"}
                 className={styles.input}
-                id={"judulEvent"}
-                name={"judulEvent"}
-                value={values.judulEvent}
+                id="nama"
+                name="nama"
+                value={values.nama}
                 onChange={handleOnChange}
                 label={"Judul Event"}
-                error={errors.judulEvent}
+                error={errors.nama}
               />
             </div>
           </div>
@@ -198,21 +210,20 @@ const TambahEvent = () => {
             <div className={styles.inputBox}>
               <Textarea
                 rows={12}
-                required={"required"}
                 placeholder={"Masukkan deskripsi event"}
                 className={
-                  errors.deskripsiEvent
+                  errors.deskripsi
                     ? `${styles.errorInput} ${styles.input}`
                     : styles.input
                 }
-                id={"deskripsiEvent"}
-                name={"deskripsiEvent"}
-                value={values.deskripsiEvent}
+                id="deskripsi"
+                name={"deskripsi"}
+                value={values.deskripsi}
                 onChange={handleOnChange}
               />
               <label
                 className={
-                  errors.deskripsiEvent
+                  errors.deskripsi
                     ? `${styles.errorTitle} ${styles.inputTitle}`
                     : styles.inputTitle
                 }
@@ -244,15 +255,14 @@ const TambahEvent = () => {
                   <div className={styles.inputBox}>
                     <Input
                       type={"text"}
-                      required={"required"}
                       placeholder={"Masukkan alamat lokasi"}
                       className={styles.input}
-                      id={"lokasiEvent"}
-                      name={"lokasiEvent"}
-                      value={values.lokasiEvent}
+                      id="lokasi"
+                      name="lokasi"
+                      value={values.lokasi}
                       onChange={handleOnChange}
                       label={"Lokasi"}
-                      error={errors.lokasiEvent}
+                      error={errors.lokasi}
                     />
                   </div>
                 </div>
@@ -261,15 +271,14 @@ const TambahEvent = () => {
                   <div className={styles.inputBox}>
                     <Input
                       type={"text"}
-                      required={"required"}
                       placeholder={"Masukkan link Google Maps lokasi"}
                       className={styles.input}
-                      id={"linkGoogleEvent"}
-                      name={"linkGoogleEvent"}
-                      value={values.linkGoogleEvent}
+                      id="link_lokasi"
+                      name="link_lokasi"
+                      value={values.link_lokasi}
                       onChange={handleOnChange}
                       label={"Google Maps"}
-                      error={errors.linkGoogleEvent}
+                      error={errors.link_lokasi}
                     />
                   </div>
                 </div>
@@ -278,15 +287,30 @@ const TambahEvent = () => {
                   <div className={styles.inputBox}>
                     <Input
                       type={"text"}
-                      required={"required"}
-                      placeholder={"00:00"}
+                      placeholder={"Masukkan waktu mulai"}
                       className={styles.input}
-                      id={"waktuEvent"}
-                      name={"waktuEvent"}
-                      value={values.waktuEvent}
+                      id="waktu_mulai"
+                      name="waktu_mulai"
+                      value={values.waktu_mulai}
                       onChange={handleOnChange}
-                      label={"Waktu"}
-                      error={errors.waktuEvent}
+                      label={"Waktu Mulai"}
+                      error={errors.waktu_mulai}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-24">
+                  <div className={styles.inputBox}>
+                    <Input
+                      type={"text"}
+                      placeholder={"Masukkan waktu selesai"}
+                      className={styles.input}
+                      id="waktu_selesai"
+                      name="waktu_selesai"
+                      value={values.waktu_selesai}
+                      onChange={handleOnChange}
+                      label={"Waktu Selesai"}
+                      error={errors.waktu_selesai}
                     />
                   </div>
                 </div>
@@ -322,15 +346,14 @@ const TambahEvent = () => {
                     <div className={styles.inputBox}>
                       <Input
                         type={"number"}
-                        required={"required"}
                         placeholder={"masukkan harga jenis"}
                         className={styles.input}
-                        id={"hargaEvent"}
-                        name={"hargaEvent"}
-                        value={values.hargaEvent}
+                        id="harga_tiket"
+                        name="harga_tiket"
+                        value={values.harga_tiket}
                         onChange={handleOnChange}
                         label={"Harga"}
-                        error={toggle ? errors.hargaEvent : false}
+                        error={toggle ? errors.harga_tiket : false}
                       />
                     </div>
                   </div>
@@ -341,15 +364,14 @@ const TambahEvent = () => {
                     <div className={styles.inputBox}>
                       <Input
                         type={"number"}
-                        required={"required"}
                         placeholder={"masukkan jumlah"}
                         className={styles.input}
-                        id={"jumlahEvent"}
-                        name={"jumlahEvent"}
-                        value={values.jumlahEvent}
+                        id={"stok_tiket"}
+                        name={"stok_tiket"}
+                        value={values.stok_tiket}
                         onChange={handleOnChange}
                         label={"Jumlah"}
-                        error={toggle ? errors.jumlahEvent : false}
+                        error={toggle ? errors.stok_tiket : false}
                       />
                     </div>
                   </div>

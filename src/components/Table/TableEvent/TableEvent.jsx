@@ -1,28 +1,25 @@
 import React, { useState, useContext } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
+import add from "../../../assets/icons/add.svg";
 import styles from "./TableEvent.module.css";
 import Edit from "../../../assets/icons/edit.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import { useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
-import add from "../../../assets/icons/add.svg";
 import ModalKonfirmasi from "../../Modal/ModalKonfirmasi/ModalKonfirmasi";
-import ModalTerhapus from "../../Modal/ModalTerhapus/ModalTerhapus";
+import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import useApi from "../../../api/useApi";
 import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
-import { ModalTempContext } from "../../../context/ModalTempContext";
-import Spinner from "../../Spinner/Spinner";
 
 const TableEvent = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const { showModalConfirmation, openModalConfirmation, id, setId } =
+  const { showModalConfirmation, openModalConfirmation, selectedId } =
     useContext(ModalConfirmationContext);
-  const { showModalTemp } = useContext(ModalTempContext);
 
   const { response: event, loading, error, del } = useApi();
 
@@ -63,166 +60,190 @@ const TableEvent = ({ data }) => {
   const handleTambahEvent = () => {
     navigate("/event/tambah");
   };
+  
+  console.log(selectedId);
 
-  const handleDelete = (id) => {
-    del(`https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`).catch(
-      (error) => {
+  const handleDelete = (selectedId) => {
+    del(`/event/${selectedId}`).catch((error) => {
         // Handle error
-        console.error(error);
+        //console.error(error);
       }
     );
   };
 
   return (
-    <div>
-      <div className="d-flex justify-content-between">
-        <TableSearch />
-        <div id="tambahEvent">
-          <Button
-            onClick={handleTambahEvent}
-            label="Tambah Event"
-            icon={add}
-            color="brown"
-          />
-        </div>
-      </div>
+    <>
+      {data?.length === 0 ? (
+        <div className="d-flex flex-column justify-content-center">
+          <div className="d-grid col-2 ms-auto">
+            <div id="tambahEventFirst">
+              <Button
+                onClick={handleTambahEvent}
+                label="Tambah Event"
+                icon={add}
+                color="brown"
+              />
+            </div>
 
-      <div className="row mt-4 text-center">
-        <div className="col-12 p-0">
-          <div className="table-responsive">
-            <table className="table ">
-              {/* Render data pada halaman saat ini */}
-              <thead className={styles.thead} id="thead">
-                <tr id="tr-table">
-                  <th
-                    className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
+          </div>
+          <EmptyTable />
+        </div>
+      ) : (
+        <div>
+          <div className="d-flex justify-content-between">
+            <TableSearch />
+            <div id="tambahEvent">
+              <Button
+                onClick={handleTambahEvent}
+                label="Tambah Event"
+                icon={add}
+                color="brown"
+              />
+            </div>
+          </div>
+
+          <div className="row mt-4 text-center">
+            <div className="col-12 p-0">
+              <div className="table-responsive">
+                <table className="table ">
+                  {/* Render data pada halaman saat ini */}
+                  <thead className={styles.thead} id="thead">
+                    <tr id="tr-table">
+                      <th
+                        className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
+                      >
+                        Foto
+                      </th>
+                      <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
+                      <th className={`p-3 ${styles.tableHeadRow}`}>Deskripsi</th>
+                      <th className={`p-3 ${styles.tableHeadRow}`}>Tanggal</th>
+                      <th
+                        className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
+                      ></th>
+                    </tr>
+                  </thead>
+                  <tbody className={styles.tbody} id="tbody">
+                    {currentItems?.map((item) => (
+                      <tr className={styles.tableRow} key={item.ID}>
+                        <td
+                          className="p-3"
+                          onClick={() => navigate(`/event/detail/${item.ID}`)}
+                        >
+                          <img src={item.gambar} className={styles.image} />
+                        </td>
+                        <td
+                          className="p-3"
+                          onClick={() => navigate(`/event/detail/${item.ID}`)}
+                        >
+                          {item.nama}
+                        </td>
+                        <td
+                          className="p-3"
+                          style={{
+                            maxWidth: "400px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                          onClick={() => navigate(`/event/detail/${item.ID}`)}
+                        >
+                          {item.deskripsi}
+                        </td>
+                        <td
+                          className="p-3"
+                          onClick={() => navigate(`/event/detail/${item.ID}`)}
+                        >
+                          {item.waktu_mulai}
+                        </td>
+                        <td className="p-3">
+                          <img
+                            src={Edit}
+                            alt=""
+                            className={`${styles.actionButton} me-16`}
+                            onClick={() => navigate(`/event/edit/${item.ID}`)}
+                            id="edit-icon"
+                          />
+                          <img
+                            src={Delete}
+                            alt=""
+                            className={styles.actionButton}
+                            onClick={() => openModalConfirmation(item.ID)}
+                            id="delete-icon"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {showModalConfirmation && (
+            <ModalKonfirmasi
+              onClick={() => handleDelete(selectedId)}
+              path={"event"}
+            />
+          )}
+          {/* {showModalConfirmation && <ModalKonfirmasi onClick={handleDelete} />}
+          {showModalTemp && <ModalTerhapus />} */}
+
+
+          {/* Kotak angka untuk memilih jumlah item per halaman */}
+          <div className={`${styles.previous} row`} id="previous">
+            <div className="col-10 p-3">
+              <span className={styles.tableSpan}>Showing</span>
+              <select
+                className={`${styles.itemsPerPage} ms-2 `}
+                id="itemsPerPage"
+                value={itemsPerPage}
+                onChange={changeItemsPerPage}
+              >
+                <option value={10}>10</option>
+                <option value={30}>20</option>
+                <option value={50}>50</option>
+              </select>
+              <span className={`${styles.tableSpan} ms-2`}>of 50</span>
+            </div>
+            <div className="col-2 p-3">
+              <button
+                className={`${styles.btnleft} col-2 me-1`}
+                id="btnleft"
+                onClick={previousPage}
+                disabled={currentPage === 1}
+              >
+                <img src={btn_arrow_left} alt="" />
+              </button>
+
+              {/* tombol halaman */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                return (
+                  <button
+                    className={`${styles.paginationPage} me-1 ${
+                      currentPage === page && styles.active
+                    }`}
+                    key={page}
+                    onClick={() => goToPage(page)}
+                    disabled={currentPage === page}
                   >
-                    Foto
-                  </th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Deskripsi</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Tanggal</th>
-                  <th
-                    className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
-                  ></th>
-                </tr>
-              </thead>
-              <tbody className={styles.tbody} id="tbody">
-                {currentItems?.map((item) => (
-                  <tr className={styles.tableRow} key={item.id}>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/event/detail/${item.id}`)}
-                    >
-                      <img src={item.fotoEvent} className={styles.image} />
-                    </td>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/event/detail/${item.id}`)}
-                    >
-                      {item.judulEvent}
-                    </td>
-                    <td
-                      className="p-3"
-                      style={{
-                        maxWidth: "400px",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                      onClick={() => navigate(`/event/detail/${item.id}`)}
-                    >
-                      {item.deskripsiEvent}
-                    </td>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/event/detail/${item.id}`)}
-                    >
-                      {item.waktuEvent}
-                    </td>
-                    <td className="p-3">
-                      <img
-                        src={Edit}
-                        alt=""
-                        className={`${styles.actionButton} me-16`}
-                        onClick={() => navigate(`/event/edit/${item.id}`)}
-                        id="edit-icon"
-                      />
-                      <img
-                        src={Delete}
-                        alt=""
-                        className={styles.actionButton}
-                        onClick={() =>
-                          del(
-                            `https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${item.id}`
-                          )
-                        }
-                        id="delete-icon"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    {page}
+                  </button>
+                );
+              })}
+
+              {/* Tombol halaman berikutnya */}
+              <button
+                className={styles.btnright}
+                id="btnright"
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+              >
+                <img src={keyboard_arrow_right} alt="" />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      {showModalConfirmation && <ModalKonfirmasi onClick={handleDelete} />}
-      {showModalTemp && <ModalTerhapus />}
-      {/* Kotak angka untuk memilih jumlah item per halaman */}
-      <div className={`${styles.previous} row`} id="previous">
-        <div className="col-10 p-3">
-          <span className={styles.tableSpan}>Showing</span>
-          <select
-            className={`${styles.itemsPerPage} ms-2 `}
-            id="itemsPerPage"
-            value={itemsPerPage}
-            onChange={changeItemsPerPage}
-          >
-            <option value={10}>10</option>
-            <option value={30}>20</option>
-            <option value={50}>50</option>
-          </select>
-          <span className={`${styles.tableSpan} ms-2`}>of 50</span>
-        </div>
-        <div className="col-2 p-3">
-          <button
-            className={`${styles.btnleft} col-2 me-1`}
-            id="btnleft"
-            onClick={previousPage}
-            disabled={currentPage === 1}
-          >
-            <img src={btn_arrow_left} alt="" />
-          </button>
-
-          {/* tombol halaman */}
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-            return (
-              <button
-                className={`${styles.paginationPage} me-1 ${
-                  currentPage === page && styles.active
-                }`}
-                key={page}
-                onClick={() => goToPage(page)}
-                disabled={currentPage === page}
-              >
-                {page}
-              </button>
-            );
-          })}
-
-          {/* Tombol halaman berikutnya */}
-          <button
-            className={styles.btnright}
-            id="btnright"
-            onClick={nextPage}
-            disabled={currentPage === totalPages}
-          >
-            <img src={keyboard_arrow_right} alt="" />
-          </button>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
