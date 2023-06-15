@@ -78,6 +78,7 @@ const DetailArtikel = () => {
                 color="white"
                 icon={hapus}
                 onClick={() => openModalConfirmation(id)}
+                id="hapusButton"
               />
             </div>
             <div className="d-grid col-3">
@@ -86,6 +87,7 @@ const DetailArtikel = () => {
                 color="brown"
                 icon={edit}
                 onClick={() => navigate(`/artikel/edit/${id}`)}
+                id="editButton"
               />
             </div>
           </div>
