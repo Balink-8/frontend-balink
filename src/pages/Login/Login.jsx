@@ -47,25 +47,20 @@ const Login = () => {
 
     if (email.trim() !== "" && password.trim() !== "") {
       try {
-        const response = await axios.post("http://167.172.66.247:8002/login", {
-          email,
-          password,
-        });
+        const response = await axios.post(
+          "http://167.172.66.247:8002/admin_login",
+          {
+            email,
+            password,
+          }
+        );
 
         const token = response.data.data.token;
-        const userRole = response.data.data.user.role;
-
-        if (userRole === "admin") {
+        // Check if the response contains a valid token
+        if (token) {
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           navigate("/dashboard");
-        } else {
-          console.log("User is not an admin. Access denied to the dashboard.");
-          setErrorMessage(
-            "Access denied. You are not authorized to access the dashboard."
-          );
-          setEmailError(true);
-          setPasswordError(true);
         }
       } catch (error) {
         // Handle login error here
