@@ -12,15 +12,15 @@ import { useNavigate } from "react-router-dom";
 const TambahArtikel = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    gambar: "",
-    judul: "",
-    isi: "",
+    fotoArtikel: "",
+    judulArtikel: "",
+    deskripsiArtikel: "",
   });
 
   const [errors, setErrors] = useState({
-    gambar: false,
-    judul: false,
-    isi: false,
+    fotoArtikel: false,
+    judulArtikel: false,
+    deskripsiArtikel: false,
   });
 
   const { response: artikel, loading, error, post } = useApi();
@@ -41,7 +41,10 @@ const TambahArtikel = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      post("/artikel", values);
+      post(
+        "https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article",
+        values
+      );
       navigate(-1);
       setFile("");
     }
@@ -49,9 +52,9 @@ const TambahArtikel = () => {
 
   const onReset = () => {
     setValues({
-      gambar: "",
-      judul: "",
-      isi: "",
+      fotoArtikel: "",
+      judulArtikel: "",
+      deskripsiArtikel: "",
     });
     setFile("");
   };
@@ -99,21 +102,23 @@ const TambahArtikel = () => {
                 <img id="uploadedImage" src={file} />
               </div>
               <div className="d-flex justify-content-center">
-                <label htmlFor="gambar">
+                <label htmlFor="fotoArtikel">
                   <Button
                     id="pilihFotoButton"
                     label="Pilih Foto"
                     icon={Filefoto}
                     color="brown"
-                    onClick={() => document.getElementById("gambar").click()}
+                    onClick={() =>
+                      document.getElementById("fotoArtikel").click()
+                    }
                   />
                 </label>
                 <input
-                  id="gambar"
+                  id="fotoArtikel"
                   className={styles.inputPhoto}
                   type="file"
-                  name="gambar"
-                  value={values.gambar}
+                  name="fotoArtikel"
+                  value={values.fotoArtikel}
                   onChange={getFile}
                 />
               </div>
@@ -131,12 +136,12 @@ const TambahArtikel = () => {
                 type="text"
                 placeholder="Masukkan judul artikel"
                 className={styles.input}
-                id="judul"
-                name="judul"
-                value={values.judul}
+                id="judulArtikel"
+                name="judulArtikel"
+                value={values.judulArtikel}
                 onChange={handleOnChange}
                 label="Judul Artikel"
-                error={errors.judul}
+                error={errors.judulArtikel}
               />
             </div>
           </div>
@@ -147,18 +152,18 @@ const TambahArtikel = () => {
                 rows={12}
                 placeholder="Masukkan deskripsi artikel"
                 className={
-                  errors.isi
+                  errors.deskripsiArtikel
                     ? `${styles.errorInput} ${styles.input}`
                     : styles.input
                 }
-                id="isi"
-                name="isi"
-                value={values.isi}
+                id="deskripsiArtikel"
+                name="deskripsiArtikel"
+                value={values.deskripsiArtikel}
                 onChange={handleOnChange}
               />
               <label
                 className={
-                  errors.isi
+                  errors.deskripsiArtikel
                     ? `${styles.errorTitle} ${styles.inputTitle}`
                     : styles.inputTitle
                 }

@@ -1,32 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./Modal.module.css";
 import Button from "../../../elements/Button/Button";
 import close from "../../../assets/icons/close.svg";
 import check from "../../../assets/icons/check.svg";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
-import ModalTerhapus from "../ModalTerhapus/ModalTerhapus";
-import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
-import { ModalAkunContext } from "../../../context/ModalAkunContext";
-import { ModalTempContext } from "../../../context/ModalTempContext";
-import { useNavigate } from "react-router-dom";
 
-const ModalKonfirmasi = ({ onClick, path }) => {
-  const { closeModalConfirmation } = useContext(ModalConfirmationContext);
-  const { closeModalAkun } = useContext(ModalAkunContext);
-  const { showModalTemp, openModalTemp } = useContext(ModalTempContext);
-  const navigate = useNavigate();
-
-  const handleDelete = () => {
-    onClick();
-    openModalTemp();
-    closeModalConfirmation();
-    closeModalAkun();
-    setTimeout(() => {
-      navigate(`/${path}`);
-      window.location.reload();
-    }, 1500);
-  };
-
+const ModalKonfirmasi = () => {
   return (
     <div
       id="modalKonfirmasiContainer"
@@ -61,7 +40,6 @@ const ModalKonfirmasi = ({ onClick, path }) => {
               label="Yes"
               color="white"
               icon={check}
-              onClick={() => handleDelete()}
             />
           </div>
           <div className="d-grid col-6">
@@ -70,12 +48,10 @@ const ModalKonfirmasi = ({ onClick, path }) => {
               label="Cancel"
               color="brown"
               icon={close}
-              onClick={() => closeModalConfirmation()}
             />
           </div>
         </div>
       </div>
-      {showModalTemp && <ModalTerhapus />}
     </div>
   );
 };

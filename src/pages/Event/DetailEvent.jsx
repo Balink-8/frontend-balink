@@ -1,18 +1,13 @@
 import styles from "./DetailEvent.module.css";
 // import foto from "../../assets/images/Mask group.png";
-import info from "../../assets/icons/language.svg";
-import lokasi from "../../assets/icons/location_on.svg";
+import info from "../../assets/icons/language.svg";import lokasi from "../../assets/icons/location_on.svg";
 import link from "../../assets/icons/link.svg";
 import waktu from "../../assets/icons/alarm.svg";
 import rectangle from "../../assets/images/Rectangle 333.png";
-import edit from "../../assets/icons/edit_square_white.svg";
-import hapus from "../../assets/icons/delete.svg";
-import Button from "../../elements/Button/Button";
 import { Switch } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../../api/useApi";
-import Spinner from "../../components/Spinner/Spinner";
 
 const DetailEvent = ({ data }) => {
   const { response: event, loading, error, get } = useApi();
@@ -22,7 +17,7 @@ const DetailEvent = ({ data }) => {
     toggle ? setToggle(false) : setToggle(true);
   };
 
-  const { id } = useParams();
+  const { id } = useParams();  
   const [values, setValues] = useState({
     fotoEvent: "",
     judulEvent: "",
@@ -34,13 +29,14 @@ const DetailEvent = ({ data }) => {
     jumlahEvent: "",
   });
 
+
   useEffect(() => {
-    get(`https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`).catch(
-      (error) => {
-        // Handle error
-        console.error(error);
-      }
-    );
+    get(
+      `https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`
+    ).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
   }, []);
 
   useEffect(() => {
@@ -63,8 +59,7 @@ const DetailEvent = ({ data }) => {
   const infoEvent = {
     imgInfo: rectangle,
     titleInfo: "Tari Kecak Daerah Bali",
-    descInfo:
-      "Tari kecak adalah saah satu tari khas bali yang menceritakan tentang bla bla bla bla...",
+    descInfo: "Tari kecak adalah saah satu tari khas bali yang menceritakan tentang bla bla bla bla...",
   };
 
   const [file, setFile] = useState();
@@ -72,7 +67,7 @@ const DetailEvent = ({ data }) => {
   return (
     <div>
       {loading ? (
-        <Spinner />
+        <p>Loading...</p>
       ) : error ? (
         <p>Error: {error}</p>
       ) : (
@@ -82,12 +77,13 @@ const DetailEvent = ({ data }) => {
           <div className="row pb-4">
             <div className="col-4">
               <div className="d-flex justify-content-center">
+
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
                     <img
                       id="uploadedImage"
-                      src={file ? file : values.fotoEvent}
+                      src={file ? file : values.fotoEvent} 
                     />
                   </div>
                 </div>
@@ -148,11 +144,8 @@ const DetailEvent = ({ data }) => {
                     </div>
 
                     <div className="mt-24">
-                      <img src={link} alt="link" />
-                      <span className="body-medium-semibold">
-                        {" "}
-                        Link Google Maps
-                      </span>
+                    <img src={link} alt="link" />
+                      <span className="body-medium-semibold"> Link Google Maps</span>
                       <p className={`body-medium-regular`}>
                         {values.linkGoogleEvent}
                       </p>
@@ -160,12 +153,13 @@ const DetailEvent = ({ data }) => {
 
                     <div className="mt-24">
                       <img src={waktu} alt="waktu" />
-                      <span className="body-medium-semibold"> Waktu</span>
-                      <p className={`body-medium-regular`}>
-                        {values.waktuEvent}
-                      </p>
+                        <span className="body-medium-semibold"> Waktu</span>
+                        <p className={`body-medium-regular`}>
+                          {values.waktuEvent}
+                        </p>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -214,24 +208,6 @@ const DetailEvent = ({ data }) => {
                   </div>
                 )}
               </div>
-            </div>
-          </div>
-          <div className="d-flex justify-content-end gap-3 pt-5">
-            <div className="d-grid col-3">
-              <Button
-                label="Hapus"
-                color="white"
-                icon={hapus}
-                // onClick={onDelete}
-              />
-            </div>
-            <div className="d-grid col-3">
-              <Button
-                label="Edit"
-                color="brown"
-                icon={edit}
-                onClick={() => navigate(`/event/edit/${id}`)}
-              />
             </div>
           </div>
         </div>

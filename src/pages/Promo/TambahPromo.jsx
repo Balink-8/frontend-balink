@@ -11,17 +11,17 @@ import { useNavigate } from "react-router-dom";
 const TambahPromo = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    nama: "",
-    deskripsi: "",
-    kode: "",
-    potongan_harga: 0,
+    NamaPromo: "",
+    DeskripsiPromo: "",
+    KodePromo: "",
+    PotonganHarga: "",
   });
 
   const [errors, setErrors] = useState({
-    nama: false,
-    deskripsi: false,
-    kode: false,
-    potongan_harga: false,
+    NamaPromo: false,
+    DeskripsiPromo: false,
+    KodePromo: false,
+    PotonganHarga: false,
   });
 
   const { response: promo, loading, error, post } = useApi();
@@ -39,21 +39,20 @@ const TambahPromo = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      const potongan_harga = parseInt(values.potongan_harga)
-      post("/promo", {
-        ...values, 
-        potongan_harga: potongan_harga
-      });
+      post(
+        "https://648179fd29fa1c5c503172c3.mockapi.io/promo",
+        values
+      );
       console.log(values)
       navigate(-1);
     }
   };
   const onReset = (e) => {
     setValues({
-      nama: "",
-      deskripsi: "",
-      kode: "",
-      potongan_harga: 0,
+      NamaPromo: "",
+      DeskripsiPromo: "",
+      KodePromo: "",
+      PotonganHarga: "",
     });
   };
 
@@ -103,10 +102,10 @@ const TambahPromo = () => {
               id={"addNamaPromo"}
               label={"Nama Promo"}
               placeholder={"Masukkan Nama Promo"}
-              name={"nama"}
-              value={values.nama}
+              name={"NamaPromo"}
+              value={values.NamaPromo}
               onChange={handleOnChange}
-              error={errors.nama}
+              error={errors.NamaPromo}
             />
             <br />
           </div>
@@ -133,13 +132,13 @@ const TambahPromo = () => {
               required={"required"}
               placeholder={"Masukkan Deskripsi Promo"}
               className={
-                errors.deskripsi
+                errors.DeskripsiPromo
                   ? `${styles.errorInput} ${styles.textArea}`
                   : styles.textArea
               }
               id={"addDeskripsiPromo"}
-              name={"deskripsi"}
-              value={values.deskripsi}
+              name={"DeskripsiPromo"}
+              value={values.DeskripsiPromo}
               onChange={handleOnChange}
             />
             <label
@@ -175,10 +174,10 @@ const TambahPromo = () => {
               id={"addKodePromo"}
               label={"Kode Promo"}
               placeholder={"Masukkan Kode Promo"}
-              name={"kode"}
-              value={values.kode}
+              name={"KodePromo"}
+              value={values.KodePromo}
               onChange={handleOnChange}
-              error={errors.kode}
+              error={errors.KodePromo}
             />
             <br />
           </div>
@@ -207,10 +206,10 @@ const TambahPromo = () => {
               id={"addPotonganHarga"}
               label={"Potongan Harga"}
               placeholder={"Rp. 0"}
-              name={"potongan_harga"}
-              value={values.potongan_harga}
+              name={"PotonganHarga"}
+              value={values.PotonganHarga}
               onChange={handleOnChange}
-              error={errors.potongan_harga}
+              error={errors.PotonganHarga}
             />
             <br />
           </div>
@@ -220,7 +219,6 @@ const TambahPromo = () => {
       <div className="d-flex justify-content-end gap-3 pt-5">
         <div className="d-grid col-3">
           <Button
-            id="reset"
             label="Reset"
             color="white"
             icon={restart}
@@ -228,13 +226,7 @@ const TambahPromo = () => {
           />
         </div>
         <div className="d-grid col-3">
-          <Button 
-            id="simpan"
-            label="Simpan" 
-            color="brown" 
-            icon={save} 
-            onClick={onSubmit} 
-          />
+          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
         </div>
       </div>
     </div>

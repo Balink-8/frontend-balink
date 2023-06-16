@@ -93,8 +93,10 @@ const TableKategori = ({ data }) => {
               <tbody className={styles.tbody} id="tbody">
                 {currentItems?.map((item) => (
                   <tr className={styles.tableRow} key={item.id}>
-                    <td className="p-3" 
-                      onClick={() => navigate(`/kategori/detail/${item.id}`)}>
+                    <td
+                      className="p-3"
+                      onClick={() => navigate(`/kategori/detail/${item.id}`)}
+                    >
                       {item.namaKategori}
                     </td>
                     <td

@@ -11,7 +11,6 @@ import Button from "../../elements/Button/Button";
 import { Switch } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../../api/useApi";
-import Spinner from "../../components/Spinner/Spinner";
 
 const EditEvent = () => {
   const { response: event, loading, error, get, put } = useApi();
@@ -34,13 +33,14 @@ const EditEvent = () => {
     jumlahEvent: "",
   });
 
+
   useEffect(() => {
-    get(`https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`).catch(
-      (error) => {
-        // Handle error
-        console.error(error);
-      }
-    );
+    get(
+      `https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`
+    ).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
   }, []);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const EditEvent = () => {
   return (
     <div>
       {loading ? (
-        <Spinner />
+        <p>Loading...</p>
       ) : error ? (
         <p>Error: {error}</p>
       ) : (
@@ -107,7 +107,7 @@ const EditEvent = () => {
                   <div className={styles.imgArea}>
                     <img
                       id="uploadedImage"
-                      src={file ? file : values.fotoEvent}
+                      src={file ? file : values.fotoEvent} 
                     />
                   </div>
                   <div className="d-flex justify-content-center">
@@ -116,9 +116,7 @@ const EditEvent = () => {
                         label="Pilih Foto"
                         icon={Filefoto}
                         color="brown"
-                        onClick={() =>
-                          document.getElementById("fotoEvent").click()
-                        }
+                        onClick={() => document.getElementById("fotoEvent").click()}
                       />
                     </label>
                     <input
@@ -314,12 +312,12 @@ const EditEvent = () => {
               />
             </div>
             <div className="d-grid col-3 ">
-              <Button
+              <Button 
                 id="saveButton"
-                label="Simpan"
-                color="brown"
-                icon={save}
-                onClick={onSubmit}
+                label="Simpan" 
+                color="brown" 
+                icon={save} 
+                onClick={onSubmit} 
               />
             </div>
           </div>
