@@ -14,13 +14,13 @@ const TambahArtikel = () => {
   const [values, setValues] = useState({
     gambar: "",
     judul: "",
-    isi: "",
+    deskripsi: "",
   });
 
   const [errors, setErrors] = useState({
     gambar: false,
     judul: false,
-    isi: false,
+    deskripsi: false,
   });
 
   const { response: artikel, loading, error, post } = useApi();
@@ -51,7 +51,7 @@ const TambahArtikel = () => {
     setValues({
       gambar: "",
       judul: "",
-      isi: "",
+      deskripsi: "",
     });
     setFile("");
   };
@@ -147,18 +147,18 @@ const TambahArtikel = () => {
                 rows={12}
                 placeholder="Masukkan deskripsi artikel"
                 className={
-                  errors.isi
+                  errors.deskripsi
                     ? `${styles.errorInput} ${styles.input}`
                     : styles.input
                 }
-                id="isi"
-                name="isi"
-                value={values.isi}
+                id="deskripsi"
+                name="deskripsi"
+                value={values.deskripsi}
                 onChange={handleOnChange}
               />
               <label
                 className={
-                  errors.isi
+                  errors.deskripsi
                     ? `${styles.errorTitle} ${styles.inputTitle}`
                     : styles.inputTitle
                 }
