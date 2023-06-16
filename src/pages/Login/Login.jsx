@@ -56,14 +56,11 @@ const Login = () => {
         );
 
         const token = response.data.data.token;
-        // Check if the response contains a valid token
         if (token) {
           localStorage.setItem("token", token);
-          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           navigate("/dashboard");
         }
       } catch (error) {
-        // Handle login error here
         setErrorMessage("Login failed. Please check your email and password.");
         setEmailError(true);
         setPasswordError(true);
