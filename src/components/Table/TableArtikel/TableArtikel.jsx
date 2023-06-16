@@ -18,6 +18,7 @@ const TableArtikel = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const { response: artikel, loading, error, del } = useApi();
+  console.log(data);
 
   const { showModalConfirmation, openModalConfirmation, selectedId } =
     useContext(ModalConfirmationContext);
@@ -155,7 +156,7 @@ const TableArtikel = ({ data }) => {
                           onClick={() => navigate(`/artikel/detail/${item.ID}`)}
                           id={`keterangan-cell`}
                         >
-                          {item.isi}
+                          {item.deskripsi}
                         </td>
                         <td className="p-3">
                           <img
