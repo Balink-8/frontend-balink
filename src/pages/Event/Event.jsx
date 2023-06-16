@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import TableEvent from "../../components/Table/TableEvent/TableEvent";
 import useApi from "../../api/useApi";
-import Spinner from "../../components/Spinner/Spinner";
-import EmptyTable from "../../components/EmptyTable/EmptyTable";
 
 const Event = () => {
   const { response: event, loading, error, get } = useApi();
 
   useEffect(() => {
-    get("/event").catch((error) => {
-      // Handle error
-      console.error(error);
-    });
+    get("https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event").catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    );
   }, []);
 
-  console.log(event?.data?.data);
+  console.log(event);
   console.log(error);
   console.log(loading);
 
@@ -22,17 +22,16 @@ const Event = () => {
     <div>
       <div>
         {loading ? (
-          <Spinner />
+          <p>Loading...</p>
         ) : error ? (
-          <p>Error: {error.message}</p>
-        ) : event?.data?.data.length === 0 ? (
-          <EmptyTable />
+          <p>Error: {error}</p>
         ) : (
-          <TableEvent data={event?.data?.data} />
+          <TableEvent data={event} />
         )}
       </div>
     </div>
   );
+
 };
 
 export default Event;

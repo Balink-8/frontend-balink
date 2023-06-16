@@ -1,31 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TableAkun from "../../components/Table/TableAkun/TableAkun";
 import useApi from "../../api/useApi";
-import Spinner from "../../components/Spinner/Spinner";
-import EmptyTable from "../../components/EmptyTable/EmptyTable";
-import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 
 const Akun = () => {
   const { response, error, loading, get } = useApi();
 
+  console.log(response);
+  console.log(error);
+  console.log(loading);
+
   useEffect(() => {
-    get("/user").catch((error) => {
-      // Handle error
-      console.error(error);
-    });
+    get("https://647ca813c0bae2880ad10a5f.mockapi.io/balink/user").catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    );
   }, []);
 
   return (
     <div>
       <div>
         {loading ? (
-          <Spinner />
+          <p>Loading...</p>
         ) : error ? (
-          <ErrorDisplay errorMessage={error.message} />
-        ) : response?.data?.data?.length === 0 ? (
-          <EmptyTable />
+          <p>Error: {error}</p>
         ) : (
-          <TableAkun userData={response?.data?.data} />
+          <TableAkun userData={response} />
         )}
       </div>
     </div>
