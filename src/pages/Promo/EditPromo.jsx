@@ -8,20 +8,21 @@ import save from "../../assets/icons/save.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../../api/useApi";
 import Spinner from "../../components/Spinner/Spinner";
+import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 
 const EditPromo = () => {
   const navigate = useNavigate();
   const { response: promo, loading, error, get, put } = useApi();
   const [values, setValues] = useState({
-    NamaPromo: "",
-    DeskripsiPromo: "",
-    KodePromo: "",
-    PotonganHarga: "",
+    nama: "",
+    deskripsi: "",
+    kode: "",
+    potongan_harga: "",
   });
   const { id } = useParams();
 
   useEffect(() => {
-    get(`https://648179fd29fa1c5c503172c3.mockapi.io/promo/${id}`).catch(
+    get(`/promo/${id}`).catch(
       (error) => {
         // Handle error
         console.error(error);
@@ -32,18 +33,22 @@ const EditPromo = () => {
   useEffect(() => {
     if (promo) {
       setValues({
-        NamaPromo: promo.NamaPromo,
-        DeskripsiPromo: promo.DeskripsiPromo,
-        KodePromo: promo.KodePromo,
-        PotonganHarga: promo.PotonganHarga,
+        nama: promo?.data.nama,
+        deskripsi: promo?.data.deskripsi,
+        kode: promo?.data.kode,
+        potongan_harga: promo?.data.potongan_harga,
       });
     }
   }, [promo]);
 
-  const paragraphs = values.DeskripsiPromo?.split("\n\n");
+  const paragraphs = values.deskripsi?.split("\n\n");
 
   const onSubmit = () => {
-    put(`https://648179fd29fa1c5c503172c3.mockapi.io/promo/${id}`, values);
+    const potongan_harga = parseInt(values.potongan_harga)
+    put(`/promo/${id}`, {
+      ...values, 
+      potongan_harga: potongan_harga
+    });
     navigate(-1);
   };
 
@@ -63,7 +68,7 @@ const EditPromo = () => {
       {loading ? (
         <Spinner />
       ) : error ? (
-        <p>Error: {error}</p>
+        <ErrorDisplay errorMessage={error.message} />
       ) : (
         <div className={`${styles.autoLayoutTambah}`}>
           <div className={`${styles.layoutTambah}`}>
@@ -90,8 +95,8 @@ const EditPromo = () => {
                   id={"editNamaPromo"}
                   label={"Nama Promo"}
                   placeholder={"Masukkan Nama Promo"}
-                  name={"NamaPromo"}
-                  value={values.NamaPromo}
+                  name={"nama"}
+                  value={values.nama}
                   onChange={handleOnChange}
                 />
                 <br />
@@ -120,8 +125,8 @@ const EditPromo = () => {
                   placeholder={"Masukkan Deskripsi Promo"}
                   className={styles.textArea}
                   id={"editDeskripsiPromo"}
-                  name={"DeskripsiPromo"}
-                  value={values.DeskripsiPromo}
+                  name={"deskripsi"}
+                  value={values.deskripsi}
                   onChange={handleOnChange}
                 />
                 <label className={styles.inputTitle}>Deskripsi Promo</label>
@@ -149,8 +154,8 @@ const EditPromo = () => {
                   id={"editKodePromo"}
                   label={"Kode Promo"}
                   placeholder={"Masukkan Kode Promo"}
-                  name={"KodePromo"}
-                  value={values.KodePromo}
+                  name={"kode"}
+                  value={values.kode}
                   onChange={handleOnChange}
                 />
                 <br />
@@ -178,8 +183,8 @@ const EditPromo = () => {
                   id={"editPotonganHarga"}
                   label={"Potongan Harga"}
                   placeholder={"Rp. 0"}
-                  name={"PotonganHarga"}
-                  value={values.PotonganHarga}
+                  name={"potongan_harga"}
+                  value={values.potongan_harga}
                   onChange={handleOnChange}
                 />
                 <br />
@@ -190,6 +195,7 @@ const EditPromo = () => {
           <div className="d-flex justify-content-end gap-3 pt-5">
             <div className="d-grid col-3">
               <Button
+                id="cancel"
                 label="Batal"
                 color="white"
                 icon={cancel}
@@ -198,6 +204,7 @@ const EditPromo = () => {
             </div>
             <div className="d-grid col-3">
               <Button
+                id="simpan"
                 label="Simpan"
                 color="brown"
                 icon={save}

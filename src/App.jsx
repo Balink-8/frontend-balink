@@ -83,7 +83,7 @@ function App() {
                     />
                     <Route path="/promo" element={<Promo />} />
                     <Route path="/promo/tambah" element={<TambahPromo />} />
-                    <Route path="/promo/:id" element={<EditPromo />} />
+                    <Route path="/promo/edit/:id" element={<EditPromo />} />
                     <Route path="/promo/detail/:id" element={<DetailPromo />} />
                     <Route path="/artikel" element={<Artikel />} />
                     <Route path="/artikel/tambah" element={<TambahArtikel />} />
