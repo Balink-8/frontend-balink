@@ -20,6 +20,18 @@ const useApi = () => {
     }
   );
 
+  axios.interceptors.request.use(
+    (config) => {
+      config.headers["Authorization"] = `Bearer ${localStorage.getItem(
+        "token"
+      )} `;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
   const makeRequest = async (method, url, data = null) => {
     setLoading(true);
 
@@ -34,6 +46,7 @@ const useApi = () => {
 
       setResponse(result.data);
       setError(null);
+      return result;
     } catch (error) {
       console.log(error);
       setError(error);

@@ -79,8 +79,8 @@ const TableArtikel = ({ data }) => {
               label="Tambah Artikel"
               icon={add}
               color="brown"
+              id="tambah-artikel-button"
             />
-
           </div>
           <EmptyTable />
         </div>
@@ -93,6 +93,7 @@ const TableArtikel = ({ data }) => {
               label="Tambah Artikel"
               icon={add}
               color="brown"
+              id="tambah-artikel-button"
             />
           </div>
 
@@ -105,11 +106,20 @@ const TableArtikel = ({ data }) => {
                     <tr id="tr-table">
                       <th
                         className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
+                        id="foto-header"
                       >
                         Foto
                       </th>
-                      <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
-                      <th className={`p-3 ${styles.tableHeadRow}`}>
+                      <th
+                        className={`p-3 ${styles.tableHeadRow}`}
+                        id="nama-header"
+                      >
+                        Nama
+                      </th>
+                      <th
+                        className={`p-3 ${styles.tableHeadRow}`}
+                        id="keterangan-header"
+                      >
                         Keterangan
                       </th>
                       <th
@@ -123,12 +133,14 @@ const TableArtikel = ({ data }) => {
                         <td
                           className="p-3"
                           onClick={() => navigate(`/artikel/detail/${item.ID}`)}
+                          id={`foto-cell`}
                         >
                           <img src={item.gambar} className={styles.image} />
                         </td>
                         <td
                           className="p-3"
                           onClick={() => navigate(`/artikel/detail/${item.ID}`)}
+                          id={`nama-cell`}
                         >
                           {item.judul}
                         </td>
@@ -141,6 +153,7 @@ const TableArtikel = ({ data }) => {
                             textOverflow: "ellipsis",
                           }}
                           onClick={() => navigate(`/artikel/detail/${item.ID}`)}
+                          id={`keterangan-cell`}
                         >
                           {item.isi}
                         </td>
@@ -150,12 +163,14 @@ const TableArtikel = ({ data }) => {
                             alt=""
                             className={`${styles.actionButton} me-16`}
                             onClick={() => navigate(`/artikel/edit/${item.ID}`)}
+                            id={`edit-button`}
                           />
                           <img
                             src={Delete}
                             alt=""
                             className={styles.actionButton}
                             onClick={() => openModalConfirmation(item.ID)}
+                            id={`delete-button`}
                           />
                         </td>
                       </tr>
@@ -209,6 +224,7 @@ const TableArtikel = ({ data }) => {
                       key={page}
                       onClick={() => goToPage(page)}
                       disabled={currentPage === page}
+                      id={`pagination-page-${page}`}
                     >
                       {page}
                     </button>
