@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Login from "./pages/Login/Login";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import HubungiKami from "./pages/LandingPage/HubungiKami";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Akun from "./pages/Akun/Akun";
 import Event from "./pages/Event/Event";
@@ -97,6 +98,7 @@ function App() {
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/HubungiKami" element={<HubungiKami />} />
               </Routes>
             </ModalTempContextProvider>
           </ModalLogoutContextProvider>
