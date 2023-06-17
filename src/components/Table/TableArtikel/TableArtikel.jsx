@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import add from "../../../assets/icons/add.svg";
@@ -10,18 +10,37 @@ import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import useApi from "../../../api/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
-import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
-import ModalKonfirmasi from "../../Modal/ModalKonfirmasi/ModalKonfirmasi";
+import Modal from "react-modal";
+import konfirmasi from "../../../assets/images/konfirmasi.png";
+import close from "../../../assets/icons/close.svg";
+import check from "../../../assets/icons/check.svg";
+import deleteImg from "../../../assets/images/delete.png";
 
 const TableArtikel = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const { response: artikel, loading, error, del } = useApi();
-  console.log(data);
+  const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
 
-  const { showModalConfirmation, openModalConfirmation, selectedId } =
-    useContext(ModalConfirmationContext);
+  const { response: artikel, loading, error, del } = useApi();
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
 
   // Menghitung jumlah halaman
   const totalPages = Math.ceil(data?.length / itemsPerPage);
@@ -61,13 +80,35 @@ const TableArtikel = ({ data }) => {
     navigate("/artikel/tambah");
   };
 
-  console.log(selectedId);
+  const closeKonfirmasiModal = () => {
+    setModalKonfirmasiIsOpen(false);
+  };
 
-  const handleDeleteArtikel = (selectedId) => {
-    del(`/artikel/${selectedId}`).catch((error) => {
-      // Handle error
-      // console.error(error);
-    });
+  const openKonfirmasiModal = (id) => {
+    setSelectedId(id);
+    setModalKonfirmasiIsOpen(true);
+  };
+
+  const openTerhapusModal = () => {
+    setModalTerhapusIsOpen(true);
+    setTimeout(() => {
+      closeTerhapusModal();
+      window.location.reload();
+    }, 1500);
+  };
+
+  const closeTerhapusModal = () => {
+    setModalTerhapusIsOpen(false);
+  };
+
+  const deleteArtikel = () => {
+    del(`/artikel/${selectedId}`)
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -170,7 +211,7 @@ const TableArtikel = ({ data }) => {
                             src={Delete}
                             alt=""
                             className={styles.actionButton}
-                            onClick={() => openModalConfirmation(item.ID)}
+                            onClick={() => openKonfirmasiModal(item.ID)}
                             id={`delete-button`}
                           />
                         </td>
@@ -181,12 +222,6 @@ const TableArtikel = ({ data }) => {
               </div>
             </div>
           </div>
-          {showModalConfirmation && (
-            <ModalKonfirmasi
-              onClick={() => handleDeleteArtikel(selectedId)}
-              path={"artikel"}
-            />
-          )}
 
           {/* Kotak angka untuk memilih jumlah item per halaman */}
           <div className={`${styles.previous}  d-flex flex-row `} id="previous">
@@ -244,6 +279,103 @@ const TableArtikel = ({ data }) => {
               </button>
             </div>
           </div>
+
+          {/* Modal */}
+          <Modal
+            isOpen={modalKonfirmasiIsOpen}
+            onRequestClose={closeKonfirmasiModal}
+            contentLabel="Confirmation Modal"
+            style={customStylesConfirmation}
+            id="modalKonfirmasi"
+          >
+            <div
+              id="modalKonfirmasiContainer"
+              className={`d-flex justify-content-center align-items-center`}
+            >
+              <div
+                id="modalKonfirmasiContent"
+                className={`d-flex flex-column justify-content-center align-items-center`}
+              >
+                <img
+                  id="modalKonfirmasiImage"
+                  src={konfirmasi}
+                  alt="konfirmasi-img"
+                  className="mb-16"
+                />
+                <h4
+                  id="modalKonfirmasiTitle"
+                  className="title-large-semibold mb-32 text-center"
+                >
+                  Apakah anda ingin menghapus data ini?
+                </h4>
+                <p id="modalKonfirmasiText1" className="body-small-regular">
+                  Data yang sudah dihapus tidak dapat dikembalikan lagi
+                </p>
+                <p
+                  id="modalKonfirmasiText2"
+                  className="body-small-regular mb-32"
+                >
+                  Apakah anda yakin?
+                </p>
+                <div className="d-flex gap-5 justify-content-center">
+                  <div className="d-grid col-6">
+                    <Button
+                      id="modalKonfirmasiYesButton"
+                      label="Yes"
+                      color="white"
+                      icon={check}
+                      onClick={deleteArtikel}
+                    />
+                  </div>
+                  <div className="d-grid col-6">
+                    <Button
+                      id="modalKonfirmasiCancelButton"
+                      label="Cancel"
+                      color="brown"
+                      icon={close}
+                      onClick={closeKonfirmasiModal}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Modal>
+          <Modal
+            isOpen={modalTerhapusIsOpen}
+            onRequestClose={closeTerhapusModal}
+            contentLabel="Deleted Modal"
+            style={customStylesConfirmation}
+            id="modalTerhapus"
+          >
+            <div
+              id="modal-terhapus-container"
+              className={`d-flex justify-content-center align-items-center`}
+            >
+              <div
+                id="modal-terhapus-content"
+                className={`d-flex flex-column justify-content-center align-items-center`}
+              >
+                <img
+                  id="modal-terhapus-image"
+                  src={deleteImg}
+                  alt="success"
+                  className="mb-16"
+                />
+                <h4
+                  id="modal-terhapus-heading"
+                  className="title-large-semibold mb-16"
+                >
+                  Berhasil Dihapus
+                </h4>
+                <p
+                  id="modal-terhapus-message"
+                  className="body-small-regular mb-16"
+                >
+                  Data telah berhasil dihapus
+                </p>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
     </>
