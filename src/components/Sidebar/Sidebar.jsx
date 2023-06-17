@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import logo from "../../assets/logo/Balink 2 1.svg";
 import dashboard from "../../assets/icons/dashboard.svg";
 import person from "../../assets/icons/person.svg";
@@ -10,13 +10,39 @@ import home from "../../assets/icons/home.svg";
 import logout from "../../assets/icons/logout.svg";
 import storefront from "../../assets/icons/storefront.svg";
 import folder_copy from "../../assets/icons/folder_copy.svg";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Sidebar.module.css";
-import { ModalLogoutContext } from "../../context/ModalLogoutContext";
-import ModalLogout from "../Modal/ModalLogout/ModalLogout";
+import Modal from "react-modal";
+import Button from "../../elements/Button/Button";
+import close from "../../assets/icons/close.svg";
+import check from "../../assets/icons/check.svg";
+import axios from "axios";
 
 const Sidebar = () => {
-  const { showModalLogout, openModalLogout } = useContext(ModalLogoutContext);
+  const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState(false);
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"];
+    navigate("/login");
+  };
 
   return (
     <div className={`${styles.sidebar} d-flex position-fixed col-2`}>
@@ -155,7 +181,7 @@ const Sidebar = () => {
           <Link
             to="#"
             className="d-flex align-item-center gap-3 text-decoration-none"
-            onClick={() => openModalLogout()}
+            onClick={() => setModalLogoutIsOpen(true)}
           >
             <img src={logout} alt="" className="img" />
             <span className="text-danger" id="keluar">
@@ -164,7 +190,59 @@ const Sidebar = () => {
           </Link>
         </div>
       </div>
-      {showModalLogout && <ModalLogout />}
+      <div>
+        <Modal
+          isOpen={modalLogoutIsOpen}
+          style={customStyles}
+          contentLabel="Logout Modal"
+          onRequestClose={() => setModalLogoutIsOpen(false)}
+        >
+          {" "}
+          <div
+            id="modalLogoutContainer"
+            className={`${styles.modalContainer} d-flex justify-content-center align-items-center`}
+          >
+            <div
+              id="modalLogoutContent"
+              className={`${styles.modalContent} d-flex flex-column justify-content-center align-items-center`}
+            >
+              <h4
+                id="modalLogoutTitle"
+                className="title-large-semibold mb-32 text-center"
+              >
+                Apakah anda yakin untuk Logout?
+              </h4>
+              <p className="body-small-regular text-center">
+                Jika anda logout maka semua data yang ada disini akan hilang dan
+                tidak dapat dikembalikan lagi
+              </p>
+              <p className="body-small-regular text-center">
+                Apakah anda tetap ingin Logout?
+              </p>
+              <div className="d-flex gap-5 justify-content-center mt-32">
+                <div className="d-grid col-6">
+                  <Button
+                    id="modalLogoutYesButton"
+                    label="Yes"
+                    color="white"
+                    icon={check}
+                    onClick={() => handleLogout()}
+                  />
+                </div>
+                <div className="d-grid col-6">
+                  <Button
+                    id="modalLogoutCancelButton"
+                    label="Cancel"
+                    color="brown"
+                    icon={close}
+                    onClick={() => setModalLogoutIsOpen(false)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>{" "}
+        </Modal>
+      </div>
     </div>
   );
 };
