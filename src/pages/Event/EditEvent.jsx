@@ -16,9 +16,16 @@ import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import Modal from "react-modal";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
+import add from "../../assets/icons/add.svg";
 
 const EditEvent = () => {
   const { response: event, loading, error, get, put } = useApi();
+  const { response: artikel, 
+          loading: loadingartikel, 
+          error: errorartikel, 
+          get: getartikel, 
+          put: putartikel } = useApi();
+
   const [toggle, setToggle] = useState(false);
 
   const toggler = () => {
@@ -52,40 +59,32 @@ const EditEvent = () => {
     );
   }, []);
 
+  // get artikel
   useEffect(() => {
-    if (event) {
-      setValues({
-        gambar: event?.data.gambar,
-        nama: event?.data.nama,
-        deskripsi: event?.data.deskripsi,
-        lokasi: event?.data.lokasi,
-        link_lokasi: event?.data.link_lokasi,
-        waktu_mulai: event?.data.waktu_mulai,
-        waktu_selesai: event?.data.waktu_selesai,
-        tanggal_mulai: "12 Desember 2023",
-        tanggal_selesai: "12 Desember 2023",
-        harga_tiket: event?.data.harga_tiket,
-        stok_tiket: event?.data.stok_tiket,
-      });
-    }
-  }, [event]);
+    getartikel(`/artikel/${event?.data.artikel_id}`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, [localStorage.getItem("artikel_id")]);
+  console.log(artikel)
 
   useEffect(() => {
     setValues({
        artikel_id: localStorage.getItem("artikel_id"),
        gambar: localStorage.getItem("gambar"),
-       nama:  localStorage.getItem("nama"),
-       deskripsi: localStorage.getItem("deskripsi"),
-       lokasi: localStorage.getItem("lokasi"),
-       link_lokasi: localStorage.getItem("link_lokasi"),
-       waktu_mulai: localStorage.getItem("waktu_mulai"),
-       waktu_selesai: localStorage.getItem("waktu_selesai"),
+       nama:  localStorage.getItem("nama")?localStorage.getItem("nama") : event?.data.nama,
+       deskripsi: localStorage.getItem("deskripsi")?localStorage.getItem("deskripsi") : event?.data.deskripsi,
+       lokasi: localStorage.getItem("lokasi")?localStorage.getItem("lokasi") : event?.data.lokasi,
+       link_lokasi: localStorage.getItem("link_lokasi")?localStorage.getItem("link_lokasi") : event?.data.link_lokasi,
+       waktu_mulai: localStorage.getItem("waktu_mulai")?localStorage.getItem("waktu_mulai") : event?.data.waktu_mulai,
+       waktu_selesai: localStorage.getItem("waktu_selesai")?localStorage.getItem("waktu_selesai") : event?.data.waktu_selesai,
        // tanggal_mulai: "12 Desember 2023",
        // tanggal_selesai: "12 Desember 2023",
-       harga_tiket: localStorage.getItem("harga_tiket"),
-       stok_tiket: localStorage.getItem("stok_tiket"),
+       harga_tiket: localStorage.getItem("harga_tiket")?localStorage.getItem("harga_tiket") : event?.data.harga_tiket,
+       stok_tiket: localStorage.getItem("stok_tiket")?localStorage.getItem("stok_tiket") : event?.data.stok_tiket,
     })
-  }, []);
+    console.log(event?.data.nama)
+  }, [event]);
 
   const paragraphs = values.deskripsi?.split("\n\n");
 
@@ -283,7 +282,46 @@ const EditEvent = () => {
                     <img src={info} alt="info" />
                     <span className="body-medium-semibold"> Info Lengkap</span>
                     <div className="d-grid col-12 ">
-                      <Button label="Ganti Artikel" color="brown" icon={edit} onClick={onArtikel}/>
+                    {artikel ? (
+                    <div>
+                      <div className={`my-3 ${styles.layoutInfo}`}>
+                        <div>
+                          <img src={artikel?.data?.gambar} alt="" />
+                        </div>
+                        <div>
+                          <p className="body-medium-semibold">
+                            {artikel?.data?.judul}
+                          </p>
+                          {paragraph?.map((text, index) => (
+                            <p
+                              key={index}
+                              id={`articleDescription${index}`}
+                              className="body-small-regular"
+                            >
+                              {text}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="w-100">
+                        <div className="d-grid">
+                          <Button
+                            label="Ganti Artikel"
+                            color="brown"
+                            icon={add}
+                            onClick={onArtikel}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button
+                      label="Tambah Artikel"
+                      color="brown"
+                      icon={add}
+                      onClick={onArtikel}
+                    />
+                  )}
                     </div>
                   </div>
 

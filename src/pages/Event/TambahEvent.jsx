@@ -89,13 +89,25 @@ const TambahEvent = () => {
     localStorage.removeItem("harga_tiket", values.harga_tiket);
     localStorage.removeItem("stok_tiket", values.stok_tiket);
 
-    Object.keys(values).forEach((key) => {
-      if (values[key].trim() === "") {
-        newErrors[key] = true;
-      } else {
-        newErrors[key] = false;
-      }
-    });
+    // Object.keys(values).forEach((key) => {
+    //   if (values[key].trim() === "") {
+    //     newErrors[key] = true;
+    //   } else {
+    //     newErrors[key] = false;
+    //   }
+    // });
+
+    if (values.nama.trim() === "") {
+      newErrors.nama = true;
+    } else {
+      newErrors.nama = false;
+    }
+
+    if (values.deskripsi.trim() === "") {
+      newErrors.deskripsi = true;
+    } else {
+      newErrors.deskripsi = false;
+    }
 
     setErrors(newErrors);
 

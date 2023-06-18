@@ -18,12 +18,16 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
+import add from "../../assets/icons/add.svg";
+
 
 const DetailEvent = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
 
   const { response: event, loading, error, get, del } = useApi();
+  const { response: artikel, loading: artikelloading, error: artikelerror, get: getartikel} = useApi();
+
   
   const navigate = useNavigate();
 
@@ -57,6 +61,19 @@ const DetailEvent = () => {
     });
   }, [id]);
 
+  // get artikel
+  useEffect(() => {
+    getartikel(`/artikel/${event?.data.artikel_id}`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, [event?.data.artikel_id]);
+  console.log(artikel)
+
+  const onArtikel = (e) => {
+    navigate("/tentang-artikel");
+  };
+
   const handleDelete = (selectedId) => {
     del(`/event/${id}`)
     .then(() => {
@@ -87,7 +104,7 @@ const DetailEvent = () => {
     setModalTerhapusIsOpen(false);
   };
 
-  const paragraph = event?.data?.deskripsi?.split("\n\n");
+  const paragraph = artikel?.data?.deskripsi?.split("\n\n");
 
   const infoEvent = {
     imgInfo: rectangle,
@@ -157,21 +174,33 @@ const DetailEvent = () => {
                     <img src={info} alt="info" />
                     <span className="body-medium-semibold"> Info Lengkap</span>
 
-                    <div className="d-grid col-12 mt-2">
-                      <div className={`${styles.layoutInfo}`}>
+                    <div className="d-grid col-12 ">
+                  {artikel && (
+                    <div>
+                      <div className={`my-3 ${styles.layoutInfo}`}>
                         <div>
-                          <img src={infoEvent.imgInfo} alt="" />
+                          <img src={artikel?.data?.gambar} alt="" />
                         </div>
                         <div>
                           <p className="body-medium-semibold">
-                            {infoEvent.titleInfo}
+                            {artikel?.data?.judul}
                           </p>
-                          <p className="body-small-regular">
-                            {infoEvent.descInfo}
-                          </p>
+                          {paragraph?.map((text, index) => (
+                            <p
+                              key={index}
+                              id={`articleDescription${index}`}
+                              className="body-small-regular"
+                            >
+                              {text}
+                            </p>
+                          ))}
                         </div>
                       </div>
                     </div>
+                  )
+                    
+                  }
+                </div>
                   </div>
 
                   <div className="col-lg-6">
