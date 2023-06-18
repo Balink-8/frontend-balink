@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import add from "../../../assets/icons/add.svg";
@@ -10,25 +10,58 @@ import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import useApi from "../../../api/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
-import { ModalConfirmationContext } from "../../../context/ModalConfirmationContext";
-import ModalKonfirmasi from "../../Modal/ModalKonfirmasi/ModalKonfirmasi";
+import Modal from "react-modal";
+import konfirmasi from "../../../assets/images/konfirmasi.png";
+import close from "../../../assets/icons/close.svg";
+import check from "../../../assets/icons/check.svg";
+import deleteImg from "../../../assets/images/delete.png";
+import Spinner from "../../../components/Spinner/Spinner";
+import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
 
-const TableArtikel = ({ data }) => {
+const TableArtikel = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const { response: artikel, loading, error, del } = useApi();
+  const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
 
-  const { showModalConfirmation, openModalConfirmation, selectedId } =
-    useContext(ModalConfirmationContext);
+  const { response: artikel, loading, error, del, get } = useApi();
+
+  useEffect(() => {
+    get(`/artikel?page=${currentPage}&limit=${itemsPerPage}`).catch((error) => {
+      console.log(error);
+    });
+  }, [currentPage, itemsPerPage]);
+
+  console.log(artikel);
+  console.log(loading);
+  console.log(error);
+
+  const data = artikel?.data?.data;
+  console.log(data?.length);
+  console.log(data);
+  console.log(artikel?.data);
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
 
   // Menghitung jumlah halaman
-  const totalPages = Math.ceil(data?.length / itemsPerPage);
-
-  // Mendapatkan data yang ditampilkan pada halaman saat ini
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(artikel?.data?.total_data / itemsPerPage);
+  console.log(totalPages);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -60,13 +93,35 @@ const TableArtikel = ({ data }) => {
     navigate("/artikel/tambah");
   };
 
-  console.log(selectedId);
+  const closeKonfirmasiModal = () => {
+    setModalKonfirmasiIsOpen(false);
+  };
 
-  const handleDeleteArtikel = (selectedId) => {
-    del(`/artikel/${selectedId}`).catch((error) => {
-      // Handle error
-      // console.error(error);
-    });
+  const openKonfirmasiModal = (id) => {
+    setSelectedId(id);
+    setModalKonfirmasiIsOpen(true);
+  };
+
+  const openTerhapusModal = () => {
+    setModalTerhapusIsOpen(true);
+    setTimeout(() => {
+      closeTerhapusModal();
+      window.location.reload();
+    }, 1500);
+  };
+
+  const closeTerhapusModal = () => {
+    setModalTerhapusIsOpen(false);
+  };
+
+  const deleteArtikel = () => {
+    del(`/artikel/${selectedId}`)
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -86,163 +141,273 @@ const TableArtikel = ({ data }) => {
         </div>
       ) : (
         <div>
-          <div className="d-flex justify-content-between">
-            <TableSearch />
-            <Button
-              onClick={handleTambahArtikel}
-              label="Tambah Artikel"
-              icon={add}
-              color="brown"
-              id="tambah-artikel-button"
-            />
-          </div>
-
-          <div className="row mt-4 text-center">
-            <div className="col-12 p-0">
-              <div className="table-responsive">
-                <table className="table">
-                  {/* Render data pada halaman saat ini */}
-                  <thead className={styles.thead} id="thead">
-                    <tr id="tr-table">
-                      <th
-                        className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
-                        id="foto-header"
-                      >
-                        Foto
-                      </th>
-                      <th
-                        className={`p-3 ${styles.tableHeadRow}`}
-                        id="nama-header"
-                      >
-                        Nama
-                      </th>
-                      <th
-                        className={`p-3 ${styles.tableHeadRow}`}
-                        id="keterangan-header"
-                      >
-                        Keterangan
-                      </th>
-                      <th
-                        className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
-                      ></th>
-                    </tr>
-                  </thead>
-                  <tbody className={styles.tbody} id="tbody">
-                    {currentItems?.map((item) => (
-                      <tr className={styles.tableRow} key={item.ID}>
-                        <td
-                          className="p-3"
-                          onClick={() => navigate(`/artikel/detail/${item.ID}`)}
-                          id={`foto-cell`}
-                        >
-                          <img src={item.gambar} className={styles.image} />
-                        </td>
-                        <td
-                          className="p-3"
-                          onClick={() => navigate(`/artikel/detail/${item.ID}`)}
-                          id={`nama-cell`}
-                        >
-                          {item.judul}
-                        </td>
-                        <td
-                          className="p-3"
-                          style={{
-                            maxWidth: "400px",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                          onClick={() => navigate(`/artikel/detail/${item.ID}`)}
-                          id={`keterangan-cell`}
-                        >
-                          {item.isi}
-                        </td>
-                        <td className="p-3">
-                          <img
-                            src={Edit}
-                            alt=""
-                            className={`${styles.actionButton} me-16`}
-                            onClick={() => navigate(`/artikel/edit/${item.ID}`)}
-                            id={`edit-button`}
-                          />
-                          <img
-                            src={Delete}
-                            alt=""
-                            className={styles.actionButton}
-                            onClick={() => openModalConfirmation(item.ID)}
-                            id={`delete-button`}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          {loading ? (
+            <Spinner />
+          ) : error ? (
+            <ErrorDisplay errorMessage={error.message} />
+          ) : (
+            <div>
+              <div className="d-flex justify-content-between">
+                <TableSearch />
+                <Button
+                  onClick={handleTambahArtikel}
+                  label="Tambah Artikel"
+                  icon={add}
+                  color="brown"
+                  id="tambah-artikel-button"
+                />
               </div>
-            </div>
-          </div>
-          {showModalConfirmation && (
-            <ModalKonfirmasi
-              onClick={() => handleDeleteArtikel(selectedId)}
-              path={"artikel"}
-            />
-          )}
 
-          {/* Kotak angka untuk memilih jumlah item per halaman */}
-          <div className={`${styles.previous}  d-flex flex-row `} id="previous">
-            <div className="p-3 me-auto">
-              <span className={styles.tableSpan}>Showing</span>
-              <select
-                className={`${styles.itemsPerPage} ms-2 `}
-                id="itemsPerPage"
-                value={itemsPerPage}
-                onChange={changeItemsPerPage}
-              >
-                <option value={10}>10</option>
-                <option value={30}>20</option>
-                <option value={50}>50</option>
-              </select>
-              <span className={`${styles.tableSpan} ms-2`}>of 50</span>
-            </div>
-            <div className="p-3 d-flex justify-content-between">
-              <button
-                className={`${styles.btnleft} col-2 me-1`}
-                id="btnleft"
-                onClick={previousPage}
-                disabled={currentPage === 1}
-              >
-                <img src={btn_arrow_left} alt="" />
-              </button>
+              <div className="row mt-4 text-center">
+                <div className="col-12 p-0">
+                  <div className="table-responsive">
+                    <table className="table">
+                      {/* Render data pada halaman saat ini */}
+                      <thead className={styles.thead} id="thead">
+                        <tr id="tr-table">
+                          <th
+                            className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
+                            id="foto-header"
+                          >
+                            Foto
+                          </th>
+                          <th
+                            className={`p-3 ${styles.tableHeadRow}`}
+                            id="nama-header"
+                          >
+                            Nama
+                          </th>
+                          <th
+                            className={`p-3 ${styles.tableHeadRow}`}
+                            id="keterangan-header"
+                          >
+                            Keterangan
+                          </th>
+                          <th
+                            className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
+                          ></th>
+                        </tr>
+                      </thead>
+                      <tbody className={styles.tbody} id="tbody">
+                        {data?.map((item) => (
+                          <tr className={styles.tableRow} key={item.ID}>
+                            <td
+                              className="p-3"
+                              onClick={() =>
+                                navigate(`/artikel/detail/${item.ID}`)
+                              }
+                              id={`foto-cell`}
+                            >
+                              <img src={item.gambar} className={styles.image} />
+                            </td>
+                            <td
+                              className="p-3"
+                              onClick={() =>
+                                navigate(`/artikel/detail/${item.ID}`)
+                              }
+                              id={`nama-cell`}
+                            >
+                              {item.judul}
+                            </td>
+                            <td
+                              className="p-3"
+                              style={{
+                                maxWidth: "400px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                              onClick={() =>
+                                navigate(`/artikel/detail/${item.ID}`)
+                              }
+                              id={`keterangan-cell`}
+                            >
+                              {item.deskripsi}
+                            </td>
+                            <td className="p-3">
+                              <img
+                                src={Edit}
+                                alt=""
+                                className={`${styles.actionButton} me-16`}
+                                onClick={() =>
+                                  navigate(`/artikel/edit/${item.ID}`)
+                                }
+                                id={`edit-button`}
+                              />
+                              <img
+                                src={Delete}
+                                alt=""
+                                className={styles.actionButton}
+                                onClick={() => openKonfirmasiModal(item.ID)}
+                                id={`delete-button`}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
 
-              {/* tombol halaman */}
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => {
-                  return (
-                    <button
-                      className={`${styles.paginationPage} me-1 ${
-                        currentPage === page && styles.active
-                      }`}
-                      key={page}
-                      onClick={() => goToPage(page)}
-                      disabled={currentPage === page}
-                      id={`pagination-page-${page}`}
+              {/* Kotak angka untuk memilih jumlah item per halaman */}
+              <div
+                className={`${styles.previous}  d-flex flex-row `}
+                id="previous"
+              >
+                <div className="p-3 me-auto">
+                  <span className={styles.tableSpan}>Showing</span>
+                  <select
+                    className={`${styles.itemsPerPage} ms-2 `}
+                    id="itemsPerPage"
+                    value={itemsPerPage}
+                    onChange={changeItemsPerPage}
+                  >
+                    <option value={10}>10</option>
+                    <option value={30}>20</option>
+                    <option value={50}>50</option>
+                  </select>
+                  <span className={`${styles.tableSpan} ms-2`}>of 50</span>
+                </div>
+                <div className="p-3 d-flex justify-content-between">
+                  <button
+                    className={`${styles.btnleft} col-2 me-1 px-3 `}
+                    id="btnleft"
+                    onClick={previousPage}
+                    disabled={currentPage === 1}
+                  >
+                    <img src={btn_arrow_left} alt="" />
+                  </button>
+
+                  {/* tombol halaman */}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => {
+                      return (
+                        <button
+                          className={`${styles.paginationPage} me-1 ${
+                            currentPage === page && styles.active
+                          }`}
+                          key={page}
+                          onClick={() => goToPage(page)}
+                          disabled={currentPage === page}
+                          id={`pagination-page-${page}`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    }
+                  )}
+
+                  {/* Tombol halaman berikutnya */}
+                  <button
+                    className={`${styles.btnright} col-2 me-1 px-3`}
+                    id="btnright"
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                  >
+                    <img src={keyboard_arrow_right} alt="" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal */}
+              <Modal
+                isOpen={modalKonfirmasiIsOpen}
+                onRequestClose={closeKonfirmasiModal}
+                contentLabel="Confirmation Modal"
+                style={customStylesConfirmation}
+                id="modalKonfirmasi"
+              >
+                <div
+                  id="modalKonfirmasiContainer"
+                  className={`d-flex justify-content-center align-items-center`}
+                >
+                  <div
+                    id="modalKonfirmasiContent"
+                    className={`d-flex flex-column justify-content-center align-items-center`}
+                  >
+                    <img
+                      id="modalKonfirmasiImage"
+                      src={konfirmasi}
+                      alt="konfirmasi-img"
+                      className="mb-16"
+                    />
+                    <h4
+                      id="modalKonfirmasiTitle"
+                      className="title-large-semibold mb-32 text-center"
                     >
-                      {page}
-                    </button>
-                  );
-                }
-              )}
-
-              {/* Tombol halaman berikutnya */}
-              <button
-                className={`${styles.btnright} col-2 me-1`}
-                id="btnright"
-                onClick={nextPage}
-                disabled={currentPage === totalPages}
+                      Apakah anda ingin menghapus data ini?
+                    </h4>
+                    <p id="modalKonfirmasiText1" className="body-small-regular">
+                      Data yang sudah dihapus tidak dapat dikembalikan lagi
+                    </p>
+                    <p
+                      id="modalKonfirmasiText2"
+                      className="body-small-regular mb-32"
+                    >
+                      Apakah anda yakin?
+                    </p>
+                    <div className="d-flex gap-5 justify-content-center">
+                      <div className="d-grid col-6">
+                        <Button
+                          id="modalKonfirmasiYesButton"
+                          label="Yes"
+                          color="white"
+                          icon={check}
+                          onClick={deleteArtikel}
+                        />
+                      </div>
+                      <div className="d-grid col-6">
+                        <Button
+                          id="modalKonfirmasiCancelButton"
+                          label="Cancel"
+                          color="brown"
+                          icon={close}
+                          onClick={closeKonfirmasiModal}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+              <Modal
+                isOpen={modalTerhapusIsOpen}
+                onRequestClose={closeTerhapusModal}
+                contentLabel="Deleted Modal"
+                style={customStylesConfirmation}
+                id="modalTerhapus"
               >
-                <img src={keyboard_arrow_right} alt="" />
-              </button>
+                <div
+                  id="modal-terhapus-container"
+                  className={`d-flex justify-content-center align-items-center`}
+                >
+                  <div
+                    id="modal-terhapus-content"
+                    className={`d-flex flex-column justify-content-center align-items-center`}
+                  >
+                    <img
+                      id="modal-terhapus-image"
+                      src={deleteImg}
+                      alt="success"
+                      className="mb-16"
+                    />
+                    <h4
+                      id="modal-terhapus-heading"
+                      className="title-large-semibold mb-16"
+                    >
+                      Berhasil Dihapus
+                    </h4>
+                    <p
+                      id="modal-terhapus-message"
+                      className="body-small-regular mb-16"
+                    >
+                      Data telah berhasil dihapus
+                    </p>
+                  </div>
+                </div>
+              </Modal>
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

@@ -16,7 +16,7 @@ const EditArtikel = () => {
   const [values, setValues] = useState({
     gambar: "",
     judul: "",
-    isi: "",
+    deskripsi: "",
   });
   const [file, setFile] = useState();
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const EditArtikel = () => {
       setValues({
         gambar: artikel?.data.gambar,
         judul: artikel?.data.judul,
-        isi: artikel?.data.isi,
+        deskripsi: artikel?.data.deskripsi,
       });
     }
   }, [artikel]);
@@ -134,9 +134,9 @@ const EditArtikel = () => {
                     rows={12}
                     placeholder="Masukkan deskripsi artikel"
                     className={styles.input}
-                    id="isi"
-                    name="isi"
-                    value={values.isi}
+                    id="deskripsi"
+                    name="deskripsi"
+                    value={values.deskripsi}
                     onChange={handleOnChange}
                   />
                   <label className={styles.inputTitle}>Deskripsi</label>

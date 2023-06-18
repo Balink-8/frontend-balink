@@ -6,11 +6,11 @@ const ModalSukses = () => {
   return (
     <div
       id="modalSuksesContainer"
-      className={`${styles.modalContainer} d-flex justify-content-center align-items-center`}
+      className={`d-flex justify-content-center align-items-center`}
     >
       <div
         id="modalSuksesContent"
-        className={`${styles.modalContent} d-flex flex-column justify-content-center align-items-center`}
+        className={`d-flex flex-column justify-content-center align-items-center`}
       >
         <img
           id="modalSuksesLogo"
