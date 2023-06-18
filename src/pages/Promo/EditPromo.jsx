@@ -9,9 +9,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../../api/useApi";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
+import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
+import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
+import Modal from "react-modal";
 
 const EditPromo = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { response: promo, loading, error, get, put } = useApi();
   const [values, setValues] = useState({
     nama: "",
@@ -19,7 +23,25 @@ const EditPromo = () => {
     kode: "",
     potongan_harga: "",
   });
-  const { id } = useParams();
+  
+  const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
+  const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
 
   useEffect(() => {
     get(`/promo/${id}`).catch(
@@ -41,15 +63,19 @@ const EditPromo = () => {
     }
   }, [promo]);
 
-  const paragraphs = values.deskripsi?.split("\n\n");
-
   const onSubmit = () => {
-    const potongan_harga = parseInt(values.potongan_harga)
-    put(`/promo/${id}`, {
-      ...values, 
-      potongan_harga: potongan_harga
-    });
-    navigate(-1);
+      const potongan_harga = parseInt(values.potongan_harga)
+      put(`/promo/${id}`, {
+        ...values, 
+        potongan_harga: potongan_harga
+      })
+      .then(() => {
+        openModalSukses();
+      })
+      .catch((error) => {
+        openModalGagal();
+        console.error(error);
+      });
   };
 
   const onCancel = () => {
@@ -61,6 +87,29 @@ const EditPromo = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const openModalSukses = () => {
+    setModalSuksesIsOpen(true);
+    setTimeout(() => {
+      closeModalSukses();
+      navigate("/promo");
+    }, 1500);
+  };
+
+  const closeModalSukses = () => {
+    setModalSuksesIsOpen(false);
+  };
+
+  const openModalGagal = () => {
+    setModalGagalIsOpen(true);
+    setTimeout(() => {
+      closeModalGagal();
+    }, 1500);
+  };
+
+  const closeModalGagal = () => {
+    setModalGagalIsOpen(false);
   };
 
   return (
@@ -212,6 +261,67 @@ const EditPromo = () => {
               />
             </div>
           </div>
+
+          {/* Modal */}
+      <Modal
+        isOpen={modalSuksesIsOpen}
+        onRequestClose={closeModalSukses}
+        contentLabel="Success Modal"
+        style={customStylesConfirmation}
+        id="modalSukses"
+      >
+        <div
+          id="modalSuksesContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalSuksesContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalSuksesLogo"
+              src={ModalSuksesLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+              Berhasil Disimpan
+            </h4>
+            <p id="modalSuksesMessage" className="body-small-regular mb-16">
+              Data yang anda uba sudah berhasil disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalGagalIsOpen}
+        onRequestClose={closeModalGagal}
+        contentLabel="Fail Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalGagalContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalGagalContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalGagalLogo"
+              src={ModalGagalLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+              Gagal Disimpan
+            </h4>
+            <p id="modalGagalText" className="body-small-regular mb-16">
+              Data yang anda ubah Gagal disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
         </div>
       )}
     </div>
