@@ -15,7 +15,7 @@ const Produk = () => {
   }, []);
 
   console.log(produk);
-  console.log(error);
+  console.log(error); 
   console.log(loading);
   return (
     <div>
