@@ -16,6 +16,7 @@ import konfirmasi from "../../../assets/images/konfirmasi.png";
 import deleteImg from "../../../assets/images/delete.png";
 import useApi from "../../../api/useApi";
 import Spinner from "../../../components/Spinner/Spinner";
+import EmptyTable from "../../EmptyTable/EmptyTable";
 
 const TableAkun = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -140,15 +141,6 @@ const TableAkun = () => {
     <>
       {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
-            <Button
-              onClick={handleTambahArtikel}
-              label="Tambah Artikel"
-              icon={add}
-              color="brown"
-              id="tambah-artikel-button"
-            />
-          </div>
           <EmptyTable />
         </div>
       ) : (
