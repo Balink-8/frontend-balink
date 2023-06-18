@@ -38,7 +38,7 @@ const useApi = () => {
     try {
       const config = {
         method: method,
-        url: `https://167.172.66.247:8002${url}`,
+        url: `http://167.172.66.247:8002${url}`,
         data: data,
       };
 
