@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import keyboard_arrow_right from "../../../assets/icons/keyboard_arrow_right.svg";
 import btn_arrow_left from "../../../assets/icons/btn_arrow_left.svg";
 import add from "../../../assets/icons/add.svg";
@@ -25,10 +25,15 @@ const TableProduk = ({ data }) => {
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
 
-    const { response: event, loading, error, del } = useApi();
-    const { response: kategori, loading: kategoriLoading, error: errorKategori, get } = useApi();
+  const { response: event, loading, error, del } = useApi();
+  const {
+    response: kategori,
+    loading: kategoriLoading,
+    error: errorKategori,
+    get,
+  } = useApi();
 
-     const customStylesConfirmation = {
+  const customStylesConfirmation = {
     content: {
       top: "50%",
       left: "50%",
@@ -44,7 +49,7 @@ const TableProduk = ({ data }) => {
     },
   };
 
-  // Menghitung jumlah halaman 
+  // Menghitung jumlah halaman
   const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
@@ -59,7 +64,9 @@ const TableProduk = ({ data }) => {
       console.error(error);
     });
   }, []);
-  console.log(kategori?.data.data.find())
+  console.log(
+    kategori?.data?.data.find((itemKategori) => itemKategori.ID === 2)?.nama
+  );
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -88,10 +95,10 @@ const TableProduk = ({ data }) => {
   };
 
   const handleTambahProduk = () => {
-    navigate("/produk/tambah"); 
+    navigate("/produk/tambah");
   };
 
-   const closeKonfirmasiModal = () => {
+  const closeKonfirmasiModal = () => {
     setModalKonfirmasiIsOpen(false);
   };
 
@@ -124,160 +131,164 @@ const TableProduk = ({ data }) => {
 
   return (
     <>
-      {
-        data?.length === 0 ? (
+      {data?.length === 0 ? (
         <div className="d-flex justify-content-between">
+          <Button
+            onClick={handleTambahProduk}
+            label="Tambah Produk"
+            icon={add}
+            color="brown"
+            id="addProduk"
+          />
+          <EmptyTable />
+        </div>
+      ) : (
+        <div>
+          <div className="d-flex justify-content-between">
+            <TableSearch />
 
-        <Button
-          onClick={handleTambahProduk}
-          label="Tambah Produk"
-          icon={add}
-          color="brown"
-          id="addProduk"
-        />
-      <EmptyTable />
-      </div>
-        ) : (
-      <div>
-      <div className="d-flex justify-content-between">
-        <TableSearch />
-
-        <Button
-          onClick={handleTambahProduk}
-          label="Tambah Produk"
-          icon={add}
-          color="brown"
-          id="addProduk"
-        />
-      </div>
-      
-       <div className="row mt-4 text-center">
-        <div className="col-12 p-0">
-          <div className="table-responsive">
-            <table className="table ">
-              {/* Render data pada halaman saat ini */}
-              <thead className={styles.thead} id="thead">
-                <tr id="tr-table">
-                  <th
-                    className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
-                  >
-                    Foto
-                  </th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Harga</th>
-                  <th className={`p-3 ${styles.tableHeadRow}`}>Kategori</th>
-                  <th
-                    className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
-                  ></th>
-                </tr>
-              </thead>
-              <tbody className={styles.tbody} id="tbody">
-                {currentItems?.map((item) => (
-                  <tr className={styles.tableRow} key={item.ID}>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/produk/detail/${item.ID}`)}
-                    >
-                      <img src={item.foto} className={styles.image} />
-                    </td>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/produk/detail/${item.ID}`)}
-                    >
-                      {item.nama}
-                    </td>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/produk/detail/${item.ID}`)}
-                    >
-                      {item.harga}
-                    </td>
-                    <td
-                      className="p-3"
-                      onClick={() => navigate(`/produk/detail/${item.ID}`)}
-                    >
-                      {item.kategori_id}
-                    </td>
-                    <td className="p-3">
-                      <img
-                        src={Edit}
-                        alt=""
-                        className={`${styles.actionButton} pe-3`}
-                        onClick={() => navigate(`/produk/edit/${item.ID}`)}
-                        id="edit-icon"
-                      />
-
-                      <img
-                        src={Delete}
-                        alt=""
-                        className={styles.actionButton}
-                        onClick={() => openKonfirmasiModal(item.ID)}
-                        id="delete-icon"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <Button
+              onClick={handleTambahProduk}
+              label="Tambah Produk"
+              icon={add}
+              color="brown"
+              id="addProduk"
+            />
           </div>
-        </div>
-      </div>
 
+          <div className="row mt-4 text-center">
+            <div className="col-12 p-0">
+              <div className="table-responsive">
+                <table className="table ">
+                  {/* Render data pada halaman saat ini */}
+                  <thead className={styles.thead} id="thead">
+                    <tr id="tr-table">
+                      <th
+                        className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
+                      >
+                        Foto
+                      </th>
+                      <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
+                      <th className={`p-3 ${styles.tableHeadRow}`}>Harga</th>
+                      <th className={`p-3 ${styles.tableHeadRow}`}>Kategori</th>
+                      <th
+                        className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
+                      ></th>
+                    </tr>
+                  </thead>
+                  <tbody className={styles.tbody} id="tbody">
+                    {currentItems?.map((item) => (
+                      <tr className={styles.tableRow} key={item.ID}>
+                        <td
+                          className="p-3"
+                          onClick={() => navigate(`/produk/detail/${item.ID}`)}
+                        >
+                          <img src={item.foto} className={styles.image} />
+                        </td>
+                        <td
+                          className="p-3"
+                          onClick={() => navigate(`/produk/detail/${item.ID}`)}
+                        >
+                          {item.nama}
+                        </td>
+                        <td
+                          className="p-3"
+                          onClick={() => navigate(`/produk/detail/${item.ID}`)}
+                        >
+                          {item.harga}
+                        </td>
+                        <td
+                          className="p-3"
+                          onClick={() => navigate(`/produk/detail/${item.ID}`)}
+                        >
+                          {
+                            kategori?.data?.data.find(
+                              (itemKategori) =>
+                                itemKategori.ID === parseInt(item.kategori_id)
+                            )?.nama
+                          }
+                        </td>
+                        <td className="p-3">
+                          <img
+                            src={Edit}
+                            alt=""
+                            className={`${styles.actionButton} pe-3`}
+                            onClick={() => navigate(`/produk/edit/${item.ID}`)}
+                            id="edit-icon"
+                          />
 
-      {/* Kotak angka untuk memilih jumlah item per halaman */}
-      <div className={`${styles.previous} row`} id="previous">
-        <div className="col-10 p-3">
-          <span className={styles.tableSpan}>Showing</span>
-          <select
-            className={`${styles.itemsPerPage} ms-2 `}
-            id="itemsPerPage"
-            value={itemsPerPage}
-            onChange={changeItemsPerPage}
-          >
-            <option value={10}>10</option>
-            <option value={30}>20</option>
-            <option value={50}>50</option>
-          </select>
-          <span className={`${styles.tableSpan} ms-2`}>of 50</span>
-        </div>
-        <div className="col-2 p-3">
-          <button
-            className={`${styles.btnleft} col-2 me-1`}
-            id="btnleft"
-            onClick={previousPage}
-            disabled={currentPage === 1}
-          >
-            <img src={btn_arrow_left} alt="" />
-          </button>
+                          <img
+                            src={Delete}
+                            alt=""
+                            className={styles.actionButton}
+                            onClick={() => openKonfirmasiModal(item.ID)}
+                            id="delete-icon"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
 
-          {/* tombol halaman */}
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-            return (
-              <button
-                className={`${styles.paginationPage} me-1 ${
-                  currentPage === page && styles.active
-                }`}
-                key={page}
-                onClick={() => goToPage(page)}
-                disabled={currentPage === page}
+          {/* Kotak angka untuk memilih jumlah item per halaman */}
+          <div className={`${styles.previous} row`} id="previous">
+            <div className="col-10 p-3">
+              <span className={styles.tableSpan}>Showing</span>
+              <select
+                className={`${styles.itemsPerPage} ms-2 `}
+                id="itemsPerPage"
+                value={itemsPerPage}
+                onChange={changeItemsPerPage}
               >
-                {page}
+                <option value={10}>10</option>
+                <option value={30}>20</option>
+                <option value={50}>50</option>
+              </select>
+              <span className={`${styles.tableSpan} ms-2`}>of 50</span>
+            </div>
+            <div className="col-2 p-3">
+              <button
+                className={`${styles.btnleft} col-2 me-1`}
+                id="btnleft"
+                onClick={previousPage}
+                disabled={currentPage === 1}
+              >
+                <img src={btn_arrow_left} alt="" />
               </button>
-            );
-          })}
 
-          {/* Tombol halaman berikutnya */}
-          <button
-            className={styles.btnright}
-            id="btnright"
-            onClick={nextPage}
-            disabled={currentPage === totalPages}
-          >
-            <img src={keyboard_arrow_right} alt="" />
-          </button>
-        </div>
-      </div>
-             {/* Modal */}
+              {/* tombol halaman */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => {
+                  return (
+                    <button
+                      className={`${styles.paginationPage} me-1 ${
+                        currentPage === page && styles.active
+                      }`}
+                      key={page}
+                      onClick={() => goToPage(page)}
+                      disabled={currentPage === page}
+                    >
+                      {page}
+                    </button>
+                  );
+                }
+              )}
+
+              {/* Tombol halaman berikutnya */}
+              <button
+                className={styles.btnright}
+                id="btnright"
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+              >
+                <img src={keyboard_arrow_right} alt="" />
+              </button>
+            </div>
+          </div>
+          {/* Modal */}
           <Modal
             isOpen={modalKonfirmasiIsOpen}
             onRequestClose={closeKonfirmasiModal}
@@ -337,7 +348,7 @@ const TableProduk = ({ data }) => {
               </div>
             </div>
           </Modal>
-          
+
           <Modal
             isOpen={modalTerhapusIsOpen}
             onRequestClose={closeTerhapusModal}
@@ -374,9 +385,8 @@ const TableProduk = ({ data }) => {
               </div>
             </div>
           </Modal>
-      </div>
-        )
-      }       
+        </div>
+      )}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import styles from "./EditProduk.module.css";
 import Input from "../../elements/Input/Input";
-import Gunung from "../../assets/icons/plain-triangle.png"
+import Gunung from "../../assets/icons/plain-triangle.png";
 import Cancel from "../../assets/icons/cancel.svg";
 import save from "../../assets/icons/save.svg";
 import Button from "../../elements/Button/Button";
@@ -34,6 +34,12 @@ const EditProduk = () => {
   };
 
   const { response: produk, loading, error, get, put } = useApi();
+  const {
+    response: kategoriProduk,
+    loading: kategoriLoading,
+    error: kategoriError,
+    get: getArtikel,
+  } = useApi();
   const [values, setValues] = useState({
     foto: "",
     nama: "",
@@ -41,20 +47,23 @@ const EditProduk = () => {
     kategori_id: "",
     harga: 0,
     stok: 0,
-  }); 
+  });
 
   const [file, setFile] = useState();
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-   get(`/produk/${id}`).catch(
-      (error) => {
-        // Handle error
-        console.error(error);
-      }
-    );
+    get(`/produk/${id}`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+    getArtikel(`/kategori_produk`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
   }, []);
+  console.log(kategoriProduk);
 
   useEffect(() => {
     if (produk) {
@@ -62,24 +71,24 @@ const EditProduk = () => {
         foto: produk?.data.foto,
         nama: produk?.data.nama,
         deskripsi: produk?.data.deskripsi,
-        kategori_id: produk?.data.kategori_id,
+        kategori_id: parseInt(produk?.data.kategori_id),
         harga: produk?.data.harga,
         stok: produk?.data.stok,
       });
     }
   }, [produk]);
 
-  const onSubmit = () => {
-    
-      put(`/produk/${id}`, values)
-       .then(() => {
-           openModalSukses();
-         })
-       .catch((error) => {
-           openModalGagal();
-           console.error(error);
-         });
+  console.log(values);
 
+  const onSubmit = () => {
+    put(`/produk/${id}`, values)
+      .then(() => {
+        openModalSukses();
+      })
+      .catch((error) => {
+        openModalGagal();
+        console.error(error);
+      });
   };
 
   const onCancel = () => {
@@ -101,7 +110,7 @@ const EditProduk = () => {
     });
   };
 
-   const openModalSukses = () => {
+  const openModalSukses = () => {
     setModalSuksesIsOpen(true);
     setTimeout(() => {
       closeModalSukses();
@@ -144,40 +153,49 @@ const EditProduk = () => {
                 </p>
               </div>
               <div className={styles.sideGambar}>
-            <div className={styles.boxImage}>
-              <img src={file && file} className={styles.imageProduk} />
-              <div className={styles.gunung}>
-                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
-              </div>
-            </div>
-            <div className={styles.boxImage}>
-              <img src={file} className={styles.imageProduk} />
-              <div className={styles.gunung}>
-                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
-              </div>
-            </div>
-            <div className={styles.boxImage}>
-              <img src={file} className={styles.imageProduk} />
-              <div className={styles.gunung}>
-                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
-              </div>
-            </div>
+                <div className={styles.boxImage}>
+                  <img src={file && file} className={styles.imageProduk} />
+                  <div className={styles.gunung}>
+                    <img
+                      src={!file ? Gunung : ""}
+                      className={styles.imgGunung}
+                    />
+                  </div>
+                </div>
+                <div className={styles.boxImage}>
+                  <img src={file} className={styles.imageProduk} />
+                  <div className={styles.gunung}>
+                    <img
+                      src={!file ? Gunung : ""}
+                      className={styles.imgGunung}
+                    />
+                  </div>
+                </div>
+                <div className={styles.boxImage}>
+                  <img src={file} className={styles.imageProduk} />
+                  <div className={styles.gunung}>
+                    <img
+                      src={!file ? Gunung : ""}
+                      className={styles.imgGunung}
+                    />
+                  </div>
+                </div>
 
-            <div className={styles.parentBoxFile}>
-              <label htmlFor="boxFile" className={styles.AddBoxImage}>
-                {" "}
-                +{" "}
-              </label>
-              <input
-                className={styles.boxFile}
-                id="boxFile"
-                type="file"
-                name={"foto"}
-                value={values.foto}
-                onChange={getFile}
-              />
-            </div>
-          </div>
+                <div className={styles.parentBoxFile}>
+                  <label htmlFor="boxFile" className={styles.AddBoxImage}>
+                    {" "}
+                    +{" "}
+                  </label>
+                  <input
+                    className={styles.boxFile}
+                    id="boxFile"
+                    type="file"
+                    name={"foto"}
+                    value={values.foto}
+                    onChange={getFile}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -270,10 +288,13 @@ const EditProduk = () => {
                     onChange={handleOnChange}
                   >
                     <option defaultValue={null} hidden></option>
-                    <option value="Alat Masak">Pakaian</option>
+                    {/* <option value="Alat Masak">Pakaian</option>
                     <option value="Alat Mandi">Perhiasan</option>
                     <option value="Sport">Kerajinan Tangan</option>
-                    <option value="Souvenir">Aksesoris</option>
+                    <option value="Souvenir">Aksesoris</option> */}
+                    {kategoriProduk?.data.data.map((kategori) => (
+                      <option value={kategori.ID}>{kategori.nama}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -359,7 +380,7 @@ const EditProduk = () => {
           </div>
         </form>
       )}
-          <Modal
+      <Modal
         isOpen={modalSuksesIsOpen}
         onRequestClose={closeModalSukses}
         contentLabel="Success Modal"
