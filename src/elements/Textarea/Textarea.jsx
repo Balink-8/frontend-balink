@@ -1,4 +1,4 @@
-const Textarea = ({type, className, placeholder, id, name, rows, value, onChange}) => {
+const Textarea = ({type, className, placeholder, id, name, rows, value, onChange, onKeyUp}) => {
       return(
             <textarea
             type={type}
@@ -9,6 +9,7 @@ const Textarea = ({type, className, placeholder, id, name, rows, value, onChange
             rows={rows}
             value={value}
             onChange={onChange}
+            onKeyUp={onKeyUp}
             />
       )
    }

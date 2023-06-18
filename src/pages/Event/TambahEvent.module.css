@@ -75,3 +75,16 @@
 .errorTitle {
   color: var(--red-dark);
 }
+
+.layoutInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  width: 500px;
+  height: 89px;
+  background: #FDFDFD;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
