@@ -50,19 +50,19 @@ const TambahEvent = () => {
 
   useEffect(() => {
     setValues({
-       artikel_id: localStorage.getItem("artikel_id"),
-       gambar: localStorage.getItem("gambar"),
-       nama:  localStorage.getItem("nama"),
-       deskripsi: localStorage.getItem("deskripsi"),
-       lokasi: localStorage.getItem("lokasi"),
-       link_lokasi: localStorage.getItem("link_lokasi"),
-       waktu_mulai: localStorage.getItem("waktu_mulai"),
-       waktu_selesai: localStorage.getItem("waktu_selesai"),
-       // tanggal_mulai: "12 Desember 2023",
-       // tanggal_selesai: "12 Desember 2023",
-       harga_tiket: localStorage.getItem("harga_tiket"),
-       stok_tiket: localStorage.getItem("stok_tiket"),
-    })
+      artikel_id: localStorage.getItem("artikel_id"),
+      gambar: localStorage.getItem("gambar"),
+      nama: localStorage.getItem("nama"),
+      deskripsi: localStorage.getItem("deskripsi"),
+      lokasi: localStorage.getItem("lokasi"),
+      link_lokasi: localStorage.getItem("link_lokasi"),
+      waktu_mulai: localStorage.getItem("waktu_mulai"),
+      waktu_selesai: localStorage.getItem("waktu_selesai"),
+      // tanggal_mulai: "12 Desember 2023",
+      // tanggal_selesai: "12 Desember 2023",
+      harga_tiket: localStorage.getItem("harga_tiket"),
+      stok_tiket: localStorage.getItem("stok_tiket"),
+    });
   }, []);
 
   const { response: event, loading, error, post } = useApi();
@@ -78,16 +78,16 @@ const TambahEvent = () => {
   const onSubmit = (e) => {
     const newErrors = {};
 
-    localStorage.removeItem("artikel_id",values.artikel_id)
-    localStorage.removeItem("gambar",values.gambar)
-    localStorage.removeItem("nama",values.nama)
-    localStorage.removeItem("deskripsi",values.deskripsi)
-    localStorage.removeItem("lokasi",values.lokasi)
-    localStorage.removeItem("link_lokasi",values.nama)
-    localStorage.removeItem("waktu_mulai",values.waktu_mulai)
-    localStorage.removeItem("waktu_selesai",values.waktu_selesai)
-    localStorage.removeItem("harga_tiket",values.harga_tiket)
-    localStorage.removeItem("stok_tiket",values.stok_tiket)
+    localStorage.removeItem("artikel_id", values.artikel_id);
+    localStorage.removeItem("gambar", values.gambar);
+    localStorage.removeItem("nama", values.nama);
+    localStorage.removeItem("deskripsi", values.deskripsi);
+    localStorage.removeItem("lokasi", values.lokasi);
+    localStorage.removeItem("link_lokasi", values.nama);
+    localStorage.removeItem("waktu_mulai", values.waktu_mulai);
+    localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("harga_tiket", values.harga_tiket);
+    localStorage.removeItem("stok_tiket", values.stok_tiket);
 
     Object.keys(values).forEach((key) => {
       if (values[key].trim() === "") {
@@ -114,35 +114,35 @@ const TambahEvent = () => {
     }
 
     if (!Object.values(newErrors).some((error) => error)) {
-      const harga_tiket = parseInt(values.harga_tiket, 10)
-      const stok_tiket = parseInt(values.stok_tiket, 10)
+      const harga_tiket = parseInt(values.harga_tiket, 10);
+      const stok_tiket = parseInt(values.stok_tiket, 10);
       post("/event", {
-        ...values, 
+        ...values,
         harga_tiket: harga_tiket,
-        stok_tiket: stok_tiket
+        stok_tiket: stok_tiket,
       })
-      .then(() => {
-        openModalSukses();
-      })
-      .catch((error) => {
-        openModalGagal();
-        console.error(error);
-      });
-      console.log(values)
+        .then(() => {
+          openModalSukses();
+        })
+        .catch((error) => {
+          openModalGagal();
+          console.error(error);
+        });
+      console.log(values);
     }
   };
 
   const onReset = (e) => {
-    localStorage.removeItem("artikel_id",values.artikel_id)
-    localStorage.removeItem("gambar",values.gambar)
-    localStorage.removeItem("nama",values.nama)
-    localStorage.removeItem("deskripsi",values.deskripsi)
-    localStorage.removeItem("lokasi",values.lokasi)
-    localStorage.removeItem("link_lokasi",values.nama)
-    localStorage.removeItem("waktu_mulai",values.waktu_mulai)
-    localStorage.removeItem("waktu_selesai",values.waktu_selesai)
-    localStorage.removeItem("harga_tiket",values.harga_tiket)
-    localStorage.removeItem("stok_tiket",values.stok_tiket)
+    localStorage.removeItem("artikel_id", values.artikel_id);
+    localStorage.removeItem("gambar", values.gambar);
+    localStorage.removeItem("nama", values.nama);
+    localStorage.removeItem("deskripsi", values.deskripsi);
+    localStorage.removeItem("lokasi", values.lokasi);
+    localStorage.removeItem("link_lokasi", values.nama);
+    localStorage.removeItem("waktu_mulai", values.waktu_mulai);
+    localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("harga_tiket", values.harga_tiket);
+    localStorage.removeItem("stok_tiket", values.stok_tiket);
 
     setValues({
       artikel_id: "",
@@ -163,7 +163,7 @@ const TambahEvent = () => {
 
   const onArtikel = (e) => {
     navigate("/tentang-artikel");
-  }
+  };
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -187,7 +187,7 @@ const TambahEvent = () => {
 
   const handleOnKeyUp = (e) => {
     localStorage.setItem(e.target.name, values[e.target.name]);
-  }
+  };
 
   const getFile = (e) => {
     setFile(URL.createObjectURL(e.target.files[0]));
@@ -198,19 +198,23 @@ const TambahEvent = () => {
   };
 
   // get artikel
-  const { response: artikel, loading: loadingartikel, error: errorartikel,  get } = useApi();
+  const {
+    response: artikel,
+    loading: loadingartikel,
+    error: errorartikel,
+    get,
+  } = useApi();
 
   useEffect(() => {
     get(`/artikel/${localStorage.getItem("artikel_id")}`)
-    .then(() => {
-      console.log(artikel);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
   }, [localStorage.getItem("artikel_id")]);
-  console.log(localStorage.getItem("artikel_id"))
-  const paragraph = artikel?.data?.isi?.split("\n\n");
+
+  console.log(localStorage.getItem("artikel_id"));
+  const paragraph = artikel?.data?.deskripsi?.split("\n\n");
 
   // modal
   const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
@@ -255,7 +259,6 @@ const TambahEvent = () => {
     setModalGagalIsOpen(false);
   };
 
-
   return (
     <div className={styles.tambahEventContainer}>
       <h1 className="headline-small-semibold">Buat event baru</h1>
@@ -266,7 +269,7 @@ const TambahEvent = () => {
             {/* upload foto */}
             <div className={styles.containerEvent}>
               <div className={styles.imgArea}>
-                <img id="uploadedImage" src={file}/>
+                <img id="uploadedImage" src={file} />
               </div>
               <div className="d-flex justify-content-center">
                 <label htmlFor="gambar">
@@ -354,28 +357,46 @@ const TambahEvent = () => {
                 <img src={info} alt="info" />
                 <span className="body-medium-semibold"> Info Lengkap</span>
                 <div className="d-grid col-12 ">
-
-                  {/* <div className={`my-3 ${styles.layoutInfo}`}>
+                  {artikel ? (
                     <div>
-                      <img src={artikel?.data?.gambar} alt="" />
+                      <div className={`my-3 ${styles.layoutInfo}`}>
+                        <div>
+                          <img src={artikel?.data?.gambar} alt="" />
+                        </div>
+                        <div>
+                          <p className="body-medium-semibold">
+                            {artikel?.data?.judul}
+                          </p>
+                          {paragraph?.map((text, index) => (
+                            <p
+                              key={index}
+                              id={`articleDescription${index}`}
+                              className="body-small-regular"
+                            >
+                              {text}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="w-100">
+                        <div className="d-grid">
+                          <Button
+                            label="Ganti Artikel"
+                            color="brown"
+                            icon={add}
+                            onClick={onArtikel}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="body-medium-semibold">
-                        {artikel?.data?.judul}
-                      </p>
-                      {paragraph?.map((text, index) => (
-                        <p 
-                        key={index}
-                        id={`articleDescription${index}`}
-                        className="body-small-regular">
-                          {text}                      
-                        </p>
-                      ))}
-                      <p>test test halo halo</p>
-                    </div>
-                  </div> */}
-
-                  <Button label="Tambah Artikel" color="brown" icon={add} onClick={onArtikel}/>
+                  ) : (
+                    <Button
+                      label="Tambah Artikel"
+                      color="brown"
+                      icon={add}
+                      onClick={onArtikel}
+                    />
+                  )}
                 </div>
               </div>
 
@@ -520,10 +541,22 @@ const TambahEvent = () => {
       {/* button */}
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button id="reset" label="Reset" color="white" icon={reset} onClick={onReset} />
+          <Button
+            id="reset"
+            label="Reset"
+            color="white"
+            icon={reset}
+            onClick={onReset}
+          />
         </div>
         <div className="d-grid col-3 ">
-          <Button id="submitButton" label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+          <Button
+            id="submitButton"
+            label="Simpan"
+            color="brown"
+            icon={save}
+            onClick={onSubmit}
+          />
         </div>
       </div>
 
