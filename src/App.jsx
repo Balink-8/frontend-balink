@@ -3,7 +3,6 @@ import Modal from "react-modal";
 import Layout from "./components/Layout/Layout";
 import Login from "./pages/Login/Login";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import HubungiKami from "./pages/LandingPage/HubungiKami";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Akun from "./pages/Akun/Akun";
 import Event from "./pages/Event/Event";

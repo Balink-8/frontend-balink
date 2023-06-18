@@ -1,10 +1,5 @@
 .navbar {
-  padding: 24px 40px !important;
+  padding: 8px 40px !important;
   background-color: var(--white);
   box-shadow: var(--box-shadow-light);
-}
-
-.navbarBrand {
-  text-decoration: none;
-  color: var(--dark-black);
 }

@@ -45,12 +45,12 @@ const DetailPromo = () => {
 
   const handleDeletePromo = () => {
     del(`/promo/${id}`)
-    .then(() => {
-      openTerhapusModal();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const closeKonfirmasiModal = () => {
@@ -96,7 +96,9 @@ const DetailPromo = () => {
 
             <div id="potonganHarga">
               <p className="body-small-regular">Potongan Harga</p>
-              <p className="body-medium-semibold">{promo?.data?.potongan_harga}</p>
+              <p className="body-medium-semibold">
+                {promo?.data?.potongan_harga}
+              </p>
             </div>
           </div>
 

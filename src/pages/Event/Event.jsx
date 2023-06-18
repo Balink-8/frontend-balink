@@ -4,8 +4,8 @@ import TableEvent from "../../components/Table/TableEvent/TableEvent";
 const Event = () => {
   return (
     <div>
-    <TableEvent />
-  </div>
+      <TableEvent />
+    </div>
   );
 };
 

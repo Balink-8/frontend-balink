@@ -115,12 +115,12 @@ const TablePromo = () => {
 
   const handleDeletePromo = () => {
     del(`/promo/${selectedId}`)
-    .then(() => {
-      openTerhapusModal();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -172,21 +172,21 @@ const TablePromo = () => {
                           >
                             Nama Promo
                           </th>
-                          <th 
+                          <th
                             className={`p-3 ${styles.tableHeadRow}`}
                             id="deskripsi-header"
                           >
                             Deskripsi Promo
                           </th>
-                          <th 
+                          <th
                             className={`p-3 ${styles.tableHeadRow}`}
                             id="kode-header"
                           >
                             Kode Promo
                           </th>
-                          <th 
+                          <th
                             className={`p-3 ${styles.tableHeadRow}`}
-                          id="disc-header"
+                            id="disc-header"
                           >
                             Potongan Harga
                           </th>
@@ -200,7 +200,9 @@ const TablePromo = () => {
                           <tr className={styles.tableRow} key={item.ID}>
                             <td
                               className="p-3"
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="nama-cell"
                             >
                               {item.nama}
@@ -213,21 +215,27 @@ const TablePromo = () => {
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                               }}
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="deskripsi-cell"
                             >
                               {item.deskripsi}
                             </td>
                             <td
                               className="p-3 body-medium-semibold"
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="kode-cell"
                             >
                               {item.kode}
                             </td>
                             <td
                               className="p-3"
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="disc-cell"
                             >
                               {item.potongan_harga}
@@ -237,7 +245,9 @@ const TablePromo = () => {
                                 src={edit}
                                 alt=""
                                 className={styles.actionButton}
-                                onClick={() => navigate(`/promo/edit/${item.ID}`)}
+                                onClick={() =>
+                                  navigate(`/promo/edit/${item.ID}`)
+                                }
                                 id="edit-icon"
                               />
                               <img
@@ -283,21 +293,23 @@ const TablePromo = () => {
                   </button>
 
                   {/* tombol halaman */}
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                    return (
-                      <button
-                        className={`${styles.paginationPage} me-1 ${
-                          currentPage === page && styles.active
-                        }`}
-                        key={page}
-                        onClick={() => goToPage(page)}
-                        disabled={currentPage === page}
-                        id={`pagination-page-${page}`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  })}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => {
+                      return (
+                        <button
+                          className={`${styles.paginationPage} me-1 ${
+                            currentPage === page && styles.active
+                          }`}
+                          key={page}
+                          onClick={() => goToPage(page)}
+                          disabled={currentPage === page}
+                          id={`pagination-page-${page}`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    }
+                  )}
 
                   {/* Tombol halaman berikutnya */}
                   <button

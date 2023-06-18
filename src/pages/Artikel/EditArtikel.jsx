@@ -44,13 +44,13 @@ const EditArtikel = () => {
   };
 
   useEffect(() => {
-    get(`/artikel/${id}`).catch((error) => {
+    get(
+      `https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article/${id}`
+    ).catch((error) => {
       // Handle error
       console.error(error);
     });
   }, []);
-
-  console.log(artikel?.data);
 
   useEffect(() => {
     if (artikel) {
@@ -61,6 +61,8 @@ const EditArtikel = () => {
       });
     }
   }, [artikel]);
+
+  const paragraphs = values.deskripsiArtikel?.split("\n\n");
 
   const onSubmit = () => {
     put(`/artikel/${id}`, values)
@@ -118,9 +120,9 @@ const EditArtikel = () => {
   return (
     <div>
       {loading ? (
-        <Spinner />
+        <p>Loading...</p>
       ) : error ? (
-        <ErrorDisplay errorMessage={error.message} />
+        <p>Error: {error}</p>
       ) : (
         <div id="editArtikelContainer" className={styles.tambahEventContainer}>
           <h1 id="editArtikelTitle" className="headline-small-semibold">
@@ -133,24 +135,27 @@ const EditArtikel = () => {
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
-                    <img id="uploadedImage" src={file ? file : values.gambar} />
+                    <img
+                      id="uploadedImage"
+                      src={file ? file : values.fotoArtikel}
+                    />
                   </div>
                   <div className="d-flex justify-content-center">
-                    <label htmlFor="gambar">
+                    <label htmlFor="fotoArtikel">
                       <Button
                         label="Pilih Foto"
                         icon={Filefoto}
                         color="brown"
                         onClick={() =>
-                          document.getElementById("gambar").click()
+                          document.getElementById("fotoArtikel").click()
                         }
                       />
                     </label>
                     <input
-                      id="gambar"
+                      id="fotoArtikel"
                       className={styles.inputPhoto}
                       type="file"
-                      name="gambar"
+                      name="fotoArtikel"
                       onChange={getFile}
                     />
                   </div>
@@ -168,9 +173,9 @@ const EditArtikel = () => {
                     type="text"
                     placeholder="Masukkan judul artikel"
                     className={styles.input}
-                    id="judul"
-                    name="judul"
-                    value={values.judul}
+                    id="judulArtikel"
+                    name="judulArtikel"
+                    value={values.judulArtikel}
                     onChange={handleOnChange}
                     label="Judul Artikel"
                   />

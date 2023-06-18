@@ -32,11 +32,11 @@ const DetailProduk = () => {
   const { response: produk, loading, error, get } = useApi();
   const navigate = useNavigate();
 
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const customStylesConfirmation = {
     content: {
-      top: "50%", 
+      top: "50%",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -50,7 +50,6 @@ const DetailProduk = () => {
     },
   };
 
- 
   useEffect(() => {
     get(`/produk/${id}`).catch((error) => {
       // Handle error
@@ -67,7 +66,7 @@ const DetailProduk = () => {
         console.error(error);
       });
   };
-   const closeKonfirmasiModal = () => {
+  const closeKonfirmasiModal = () => {
     setModalKonfirmasiIsOpen(false);
   };
 
@@ -90,105 +89,95 @@ const DetailProduk = () => {
   return (
     <div>
       {loading ? (
-        <Spinner />
+        <p>Loading...</p>
       ) : error ? (
         <ErrorDisplay errorMessage={error.message} />
       ) : (
-      <div>
-        <div className={styles.wrapper} id="wrapper">
-          <div className={styles.wrapperDetail} id="wrapper-detail">
-            <h1 className="headline-small-semibold">Detail Produk</h1>
-            <div className={styles.parentImages} id="parentsImages">
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-            </div>
-            <div className={styles.parentDetail} id="parentsDetail">
-              <h1
-                className={`title-large-semibold ${styles.titleProduk}`}
-                id="titleProduk"
-              >
-                {produk?.data?.nama}
-              </h1>
-              <p className="body-medium-reguler" id="title-deskripsi">
-                {DataDetailProduk.titleDeskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
+        <div>
+          <div className={styles.wrapper} id="wrapper">
+            <div className={styles.wrapperDetail} id="wrapper-detail">
+              <h1 className="headline-small-semibold">Detail Produk</h1>
+              <div className={styles.parentImages} id="parentsImages">
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+              </div>
+              <div className={styles.parentDetail} id="parentsDetail">
+                <h1
+                  className={`title-large-semibold ${styles.titleProduk}`}
+                  id="titleProduk"
+                >
+                  {produk?.data?.nama}
+                </h1>
+                <p className="body-medium-reguler" id="title-deskripsi">
+                  {DataDetailProduk.titleDeskripsi}
+                </p>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+              </div>
+
+              <div className={styles.keterangan} id="keterangan">
+                <div className={styles.kategori} id="kategori">
+                  <label className="body-medium-regular">Kategori Produk</label>
+                  <p className="title-medium-semibold">
+                    {produk?.data?.kategori_id}
+                  </p>
+                </div>
+                <div className={styles.harga} id="harga">
+                  <label className="body-medium-reguler">Harga Produk</label>
+                  <p className="title-medium-semibold">{produk?.data?.harga}</p>
+                </div>
+                <div className={styles.stok} id="stok">
+                  <label className="body-medium-reguler">Stok Produk</label>
+                  <p className="title-medium-semibold">{produk?.data?.stok}</p>
+                </div>
+              </div>
             </div>
 
-            <div className={styles.keterangan} id="keterangan">
-              <div className={styles.kategori} id="kategori">
-                <label className="body-medium-regular">Kategori Produk</label>
-                <p className="title-medium-semibold">{produk?.data?.kategori_id}</p>
+            <div>
+              <div className="d-flex justify-content-end gap-3 pt-3">
+                <div className="d-grid col-3">
+                  <Button
+                    label="Hapus"
+                    color="white"
+                    icon={Hapus}
+                    onClick={() => openKonfirmasiModal()}
+                    id="hapusButton"
+                  />
+                </div>
+                <div className="d-grid col-3">
+                  <Button
+                    label="Edit"
+                    color="brown"
+                    icon={Edit}
+                    onClick={() => navigate(`/produk/edit/${id}`)}
+                    id="editButton"
+                  />
+                </div>
               </div>
-              <div className={styles.harga} id="harga">
-                <label className="body-medium-reguler">Harga Produk</label>
-                <p className="title-medium-semibold">{produk?.data?.harga}</p>
-              </div>
-              <div className={styles.stok} id="stok">
-                <label className="body-medium-reguler">Stok Produk</label>
-                <p className="title-medium-semibold">{produk?.data?.stok}</p>
-              </div>
-            </div>
-          </div>
-     
-      <div>
-        <div className="d-flex justify-content-end gap-3 pt-3">
-            <div className="d-grid col-3">
-              <Button
-                label="Hapus"
-                color="white"
-                icon={Hapus}
-                onClick={() => openKonfirmasiModal()}
-                id="hapusButton"
-              />
-            </div>
-            <div className="d-grid col-3">
-              <Button
-                label="Edit"
-                color="brown"
-                icon={Edit}
-                onClick={() => navigate(`/produk/edit/${id}`)}
-                id="editButton"
-              />
             </div>
           </div>
         </div>
-      </div>
-    </div>
       )}
       <Modal
         isOpen={modalKonfirmasiIsOpen}

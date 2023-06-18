@@ -41,7 +41,7 @@ const LandingPage = () => {
             </li>
             <li className="mx-8">
               <Link to='#info' className={styles.link} smooth>
-                Tentang Kami
+                About Us
               </Link>
             </li>
             <li className="mx-8">
@@ -50,8 +50,8 @@ const LandingPage = () => {
               </Link>
             </li>
             <li className="mx-8">
-              <Link to="/HubungiKami" className={styles.link}>
-                Hubungi Kami
+              <Link to="#" className={styles.link}>
+                Contact
               </Link>
             </li>
           </ul>
@@ -250,6 +250,11 @@ const LandingPage = () => {
                 event yang kamu membeli tiket terlebih dahulu. Kami menyediakan
                 informasi deskripsi kegiatan, link maps, dan info terkait event.{" "}
               </p>
+              <div className="mt-3">
+                <button type="button" className={styles.buttonMain}>
+                  Info Selengkapnya
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -278,6 +283,11 @@ const LandingPage = () => {
                 aman dan cepat. Dengan sistem COD atau transfer kami juga
                 menyediakan untuk keamanan transaksinya.
               </p>
+              <div className="mt-3">
+                <button type="button" className={styles.buttonMain}>
+                  Info Selengkapnya
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -297,18 +307,19 @@ const LandingPage = () => {
                   <p className="body-large-regular mb-8">
                     Peniliain pengguna terhadap Balink
                   </p>
+                  <div className="mt-3">
+                    <button type="button" className={styles.buttonMain}>
+                      Info Selengkapnya
+                    </button>
+                  </div>
                 </div>
 
                 <div className="col-lg-3">
                   <div className="mt-48">
                     <div className="d-flex">
                       <div className="flex-grow-1">
-                      <Link to="https://play.google.com/store/apps?hl=en-ID" className={styles.link}>
                         <img className="my-2" src={play} alt="playstore" />
-                      </Link>
-                      <Link to="https://www.apple.com/id/app-store/" className={styles.link}>
                         <img className="my-2" src={apple} alt="appstore" />
-                      </Link>
                       </div>
                     </div>
                   </div>
