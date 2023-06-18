@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Promo.module.css";
 import Button from "../../elements/Button/Button";
 import edit from "../../assets/icons/edit_square_white.svg";
