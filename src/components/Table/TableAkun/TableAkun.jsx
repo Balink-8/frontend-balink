@@ -17,6 +17,7 @@ import deleteImg from "../../../assets/images/delete.png";
 import useApi from "../../../api/useApi";
 import Spinner from "../../../components/Spinner/Spinner";
 import EmptyTable from "../../EmptyTable/EmptyTable";
+import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
 
 const TableAkun = () => {
   const [currentPage, setCurrentPage] = useState(1);
