@@ -19,21 +19,6 @@ import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import add from "../../assets/icons/add.svg";
 
 const EditEvent = () => {
-  const { response: event, loading, error, get, put } = useApi();
-  const { response: artikel, 
-          loading: loadingartikel, 
-          error: errorartikel, 
-          get: getartikel, 
-          put: putartikel } = useApi();
-
-  const [toggle, setToggle] = useState(false);
-
-  const toggler = () => {
-    toggle ? setToggle(false) : setToggle(true);
-  };
-
-  const navigate = useNavigate();
-  const { id } = useParams();
   const [values, setValues] = useState({
     artikel_id: "",
     gambar: "",
@@ -48,106 +33,23 @@ const EditEvent = () => {
     harga_tiket: 0,
     stok_tiket: 0,
   });
-
-
-  useEffect(() => {
-    get(`/event/${id}`).catch(
-      (error) => {
-        // Handle error
-        console.error(error);
-      }
-    );
-  }, []);
-
-  // get artikel
-  useEffect(() => {
-    getartikel(`/artikel/${event?.data.artikel_id}`).catch((error) => {
-      // Handle error
-      console.error(error);
-    });
-  }, [localStorage.getItem("artikel_id")]);
-  console.log(artikel)
-
-  useEffect(() => {
-    setValues({
-       artikel_id: localStorage.getItem("artikel_id"),
-       gambar: localStorage.getItem("gambar"),
-       nama:  localStorage.getItem("nama")?localStorage.getItem("nama") : event?.data.nama,
-       deskripsi: localStorage.getItem("deskripsi")?localStorage.getItem("deskripsi") : event?.data.deskripsi,
-       lokasi: localStorage.getItem("lokasi")?localStorage.getItem("lokasi") : event?.data.lokasi,
-       link_lokasi: localStorage.getItem("link_lokasi")?localStorage.getItem("link_lokasi") : event?.data.link_lokasi,
-       waktu_mulai: localStorage.getItem("waktu_mulai")?localStorage.getItem("waktu_mulai") : event?.data.waktu_mulai,
-       waktu_selesai: localStorage.getItem("waktu_selesai")?localStorage.getItem("waktu_selesai") : event?.data.waktu_selesai,
-       // tanggal_mulai: "12 Desember 2023",
-       // tanggal_selesai: "12 Desember 2023",
-       harga_tiket: localStorage.getItem("harga_tiket")?localStorage.getItem("harga_tiket") : event?.data.harga_tiket,
-       stok_tiket: localStorage.getItem("stok_tiket")?localStorage.getItem("stok_tiket") : event?.data.stok_tiket,
-    })
-    console.log(event?.data.nama)
-  }, [event]);
-
-  const paragraphs = values.deskripsi?.split("\n\n");
-
-  const onSubmit = () => {
-    localStorage.removeItem("artikel_id",values.artikel_id)
-    localStorage.removeItem("gambar",values.gambar)
-    localStorage.removeItem("nama",values.nama)
-    localStorage.removeItem("deskripsi",values.deskripsi)
-    localStorage.removeItem("lokasi",values.lokasi)
-    localStorage.removeItem("link_lokasi",values.nama)
-    localStorage.removeItem("waktu_mulai",values.waktu_mulai)
-    localStorage.removeItem("waktu_selesai",values.waktu_selesai)
-    localStorage.removeItem("harga_tiket",values.harga_tiket)
-    localStorage.removeItem("stok_tiket",values.stok_tiket)
-
-    const harga_tiket = parseInt(values.harga_tiket)
-    const stok_tiket = parseInt(values.stok_tiket)
-    put(`/event/${id}`, {
-      ...values, 
-      harga_tiket: harga_tiket,
-      stok_tiket: stok_tiket
-    })
-    .then(() => {
-      openModalSukses();
-    })
-    .catch((error) => {
-      openModalGagal();
-      console.error(error);
-    });
-    console.log(values)
-  };
-
-  const onCancel = (e) => {
-    navigate(-1);
-  };
-
-  const handleOnChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
-
+  const [toggle, setToggle] = useState(false);
   const [file, setFile] = useState();
-  const getFile = (e) => {
-    setFile(URL.createObjectURL(e.target.files[0]));
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const onArtikel = (e) => {
-    navigate("/tentang-artikel");
-  }
-
-  const handleOnKeyUp = (e) => {
-    localStorage.setItem(e.target.name, values[e.target.name]);
-  }
-
   // modal
   const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
   const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
+
+  const { response: event, loading, error, get, put } = useApi();
+  const {
+    response: artikel,
+    loading: loadingartikel,
+    error: errorartikel,
+    get: getartikel,
+    put: putartikel,
+  } = useApi();
+
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const customStylesConfirmation = {
     content: {
@@ -163,6 +65,124 @@ const EditEvent = () => {
       backgroundColor: "rgba(0, 0, 0, 0.1)",
       zIndex: "9999",
     },
+  };
+
+  const paragraphsArtikel = artikel?.data.deskripsi?.split("\n\n");
+
+  useEffect(() => {
+    get(`/event/${id}`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, []);
+
+  // get artikel
+  useEffect(() => {
+    if (event?.data.artikel_id) {
+      getartikel(
+        `/artikel/${
+          localStorage.getItem("artikel_id")
+            ? localStorage.getItem("artikel_id")
+            : event?.data.artikel_id
+        }`
+      ).catch((error) => {
+        // Handle error
+        console.error(error);
+      });
+    }
+  }, [event?.data.artikel_id, localStorage.getItem("artikel_id")]);
+
+  useEffect(() => {
+    setValues({
+      artikel_id: localStorage.getItem("artikel_id"),
+      gambar: localStorage.getItem("gambar"),
+      nama: localStorage.getItem("nama")
+        ? localStorage.getItem("nama")
+        : event?.data.nama,
+      deskripsi: localStorage.getItem("deskripsi")
+        ? localStorage.getItem("deskripsi")
+        : event?.data.deskripsi,
+      lokasi: localStorage.getItem("lokasi")
+        ? localStorage.getItem("lokasi")
+        : event?.data.lokasi,
+      link_lokasi: localStorage.getItem("link_lokasi")
+        ? localStorage.getItem("link_lokasi")
+        : event?.data.link_lokasi,
+      waktu_mulai: localStorage.getItem("waktu_mulai")
+        ? localStorage.getItem("waktu_mulai")
+        : event?.data.waktu_mulai,
+      waktu_selesai: localStorage.getItem("waktu_selesai")
+        ? localStorage.getItem("waktu_selesai")
+        : event?.data.waktu_selesai,
+      // tanggal_mulai: "12 Desember 2023",
+      // tanggal_selesai: "12 Desember 2023",
+      harga_tiket: localStorage.getItem("harga_tiket")
+        ? localStorage.getItem("harga_tiket")
+        : event?.data.harga_tiket,
+      stok_tiket: localStorage.getItem("stok_tiket")
+        ? localStorage.getItem("stok_tiket")
+        : event?.data.stok_tiket,
+    });
+  }, [event]);
+
+  const toggler = () => {
+    toggle ? setToggle(false) : setToggle(true);
+  };
+
+  const onSubmit = () => {
+    localStorage.removeItem("artikel_id", values.artikel_id);
+    localStorage.removeItem("gambar", values.gambar);
+    localStorage.removeItem("nama", values.nama);
+    localStorage.removeItem("deskripsi", values.deskripsi);
+    localStorage.removeItem("lokasi", values.lokasi);
+    localStorage.removeItem("link_lokasi", values.nama);
+    localStorage.removeItem("waktu_mulai", values.waktu_mulai);
+    localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("harga_tiket", values.harga_tiket);
+    localStorage.removeItem("stok_tiket", values.stok_tiket);
+
+    const harga_tiket = parseInt(values.harga_tiket);
+    const stok_tiket = parseInt(values.stok_tiket);
+    put(`/event/${id}`, {
+      ...values,
+      harga_tiket: harga_tiket,
+      stok_tiket: stok_tiket,
+    })
+      .then(() => {
+        openModalSukses();
+      })
+      .catch((error) => {
+        openModalGagal();
+        console.error(error);
+      });
+    console.log(values);
+  };
+
+  const onCancel = (e) => {
+    navigate(-1);
+  };
+
+  const handleOnChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const getFile = (e) => {
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onArtikel = (e) => {
+    navigate("/tentang-artikel");
+  };
+
+  const handleOnKeyUp = (e) => {
+    localStorage.setItem(e.target.name, values[e.target.name]);
   };
 
   const openModalSukses = () => {
@@ -204,10 +224,7 @@ const EditEvent = () => {
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
-                    <img
-                      id="uploadedImage"
-                      src={file ? file : values.gambar}
-                    />
+                    <img id="uploadedImage" src={file ? file : values.gambar} />
                   </div>
                   <div className="d-flex justify-content-center">
                     <label htmlFor={"gambar"}>
@@ -282,46 +299,46 @@ const EditEvent = () => {
                     <img src={info} alt="info" />
                     <span className="body-medium-semibold"> Info Lengkap</span>
                     <div className="d-grid col-12 ">
-                    {artikel ? (
-                    <div>
-                      <div className={`my-3 ${styles.layoutInfo}`}>
+                      {artikel ? (
                         <div>
-                          <img src={artikel?.data?.gambar} alt="" />
+                          <div className={`my-3 ${styles.layoutInfo}`}>
+                            <div>
+                              <img src={artikel?.data?.gambar} alt="" />
+                            </div>
+                            <div>
+                              <p className="body-medium-semibold">
+                                {artikel?.data?.judul}
+                              </p>
+                              {paragraphsArtikel?.map((text, index) => (
+                                <p
+                                  key={index}
+                                  id={`articleDescription${index}`}
+                                  className="body-small-regular"
+                                >
+                                  {text}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="w-100">
+                            <div className="d-grid">
+                              <Button
+                                label="Ganti Artikel"
+                                color="brown"
+                                icon={add}
+                                onClick={onArtikel}
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className="body-medium-semibold">
-                            {artikel?.data?.judul}
-                          </p>
-                          {paragraph?.map((text, index) => (
-                            <p
-                              key={index}
-                              id={`articleDescription${index}`}
-                              className="body-small-regular"
-                            >
-                              {text}
-                            </p>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="w-100">
-                        <div className="d-grid">
-                          <Button
-                            label="Ganti Artikel"
-                            color="brown"
-                            icon={add}
-                            onClick={onArtikel}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <Button
-                      label="Tambah Artikel"
-                      color="brown"
-                      icon={add}
-                      onClick={onArtikel}
-                    />
-                  )}
+                      ) : (
+                        <Button
+                          label="Tambah Artikel"
+                          color="brown"
+                          icon={add}
+                          onClick={onArtikel}
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -389,7 +406,6 @@ const EditEvent = () => {
                         />
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -470,12 +486,13 @@ const EditEvent = () => {
               />
             </div>
             <div className="d-grid col-3 ">
-              <Button 
-                id="submitButton" 
-                label="Simpan" 
-                color="brown" 
-                icon={save} 
-                onClick={onSubmit} />
+              <Button
+                id="submitButton"
+                label="Simpan"
+                color="brown"
+                icon={save}
+                onClick={onSubmit}
+              />
             </div>
           </div>
 
@@ -501,7 +518,10 @@ const EditEvent = () => {
                   alt="success"
                   className="mb-16"
                 />
-                <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+                <h4
+                  id="modalSuksesTitle"
+                  className="title-large-semibold mb-16"
+                >
                   Berhasil Disimpan
                 </h4>
                 <p id="modalSuksesMessage" className="body-small-regular mb-16">

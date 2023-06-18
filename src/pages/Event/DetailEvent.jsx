@@ -18,15 +18,19 @@ import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
 
-
 const DetailEvent = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
 
   const { response: event, loading, error, get, del } = useApi();
-  const { response: artikel, loading: artikelloading, error: artikelerror, get: getartikel} = useApi();
+  const {
+    response: artikel,
+    loading: artikelloading,
+    error: artikelerror,
+    get: getartikel,
+  } = useApi();
 
-  
+
   const navigate = useNavigate();
 
   const [toggle, setToggle] = useState(false);
@@ -61,21 +65,23 @@ const DetailEvent = () => {
 
   // get artikel
   useEffect(() => {
-    getartikel(`/artikel/${event?.data.artikel_id}`).catch((error) => {
-      // Handle error
-      console.error(error);
-    });
+    if (event?.data.artikel_id) {
+      getartikel(`/artikel/${event?.data.artikel_id}`).catch((error) => {
+        // Handle error
+        console.error(error);
+      });
+    }
   }, [event?.data.artikel_id]);
-  console.log(artikel)
+  console.log(artikel);
 
   const handleDelete = (selectedId) => {
     del(`/event/${id}`)
-    .then(() => {
-      openTerhapusModal();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const closeKonfirmasiModal = () => {
@@ -98,7 +104,10 @@ const DetailEvent = () => {
     setModalTerhapusIsOpen(false);
   };
 
-  const paragraph = artikel?.data?.deskripsi?.split("\n\n");
+  const paragraphEvent = event?.data?.deskripsi?.split("\n\n");
+  const paragraphArtikel = artikel?.data?.deskripsi?.split("\n\n");
+
+  const [file, setFile] = useState();
 
   return (
     <div>
@@ -135,7 +144,7 @@ const DetailEvent = () => {
               </div>
 
               <div className="mt-3">
-                {paragraph?.map((text, index) => (
+                {paragraphEvent?.map((text, index) => (
                   <p
                     key={index}
                     id={`articleDescription${index}`}
@@ -160,39 +169,37 @@ const DetailEvent = () => {
                     <span className="body-medium-semibold"> Info Lengkap</span>
 
                     <div className="d-grid col-12 ">
-                  {artikel && (
-                    <div>
-                      <div className={`my-3 ${styles.layoutInfo}`}>
+                      {artikel && (
                         <div>
-                          <img src={artikel?.data?.gambar} alt="" />
+                          <div className={`my-3 ${styles.layoutInfo}`}>
+                            <div>
+                              <img src={artikel?.data?.gambar} alt="" />
+                            </div>
+                            <div>
+                              <p className="body-medium-semibold">
+                                {artikel?.data?.judul}
+                              </p>
+                              {paragraphArtikel?.map((text, index) => (
+                                <p
+                                  key={index}
+                                  id={`articleDescription${index}`}
+                                  className="body-small-regular"
+                                >
+                                  {text}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className="body-medium-semibold">
-                            {artikel?.data?.judul}
-                          </p>
-                          {paragraph?.map((text, index) => (
-                            <p
-                              key={index}
-                              id={`articleDescription${index}`}
-                              className="body-small-regular"
-                            >
-                              {text}
-                            </p>
-                          ))}
-                        </div>
-                      </div>
+                      )}
                     </div>
-                  )
-                    
-                  }
-                </div>
                   </div>
 
                   <div className="col-lg-6">
                     <div className="mt-24">
                       <img src={lokasi} alt="lokasi" />
                       <span className="body-medium-semibold"> Lokasi</span>
-                      <p className={`body-medium-regular`} id="lokasi"> 
+                      <p className={`body-medium-regular`} id="lokasi">
                         {event?.data?.lokasi}
                       </p>
                     </div>
@@ -217,12 +224,14 @@ const DetailEvent = () => {
 
                     <div className="mt-24">
                       <img src={waktu} alt="waktu" />
-                      <span className="body-medium-semibold"> Waktu Selesai</span>
+                      <span className="body-medium-semibold">
+                        {" "}
+                        Waktu Selesai
+                      </span>
                       <p className={`body-medium-regular`} id="waktuSelesai">
                         {event?.data?.waktu_selesai}
                       </p>
                     </div>
-
                   </div>
                 </div>
               </div>
