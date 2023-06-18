@@ -11,62 +11,151 @@ import Button from "../../elements/Button/Button";
 import { Switch } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../../api/useApi";
+import Spinner from "../../components/Spinner/Spinner";
+import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
+import Modal from "react-modal";
+import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
+import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
+import add from "../../assets/icons/add.svg";
 
 const EditEvent = () => {
-  const { response: event, loading, error, get, put } = useApi();
+  const [values, setValues] = useState({
+    artikel_id: "",
+    gambar: "",
+    nama: "",
+    deskripsi: "",
+    lokasi: "",
+    link_lokasi: "",
+    waktu_mulai: "",
+    waktu_selesai: "",
+    tanggal_mulai: "12 Desember 2023",
+    tanggal_selesai: "12 Desember 2023",
+    harga_tiket: 0,
+    stok_tiket: 0,
+  });
   const [toggle, setToggle] = useState(false);
+  const [file, setFile] = useState();
+  // modal
+  const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
+  const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
 
-  const toggler = () => {
-    toggle ? setToggle(false) : setToggle(true);
-  };
+  const { response: event, loading, error, get, put } = useApi();
+  const {
+    response: artikel,
+    loading: loadingartikel,
+    error: errorartikel,
+    get: getartikel,
+    put: putartikel,
+  } = useApi();
 
   const navigate = useNavigate();
   const { id } = useParams();
-  const [values, setValues] = useState({
-    fotoEvent: "",
-    judulEvent: "",
-    deskripsiEvent: "",
-    lokasiEvent: "",
-    linkGoogleEvent: "",
-    waktuEvent: "",
-    hargaEvent: "",
-    jumlahEvent: "",
-  });
 
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
+
+  const paragraphsArtikel = artikel?.data.deskripsi?.split("\n\n");
 
   useEffect(() => {
-    get(
-      `https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`
-    ).catch((error) => {
+    get(`/event/${id}`).catch((error) => {
       // Handle error
       console.error(error);
     });
   }, []);
 
+  // get artikel
   useEffect(() => {
-    if (event) {
-      setValues({
-        fotoEvent: event.fotoEvent,
-        judulEvent: event.judulEvent,
-        deskripsiEvent: event.deskripsiEvent,
-        lokasiEvent: event.lokasiEvent,
-        linkGoogleEvent: event.linkGoogleEvent,
-        waktuEvent: event.waktuEvent,
-        hargaEvent: event.hargaEvent,
-        jumlahEvent: event.jumlahEvent,
+    if (event?.data.artikel_id) {
+      getartikel(
+        `/artikel/${
+          localStorage.getItem("artikel_id")
+            ? localStorage.getItem("artikel_id")
+            : event?.data.artikel_id
+        }`
+      ).catch((error) => {
+        // Handle error
+        console.error(error);
       });
     }
+  }, [event?.data.artikel_id, localStorage.getItem("artikel_id")]);
+
+  useEffect(() => {
+    setValues({
+      artikel_id: localStorage.getItem("artikel_id"),
+      gambar: localStorage.getItem("gambar"),
+      nama: localStorage.getItem("nama")
+        ? localStorage.getItem("nama")
+        : event?.data.nama,
+      deskripsi: localStorage.getItem("deskripsi")
+        ? localStorage.getItem("deskripsi")
+        : event?.data.deskripsi,
+      lokasi: localStorage.getItem("lokasi")
+        ? localStorage.getItem("lokasi")
+        : event?.data.lokasi,
+      link_lokasi: localStorage.getItem("link_lokasi")
+        ? localStorage.getItem("link_lokasi")
+        : event?.data.link_lokasi,
+      waktu_mulai: localStorage.getItem("waktu_mulai")
+        ? localStorage.getItem("waktu_mulai")
+        : event?.data.waktu_mulai,
+      waktu_selesai: localStorage.getItem("waktu_selesai")
+        ? localStorage.getItem("waktu_selesai")
+        : event?.data.waktu_selesai,
+      // tanggal_mulai: "12 Desember 2023",
+      // tanggal_selesai: "12 Desember 2023",
+      harga_tiket: localStorage.getItem("harga_tiket")
+        ? localStorage.getItem("harga_tiket")
+        : event?.data.harga_tiket,
+      stok_tiket: localStorage.getItem("stok_tiket")
+        ? localStorage.getItem("stok_tiket")
+        : event?.data.stok_tiket,
+    });
   }, [event]);
 
-  const paragraphs = values.deskripsiEvent?.split("\n\n");
+  const toggler = () => {
+    toggle ? setToggle(false) : setToggle(true);
+  };
 
   const onSubmit = () => {
-    put(
-      `https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`,
-      values
-    );
-    navigate(-1);
-    setFile("");
+    localStorage.removeItem("artikel_id", values.artikel_id);
+    localStorage.removeItem("gambar", values.gambar);
+    localStorage.removeItem("nama", values.nama);
+    localStorage.removeItem("deskripsi", values.deskripsi);
+    localStorage.removeItem("lokasi", values.lokasi);
+    localStorage.removeItem("link_lokasi", values.nama);
+    localStorage.removeItem("waktu_mulai", values.waktu_mulai);
+    localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("harga_tiket", values.harga_tiket);
+    localStorage.removeItem("stok_tiket", values.stok_tiket);
+
+    const harga_tiket = parseInt(values.harga_tiket);
+    const stok_tiket = parseInt(values.stok_tiket);
+    put(`/event/${id}`, {
+      ...values,
+      harga_tiket: harga_tiket,
+      stok_tiket: stok_tiket,
+    })
+      .then(() => {
+        openModalSukses();
+      })
+      .catch((error) => {
+        openModalGagal();
+        console.error(error);
+      });
+    console.log(values);
   };
 
   const onCancel = (e) => {
@@ -80,7 +169,6 @@ const EditEvent = () => {
     });
   };
 
-  const [file, setFile] = useState();
   const getFile = (e) => {
     setFile(URL.createObjectURL(e.target.files[0]));
     setValues({
@@ -89,12 +177,43 @@ const EditEvent = () => {
     });
   };
 
+  const onArtikel = (e) => {
+    navigate("/tentang-artikel");
+  };
+
+  const handleOnKeyUp = (e) => {
+    localStorage.setItem(e.target.name, values[e.target.name]);
+  };
+
+  const openModalSukses = () => {
+    setModalSuksesIsOpen(true);
+    setTimeout(() => {
+      closeModalSukses();
+      navigate("/event");
+    }, 1500);
+  };
+
+  const closeModalSukses = () => {
+    setModalSuksesIsOpen(false);
+  };
+
+  const openModalGagal = () => {
+    setModalGagalIsOpen(true);
+    setTimeout(() => {
+      closeModalGagal();
+    }, 1500);
+  };
+
+  const closeModalGagal = () => {
+    setModalGagalIsOpen(false);
+  };
+
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : error ? (
-        <p>Error: {error}</p>
+        <ErrorDisplay errorMessage={error.message} />
       ) : (
         <div className={styles.tambahEventContainer}>
           <h1 className="headline-small-semibold">Edit Event</h1>
@@ -105,26 +224,26 @@ const EditEvent = () => {
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
-                    <img
-                      id="uploadedImage"
-                      src={file ? file : values.fotoEvent} 
-                    />
+                    <img id="uploadedImage" src={file ? file : values.gambar} />
                   </div>
                   <div className="d-flex justify-content-center">
-                    <label htmlFor={"fotoEvent"}>
+                    <label htmlFor={"gambar"}>
                       <Button
                         label="Pilih Foto"
                         icon={Filefoto}
                         color="brown"
-                        onClick={() => document.getElementById("fotoEvent").click()}
+                        onClick={() =>
+                          document.getElementById("gambar").click()
+                        }
                       />
                     </label>
                     <input
-                      id={"fotoEvent"}
+                      id={"gambar"}
                       className={styles.inputPhoto}
                       type={"file"}
-                      name={"fotoEvent"}
+                      name={"gambar"}
                       onChange={getFile}
+                      onKeyUp={handleOnKeyUp}
                     />
                   </div>
                   <div className="d-flex justify-content-center mt-3">
@@ -139,13 +258,13 @@ const EditEvent = () => {
                 <div className={styles.inputBox}>
                   <Input
                     type={"text"}
-                    required={"required"}
                     placeholder={"Masukkan judul event"}
                     className={styles.input}
-                    id={"judulEvent"}
-                    name={"judulEvent"}
-                    value={values.judulEvent}
+                    id={"nama"}
+                    name={"nama"}
+                    value={values.nama}
                     onChange={handleOnChange}
+                    onKeyUp={handleOnKeyUp}
                     label={"Judul Event"}
                   />
                 </div>
@@ -155,13 +274,13 @@ const EditEvent = () => {
                 <div className={styles.inputBox}>
                   <Textarea
                     rows={12}
-                    required={"required"}
                     placeholder={"Masukkan deskripsi event"}
                     className={styles.input}
-                    id={"deskripsiEvent"}
-                    name={"deskripsiEvent"}
-                    value={values.deskripsiEvent}
+                    id={"deskripsi"}
+                    name={"deskripsi"}
+                    value={values.deskripsi}
                     onChange={handleOnChange}
+                    onKeyUp={handleOnKeyUp}
                   />
                   <label className={styles.inputTitle}>Deskripsi</label>
                 </div>
@@ -180,7 +299,46 @@ const EditEvent = () => {
                     <img src={info} alt="info" />
                     <span className="body-medium-semibold"> Info Lengkap</span>
                     <div className="d-grid col-12 ">
-                      <Button label="Ganti Artikel" color="brown" icon={edit} />
+                      {artikel ? (
+                        <div>
+                          <div className={`my-3 ${styles.layoutInfo}`}>
+                            <div>
+                              <img src={artikel?.data?.gambar} alt="" />
+                            </div>
+                            <div>
+                              <p className="body-medium-semibold">
+                                {artikel?.data?.judul}
+                              </p>
+                              {paragraphsArtikel?.map((text, index) => (
+                                <p
+                                  key={index}
+                                  id={`articleDescription${index}`}
+                                  className="body-small-regular"
+                                >
+                                  {text}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="w-100">
+                            <div className="d-grid">
+                              <Button
+                                label="Ganti Artikel"
+                                color="brown"
+                                icon={add}
+                                onClick={onArtikel}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <Button
+                          label="Tambah Artikel"
+                          color="brown"
+                          icon={add}
+                          onClick={onArtikel}
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -189,13 +347,13 @@ const EditEvent = () => {
                       <div className={styles.inputBox}>
                         <Input
                           type={"text"}
-                          required={"required"}
                           placeholder={"Masukkan alamat lokasi"}
                           className={styles.input}
-                          id={"lokasiEvent"}
-                          name={"lokasiEvent"}
-                          value={values.lokasiEvent}
+                          id={"lokasi"}
+                          name={"lokasi"}
+                          value={values.lokasi}
                           onChange={handleOnChange}
+                          onKeyUp={handleOnKeyUp}
                           label={"Lokasi"}
                         />
                       </div>
@@ -205,13 +363,13 @@ const EditEvent = () => {
                       <div className={styles.inputBox}>
                         <Input
                           type={"text"}
-                          required={"required"}
                           placeholder={"Masukkan link Google Maps lokasi"}
                           className={styles.input}
-                          id={"linkGoogleEvent"}
-                          name={"linkGoogleEvent"}
-                          value={values.linkGoogleEvent}
+                          id={"link_lokasi"}
+                          name={"link_lokasi"}
+                          value={values.link_lokasi}
                           onChange={handleOnChange}
+                          onKeyUp={handleOnKeyUp}
                           label={"Google Maps"}
                         />
                       </div>
@@ -221,14 +379,30 @@ const EditEvent = () => {
                       <div className={styles.inputBox}>
                         <Input
                           type={"text"}
-                          required={"required"}
-                          placeholder={"00:00"}
+                          placeholder={"Masukan waktu Mulai"}
                           className={styles.input}
-                          id={"waktuEvent"}
-                          name={"waktuEvent"}
-                          value={values.waktuEvent}
+                          id={"waktu_mulai"}
+                          name={"waktu_mulai"}
+                          value={values.waktu_mulai}
                           onChange={handleOnChange}
-                          label={"Waktu"}
+                          onKeyUp={handleOnKeyUp}
+                          label={"Waktu Mulai"}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-24">
+                      <div className={styles.inputBox}>
+                        <Input
+                          type={"text"}
+                          placeholder={"Masukan waktu Selesai"}
+                          className={styles.input}
+                          id={"waktu_selesai"}
+                          name={"waktu_selesai"}
+                          value={values.waktu_selesai}
+                          onChange={handleOnChange}
+                          onKeyUp={handleOnKeyUp}
+                          label={"Waktu Selesai"}
                         />
                       </div>
                     </div>
@@ -263,14 +437,14 @@ const EditEvent = () => {
                       <div className="m-2">
                         <div className={styles.inputBox}>
                           <Input
-                            type={"text"}
-                            required={"required"}
+                            type={"number"}
                             placeholder={"masukkan harga jenis"}
                             className={styles.input}
-                            id={"hargaEvent"}
-                            name={"hargaEvent"}
-                            value={values.hargaEvent}
+                            id={"harga_tiket"}
+                            name={"harga_tiket"}
+                            value={values.harga_tiket}
                             onChange={handleOnChange}
+                            onKeyUp={handleOnKeyUp}
                             label={"Harga"}
                           />
                         </div>
@@ -281,14 +455,14 @@ const EditEvent = () => {
                       <div className="m-2">
                         <div className={styles.inputBox}>
                           <Input
-                            type={"text"}
-                            required={"required"}
+                            type={"number"}
                             placeholder={"masukkan jumlah"}
                             className={styles.input}
-                            id={"jumlahEvent"}
-                            name={"jumlahEvent"}
-                            value={values.jumlahEvent}
+                            id={"stok_tiket"}
+                            name={"stok_tiket"}
+                            value={values.stok_tiket}
                             onChange={handleOnChange}
+                            onKeyUp={handleOnKeyUp}
                             label={"Jumlah"}
                           />
                         </div>
@@ -312,15 +486,80 @@ const EditEvent = () => {
               />
             </div>
             <div className="d-grid col-3 ">
-              <Button 
-                id="saveButton"
-                label="Simpan" 
-                color="brown" 
-                icon={save} 
-                onClick={onSubmit} 
+              <Button
+                id="submitButton"
+                label="Simpan"
+                color="brown"
+                icon={save}
+                onClick={onSubmit}
               />
             </div>
           </div>
+
+          {/* Modal */}
+          <Modal
+            isOpen={modalSuksesIsOpen}
+            onRequestClose={closeModalSukses}
+            contentLabel="Success Modal"
+            style={customStylesConfirmation}
+            id="modalSukses"
+          >
+            <div
+              id="modalSuksesContainer"
+              className={`d-flex justify-content-center align-items-center`}
+            >
+              <div
+                id="modalSuksesContent"
+                className={`d-flex flex-column justify-content-center align-items-center`}
+              >
+                <img
+                  id="modalSuksesLogo"
+                  src={ModalSuksesLogo}
+                  alt="success"
+                  className="mb-16"
+                />
+                <h4
+                  id="modalSuksesTitle"
+                  className="title-large-semibold mb-16"
+                >
+                  Berhasil Disimpan
+                </h4>
+                <p id="modalSuksesMessage" className="body-small-regular mb-16">
+                  Data yang anda buat sudah berhasil disimpan
+                </p>
+              </div>
+            </div>
+          </Modal>
+
+          <Modal
+            isOpen={modalGagalIsOpen}
+            onRequestClose={closeModalGagal}
+            contentLabel="Fail Modal"
+            style={customStylesConfirmation}
+          >
+            <div
+              id="modalGagalContainer"
+              className={`d-flex justify-content-center align-items-center`}
+            >
+              <div
+                id="modalGagalContent"
+                className={`d-flex flex-column justify-content-center align-items-center`}
+              >
+                <img
+                  id="modalGagalLogo"
+                  src={ModalGagalLogo}
+                  alt="success"
+                  className="mb-16"
+                />
+                <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+                  Gagal Disimpan
+                </h4>
+                <p id="modalGagalText" className="body-small-regular mb-16">
+                  Data yang anda buat Gagal disimpan
+                </p>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
     </div>

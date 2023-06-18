@@ -7,24 +7,46 @@ import restart from "../../assets/icons/restart_alt.svg";
 import save from "../../assets/icons/save.svg";
 import useApi from "../../api/useApi";
 import { useNavigate } from "react-router-dom";
+import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
+import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
+import Modal from "react-modal";
 
 const TambahPromo = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    NamaPromo: "",
-    DeskripsiPromo: "",
-    KodePromo: "",
-    PotonganHarga: "",
+    nama: "",
+    deskripsi: "",
+    kode: "",
+    potongan_harga: 0,
   });
 
   const [errors, setErrors] = useState({
-    NamaPromo: false,
-    DeskripsiPromo: false,
-    KodePromo: false,
-    PotonganHarga: false,
+    nama: false,
+    deskripsi: false,
+    kode: false,
+    potongan_harga: false,
   });
 
+  const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
+  const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
+
   const { response: promo, loading, error, post } = useApi();
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
 
   const onSubmit = () => {
     const newErrors = {};
@@ -39,20 +61,27 @@ const TambahPromo = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      post(
-        "https://648179fd29fa1c5c503172c3.mockapi.io/promo",
-        values
-      );
+      const potongan_harga = parseInt(values.potongan_harga)
+      post("/promo", {
+        ...values, 
+        potongan_harga: potongan_harga
+      })
+      .then(() => {
+        openModalSukses();
+      })
+      .catch((error) => {
+        openModalGagal();
+        console.error(error);
+      });
       console.log(values)
-      navigate(-1);
     }
   };
   const onReset = (e) => {
     setValues({
-      NamaPromo: "",
-      DeskripsiPromo: "",
-      KodePromo: "",
-      PotonganHarga: "",
+      nama: "",
+      deskripsi: "",
+      kode: "",
+      potongan_harga: 0,
     });
   };
 
@@ -74,6 +103,29 @@ const TambahPromo = () => {
         [name]: false,
       }));
     }
+  };
+
+  const openModalSukses = () => {
+    setModalSuksesIsOpen(true);
+    setTimeout(() => {
+      closeModalSukses();
+      navigate("/promo");
+    }, 1500);
+  };
+
+  const closeModalSukses = () => {
+    setModalSuksesIsOpen(false);
+  };
+
+  const openModalGagal = () => {
+    setModalGagalIsOpen(true);
+    setTimeout(() => {
+      closeModalGagal();
+    }, 1500);
+  };
+
+  const closeModalGagal = () => {
+    setModalGagalIsOpen(false);
   };
 
   return (
@@ -102,10 +154,10 @@ const TambahPromo = () => {
               id={"addNamaPromo"}
               label={"Nama Promo"}
               placeholder={"Masukkan Nama Promo"}
-              name={"NamaPromo"}
-              value={values.NamaPromo}
+              name={"nama"}
+              value={values.nama}
               onChange={handleOnChange}
-              error={errors.NamaPromo}
+              error={errors.nama}
             />
             <br />
           </div>
@@ -132,13 +184,13 @@ const TambahPromo = () => {
               required={"required"}
               placeholder={"Masukkan Deskripsi Promo"}
               className={
-                errors.DeskripsiPromo
+                errors.deskripsi
                   ? `${styles.errorInput} ${styles.textArea}`
                   : styles.textArea
               }
               id={"addDeskripsiPromo"}
-              name={"DeskripsiPromo"}
-              value={values.DeskripsiPromo}
+              name={"deskripsi"}
+              value={values.deskripsi}
               onChange={handleOnChange}
             />
             <label
@@ -174,10 +226,10 @@ const TambahPromo = () => {
               id={"addKodePromo"}
               label={"Kode Promo"}
               placeholder={"Masukkan Kode Promo"}
-              name={"KodePromo"}
-              value={values.KodePromo}
+              name={"kode"}
+              value={values.kode}
               onChange={handleOnChange}
-              error={errors.KodePromo}
+              error={errors.kode}
             />
             <br />
           </div>
@@ -206,10 +258,10 @@ const TambahPromo = () => {
               id={"addPotonganHarga"}
               label={"Potongan Harga"}
               placeholder={"Rp. 0"}
-              name={"PotonganHarga"}
-              value={values.PotonganHarga}
+              name={"potongan_harga"}
+              value={values.potongan_harga}
               onChange={handleOnChange}
-              error={errors.PotonganHarga}
+              error={errors.potongan_harga}
             />
             <br />
           </div>
@@ -219,6 +271,7 @@ const TambahPromo = () => {
       <div className="d-flex justify-content-end gap-3 pt-5">
         <div className="d-grid col-3">
           <Button
+            id="reset"
             label="Reset"
             color="white"
             icon={restart}
@@ -226,9 +279,75 @@ const TambahPromo = () => {
           />
         </div>
         <div className="d-grid col-3">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+          <Button 
+            id="simpan"
+            label="Simpan" 
+            color="brown" 
+            icon={save} 
+            onClick={onSubmit} 
+          />
         </div>
       </div>
+      {/* Modal */}
+      <Modal
+        isOpen={modalSuksesIsOpen}
+        onRequestClose={closeModalSukses}
+        contentLabel="Success Modal"
+        style={customStylesConfirmation}
+        id="modalSukses"
+      >
+        <div
+          id="modalSuksesContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalSuksesContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalSuksesLogo"
+              src={ModalSuksesLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+              Berhasil Disimpan
+            </h4>
+            <p id="modalSuksesMessage" className="body-small-regular mb-16">
+              Data yang anda buat sudah berhasil disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalGagalIsOpen}
+        onRequestClose={closeModalGagal}
+        contentLabel="Fail Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalGagalContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalGagalContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalGagalLogo"
+              src={ModalGagalLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+              Gagal Disimpan
+            </h4>
+            <p id="modalGagalText" className="body-small-regular mb-16">
+              Data yang anda buat Gagal disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

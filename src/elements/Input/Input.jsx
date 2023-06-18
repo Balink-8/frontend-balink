@@ -11,6 +11,7 @@ const Input = ({
   readOnly,
   icon,
   onClick,
+  onKeyUp,
   error,
 }) => {
   return (
@@ -36,6 +37,7 @@ const Input = ({
           name={name}
           value={value}
           onChange={onChange}
+          onKeyUp={onKeyUp}
           readOnly={readOnly ? true : false}
         />
         {icon && (

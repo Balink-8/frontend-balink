@@ -14,6 +14,8 @@ const Navbar = () => {
       return "Akun";
     } else if (pathname.includes("event")) {
       return "Event";
+    } else if (pathname.includes("tentang-artikel")) {
+      return "Artikel tentang Event";
     } else if (pathname.includes("produk")) {
       return "Produk";
     } else if (pathname.includes("kategori")) {
@@ -31,24 +33,14 @@ const Navbar = () => {
     }
   };
   return (
-    <nav id="navbar" className={`${styles.navbar} navbar`}>
-      <div className="container-fluid">
-        <a id="navbarBrand" className="navbar-brand headline-small-semibold">
+    <nav id="navbar" className={`${styles.navbar} fixed-top offset-2`}>
+      <div className="d-flex align-items-center justify-content-between">
+        <a
+          id="navbarBrand"
+          className={`${styles.navbarBrand} headline-small-semibold`}
+        >
           {setTitle(pathname)}
         </a>
-        <div id="userContainer" className="user">
-          <a id="notificationLink" href="">
-            <img
-              id="notificationIcon"
-              src={notification}
-              alt="notification-icon"
-              className="me-16"
-            />
-          </a>
-          <a id="avatarLink" href="">
-            <img id="avatarImage" src={avatar} alt="avatar-img" />
-          </a>
-        </div>
       </div>
     </nav>
   );

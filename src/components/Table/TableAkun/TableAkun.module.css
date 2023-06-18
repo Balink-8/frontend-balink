@@ -66,6 +66,7 @@
 .tableRow:hover {
   background-color: #fffcf8;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .actionButton {
@@ -93,4 +94,14 @@
 .tableHeadRow {
   border-bottom-color: transparent !important;
   background-color: var(--brown-light) !important;
+}
+
+.close {
+  cursor: pointer;
+}
+
+.avatar {
+  width: 64px;
+  margin-bottom: 24px;
+  border-radius: 64px;
 }

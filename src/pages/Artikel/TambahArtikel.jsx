@@ -5,27 +5,47 @@ import Textarea from "../../elements/Textarea/Textarea";
 import reset from "../../assets/icons/restart_alt.svg";
 import save from "../../assets/icons/save.svg";
 import Filefoto from "../../assets/icons/drive_folder_upload.svg";
+import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
+import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import Button from "../../elements/Button/Button";
 import useApi from "../../api/useApi";
+import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 
 const TambahArtikel = () => {
-  const navigate = useNavigate();
   const [values, setValues] = useState({
-    fotoArtikel: "",
-    judulArtikel: "",
-    deskripsiArtikel: "",
+    gambar: "",
+    judul: "",
+    deskripsi: "",
   });
-
   const [errors, setErrors] = useState({
-    fotoArtikel: false,
-    judulArtikel: false,
-    deskripsiArtikel: false,
+    gambar: false,
+    judul: false,
+    deskripsi: false,
   });
+  const [file, setFile] = useState();
+  const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
+  const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
 
   const { response: artikel, loading, error, post } = useApi();
 
-  const [file, setFile] = useState();
+  const navigate = useNavigate();
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
 
   const onSubmit = () => {
     const newErrors = {};
@@ -41,20 +61,22 @@ const TambahArtikel = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      post(
-        "https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article",
-        values
-      );
-      navigate(-1);
-      setFile("");
+      post("/artikel", values)
+        .then(() => {
+          openModalSukses();
+        })
+        .catch((error) => {
+          openModalGagal();
+          console.error(error);
+        });
     }
   };
 
   const onReset = () => {
     setValues({
-      fotoArtikel: "",
-      judulArtikel: "",
-      deskripsiArtikel: "",
+      gambar: "",
+      judul: "",
+      deskripsi: "",
     });
     setFile("");
   };
@@ -87,6 +109,29 @@ const TambahArtikel = () => {
     });
   };
 
+  const openModalSukses = () => {
+    setModalSuksesIsOpen(true);
+    setTimeout(() => {
+      closeModalSukses();
+      navigate("/artikel");
+    }, 1500);
+  };
+
+  const closeModalSukses = () => {
+    setModalSuksesIsOpen(false);
+  };
+
+  const openModalGagal = () => {
+    setModalGagalIsOpen(true);
+    setTimeout(() => {
+      closeModalGagal();
+    }, 1500);
+  };
+
+  const closeModalGagal = () => {
+    setModalGagalIsOpen(false);
+  };
+
   return (
     <div id="tambahArtikelContainer" className={styles.tambahEventContainer}>
       <h1 id="tambahArtikelTitle" className="headline-small-semibold">
@@ -102,23 +147,21 @@ const TambahArtikel = () => {
                 <img id="uploadedImage" src={file} />
               </div>
               <div className="d-flex justify-content-center">
-                <label htmlFor="fotoArtikel">
+                <label htmlFor="gambar">
                   <Button
                     id="pilihFotoButton"
                     label="Pilih Foto"
                     icon={Filefoto}
                     color="brown"
-                    onClick={() =>
-                      document.getElementById("fotoArtikel").click()
-                    }
+                    onClick={() => document.getElementById("gambar").click()}
                   />
                 </label>
                 <input
-                  id="fotoArtikel"
+                  id="gambar"
                   className={styles.inputPhoto}
                   type="file"
-                  name="fotoArtikel"
-                  value={values.fotoArtikel}
+                  name="gambar"
+                  value={values.gambar}
                   onChange={getFile}
                 />
               </div>
@@ -136,12 +179,12 @@ const TambahArtikel = () => {
                 type="text"
                 placeholder="Masukkan judul artikel"
                 className={styles.input}
-                id="judulArtikel"
-                name="judulArtikel"
-                value={values.judulArtikel}
+                id="judul"
+                name="judul"
+                value={values.judul}
                 onChange={handleOnChange}
                 label="Judul Artikel"
-                error={errors.judulArtikel}
+                error={errors.judul}
               />
             </div>
           </div>
@@ -152,18 +195,18 @@ const TambahArtikel = () => {
                 rows={12}
                 placeholder="Masukkan deskripsi artikel"
                 className={
-                  errors.deskripsiArtikel
+                  errors.deskripsi
                     ? `${styles.errorInput} ${styles.input}`
                     : styles.input
                 }
-                id="deskripsiArtikel"
-                name="deskripsiArtikel"
-                value={values.deskripsiArtikel}
+                id="deskripsi"
+                name="deskripsi"
+                value={values.deskripsi}
                 onChange={handleOnChange}
               />
               <label
                 className={
-                  errors.deskripsiArtikel
+                  errors.deskripsi
                     ? `${styles.errorTitle} ${styles.inputTitle}`
                     : styles.inputTitle
                 }
@@ -196,6 +239,67 @@ const TambahArtikel = () => {
           />
         </div>
       </div>
+
+      {/* Modal */}
+      <Modal
+        isOpen={modalSuksesIsOpen}
+        onRequestClose={closeModalSukses}
+        contentLabel="Success Modal"
+        style={customStylesConfirmation}
+        id="modalSukses"
+      >
+        <div
+          id="modalSuksesContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalSuksesContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalSuksesLogo"
+              src={ModalSuksesLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+              Berhasil Disimpan
+            </h4>
+            <p id="modalSuksesMessage" className="body-small-regular mb-16">
+              Data yang anda buat sudah berhasil disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalGagalIsOpen}
+        onRequestClose={closeModalGagal}
+        contentLabel="Fail Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalGagalContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalGagalContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalGagalLogo"
+              src={ModalGagalLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+              Gagal Disimpan
+            </h4>
+            <p id="modalGagalText" className="body-small-regular mb-16">
+              Data yang anda buat Gagal disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

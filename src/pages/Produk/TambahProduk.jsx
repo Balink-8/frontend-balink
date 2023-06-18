@@ -4,32 +4,54 @@ import Input from "../../elements/Input/Input";
 import Undo from "../../assets/icons/undo.png";
 import save from "../../assets/icons/save.svg";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../elements/Button/Button";
 import useApi from "../../api/useApi";
+import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
+import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
+import Modal from "react-modal";
 
 const TambahProduk = () => {
    const navigate = useNavigate();
    const [file, setFile] = useState();
+  const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
+  const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
 
   const [values, setValues] = useState({
-    fotoProduk: "",
-    namaProduk: "",
-    deskripsiProduk: "",
-    kategoriProduk: "",
-    hargaProduk: "",
-    stokProduk: "",
+    foto: "",
+    nama: "",
+    deskripsi: "",
+    kategori_id: "",
+    harga: 0,
+    stok: 0,
   });
   const [errors, setErrors] = useState({
-    fotoProduk: false,
-    namaProduk: false,
-    deskripsiProduk: false,
-    kategoriProduk: false,
-    hargaProduk: false,
-    stokProduk: false
+    foto: false,
+    nama: false,
+    deskripsi: false,
+    kategori_id: false,
+    harga: false,
+    stok: false
   });
 
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
+
   const { response: produk, loading, error, post } = useApi();
+   const { response: kategori, loading: kategoriLoading, error: errorKategori, get } = useApi();
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -48,34 +70,50 @@ const TambahProduk = () => {
 
      console.log(newErrors)
     if (!Object.values(newErrors).some((error) => error)) {
-      console.log(values)
-      post(
-        "https://64328e2b3e05ff8b3728907e.mockapi.io/products/products",
-        values
-      );
-      navigate(-1);
-      setFile("");
-      
+      const harga = parseInt(values.harga)
+      const stok = parseInt(values.stok)
+     
+      post("/produk", {
+        ...values, 
+        harga: harga,
+        stok: stok
+      })
+      .then(() => {
+          openModalSukses();
+        })
+      .catch((error) => {
+          openModalGagal();
+          console.error(error);
+        });
     }
   };
+
+   useEffect(() => {
+   get(`/kategori_produk`).catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    );
+  }, []);
+  console.log(kategori?.data.data)
 
 
 
  const onReset = () => {
     setValues({
-    fotoProduk: "",
-    namaProduk: "",
-    deskripsiProduk: "",
-    kategoriProduk: "",
-    hargaProduk: "",
-    stokProduk: ""
+    foto: "",
+    nama: "",
+    deskripsi: "",
+    kategori_id: "",
+    harga: 0,
+    stok: 0
     });
-    setFile("");
   };
 
 
   const handleOnChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; 
     setValues({
       ...values,
       [name]: value,
@@ -94,6 +132,30 @@ const TambahProduk = () => {
     }
   };
 
+  const openModalSukses = () => {
+    setModalSuksesIsOpen(true);
+    setTimeout(() => {
+      closeModalSukses();
+      navigate("/produk");
+    }, 1500);
+  };
+
+  const closeModalSukses = () => {
+    setModalSuksesIsOpen(false);
+  };
+
+  const openModalGagal = () => {
+    setModalGagalIsOpen(true);
+    setTimeout(() => {
+      closeModalGagal();
+    }, 1500);
+  };
+
+  const closeModalGagal = () => {
+    setModalGagalIsOpen(false);
+  };
+
+
 
   const getFile = (e) => {
     console.log("random")
@@ -105,7 +167,7 @@ const TambahProduk = () => {
   };
 
   return (
-    <form className={styles.wrapper} onSubmit={onSubmit}>
+    <form className={styles.wrapper}>
       <div className={styles.produkBaru}>
         <h1 className="headline-small-semibold">Buat Produk Baru</h1>
         <div className={styles.rowTambahProduk}>
@@ -146,8 +208,8 @@ const TambahProduk = () => {
                 className={styles.boxFile}
                 id="boxFile"
                 type="file"
-                name={"fotoProduk"}
-                value={values.fotoProduk}
+                name={"foto"}
+                value={values.foto}
                 onChange={getFile}
               />
             </div>
@@ -177,13 +239,13 @@ const TambahProduk = () => {
               <Input
                 type="text"
                 placeholder="Masukan nama produk"
-                name="namaProduk"
-                id="namaProduk"
+                name="nama"
+                id="nama"
                 onChange={handleOnChange}
                 className={`body-medium-regular ${styles.namaProduk}`}
                 label={"Nama Produk"}
-                error={errors.namaProduk}
-                value={values.namaProduk}
+                error={errors.nama}
+                value={values.nama}
               />
             </div>
           </div>
@@ -210,12 +272,12 @@ const TambahProduk = () => {
                 label={"Deskripsi Produk"}
                 type="text"
                 placeholder="Masukan Deskripsi produk"
-                value={values.deskripsiProduk}
-                name="deskripsiProduk"
-                id="deskripsiProduk"
+                value={values.deskripsi}
+                name="deskripsi"
+                id="deskripsi"
                 onChange={handleOnChange}
                 className={`body-medium-regular ${styles.deskripsiProduk}`}
-                error={errors.deskripsiProduk}
+                error={errors.deskripsi}
               />
             </div>
           </div>
@@ -240,18 +302,23 @@ const TambahProduk = () => {
             <div className={styles.parentInput}>
               <select
                 type="select"
-                id="kategoriProduk"
-                name="kategoriProduk"
-                value={values.kategoriProduk}
+                id="kategori_id"
+                name="kategori_id"
+                value={values.kategori_id}
                 onChange={handleOnChange}
                 placeholder="masukan kategori produk"
                 className={`${styles.kategoriProduk}`}
               >
                 <option defaultValue={null} hidden></option>
-                <option value="Pakaian">Pakaian</option>
+                {/* <option value="Pakaian">Pakaian</option>
                 <option value="Perhiasan">Perhiasan</option>
                 <option value="Kerajinan Tangan">Kerajinan Tangan</option>
-                <option value="Aksesori">Aksesoris</option>
+                <option value="Aksesori">Aksesoris</option> */}
+                {
+                  kategori?.data.data.map((kategori)=>(
+                     <option value={kategori.ID}>{kategori.nama}</option>
+                  ))
+                }
               </select>
               <div className={styles.kategori}>
                 <span style={{fontSize: "11px"}}>Kategori Produk</span>
@@ -280,13 +347,13 @@ const TambahProduk = () => {
               <Input
                 type="number"
                 placeholder="Rp. 120000"
-                name="hargaProduk"
-                id="hargaProduk"
-                value={values.hargaProduk}
+                name="harga"
+                id="harga"
+                value={values.harga}
                 className={`body-medium-regular ${styles.hargaProduk}`}
                 label={"Harga Produk"}
                 onChange={handleOnChange}
-                error={errors.hargaProduk}
+                error={errors.harga}
               />
             </div>
           </div>
@@ -313,12 +380,12 @@ const TambahProduk = () => {
                 label={"Stok Produk"}
                 type="number"
                 placeholder="190"
-                name="stokProduk"
-                id="stokProduk"
-                value={values.stokProduk}
+                name="stok"
+                id="stok"
+                value={values.stok}
                 onChange={handleOnChange}
                 className={`body-medium-regular ${styles.stokProduk}`}
-                error={errors.stokProduk}
+                error={errors.stok}
               />
             </div>
           </div>
@@ -332,6 +399,66 @@ const TambahProduk = () => {
           <Button label="Simpan" color="brown" icon={save} onClick={onSubmit}/>
         </div>
       </div>
+
+       <Modal
+        isOpen={modalSuksesIsOpen}
+        onRequestClose={closeModalSukses}
+        contentLabel="Success Modal"
+        style={customStylesConfirmation}
+        id="modalSukses"
+      >
+        <div
+          id="modalSuksesContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalSuksesContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalSuksesLogo"
+              src={ModalSuksesLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+              Berhasil Disimpan
+            </h4>
+            <p id="modalSuksesMessage" className="body-small-regular mb-16">
+              Data yang anda buat sudah berhasil disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalGagalIsOpen}
+        onRequestClose={closeModalGagal}
+        contentLabel="Fail Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalGagalContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalGagalContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalGagalLogo"
+              src={ModalGagalLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+              Gagal Disimpan
+            </h4>
+            <p id="modalGagalText" className="body-small-regular mb-16">
+              Data yang anda buat Gagal disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
     </form>
   );
 };
