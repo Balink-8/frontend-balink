@@ -10,12 +10,17 @@ import add from "../../assets/icons/add.svg";
 import { Switch } from "antd";
 import Button from "../../elements/Button/Button";
 import useApi from "../../api/useApi";
-import { useNavigate } from "react-router";
+import { useEffect } from "react";
+// import rectangle from "../../assets/images/Rectangle 333.png";
+import { useNavigate, useParams } from "react-router-dom";
+import Modal from "react-modal";
+import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
+import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 
 const TambahEvent = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    artikel_id: "2",
+    artikel_id: "",
     gambar: "",
     nama: "",
     deskripsi: "",
@@ -37,11 +42,28 @@ const TambahEvent = () => {
     link_lokasi: false,
     waktu_mulai: false,
     waktu_selesai: false,
-    tanggal_mulai: false,
-    tanggal_selesai: false,
+    // tanggal_mulai: false,
+    // tanggal_selesai: false,
     harga_tiket: false,
     stok_tiket: false,
   });
+
+  useEffect(() => {
+    setValues({
+       artikel_id: localStorage.getItem("artikel_id"),
+       gambar: localStorage.getItem("gambar"),
+       nama:  localStorage.getItem("nama"),
+       deskripsi: localStorage.getItem("deskripsi"),
+       lokasi: localStorage.getItem("lokasi"),
+       link_lokasi: localStorage.getItem("link_lokasi"),
+       waktu_mulai: localStorage.getItem("waktu_mulai"),
+       waktu_selesai: localStorage.getItem("waktu_selesai"),
+       // tanggal_mulai: "12 Desember 2023",
+       // tanggal_selesai: "12 Desember 2023",
+       harga_tiket: localStorage.getItem("harga_tiket"),
+       stok_tiket: localStorage.getItem("stok_tiket"),
+    })
+  }, []);
 
   const { response: event, loading, error, post } = useApi();
 
@@ -56,6 +78,17 @@ const TambahEvent = () => {
   const onSubmit = (e) => {
     const newErrors = {};
 
+    localStorage.removeItem("artikel_id",values.artikel_id)
+    localStorage.removeItem("gambar",values.gambar)
+    localStorage.removeItem("nama",values.nama)
+    localStorage.removeItem("deskripsi",values.deskripsi)
+    localStorage.removeItem("lokasi",values.lokasi)
+    localStorage.removeItem("link_lokasi",values.nama)
+    localStorage.removeItem("waktu_mulai",values.waktu_mulai)
+    localStorage.removeItem("waktu_selesai",values.waktu_selesai)
+    localStorage.removeItem("harga_tiket",values.harga_tiket)
+    localStorage.removeItem("stok_tiket",values.stok_tiket)
+
     Object.keys(values).forEach((key) => {
       if (values[key].trim() === "") {
         newErrors[key] = true;
@@ -63,6 +96,8 @@ const TambahEvent = () => {
         newErrors[key] = false;
       }
     });
+
+    setErrors(newErrors);
 
     if (toggle) {
       if (values.harga_tiket.trim() === "") {
@@ -78,36 +113,39 @@ const TambahEvent = () => {
       setErrors(newErrors);
     }
 
-    // if (!Object.values(newErrors).some((error) => error)) {
-    //   setValues({
-    //     artikel_id: "2",
-    //     gambar: "",
-    //     nama: "",
-    //     deskripsi: "",
-    //     lokasi: "",
-    //     link_lokasi: "",
-    //     waktu_mulai: "",
-    //     waktu_selesai: "",
-    //     tanggal_mulai: "12 Desember 2023",
-    //     tanggal_selesai: "12 Desember 2023",
-    //     harga_tiket: "",
-    //     stok_tiket: "",
-    //   });
-
-    //   setFile("");
-    //   console.log(values);
-    // }
-
     if (!Object.values(newErrors).some((error) => error)) {
-      post("/event", values);
-      navigate(-1);
-      setFile("");
+      const harga_tiket = parseInt(values.harga_tiket, 10)
+      const stok_tiket = parseInt(values.stok_tiket, 10)
+      post("/event", {
+        ...values, 
+        harga_tiket: harga_tiket,
+        stok_tiket: stok_tiket
+      })
+      .then(() => {
+        openModalSukses();
+      })
+      .catch((error) => {
+        openModalGagal();
+        console.error(error);
+      });
+      console.log(values)
     }
   };
 
   const onReset = (e) => {
+    localStorage.removeItem("artikel_id",values.artikel_id)
+    localStorage.removeItem("gambar",values.gambar)
+    localStorage.removeItem("nama",values.nama)
+    localStorage.removeItem("deskripsi",values.deskripsi)
+    localStorage.removeItem("lokasi",values.lokasi)
+    localStorage.removeItem("link_lokasi",values.nama)
+    localStorage.removeItem("waktu_mulai",values.waktu_mulai)
+    localStorage.removeItem("waktu_selesai",values.waktu_selesai)
+    localStorage.removeItem("harga_tiket",values.harga_tiket)
+    localStorage.removeItem("stok_tiket",values.stok_tiket)
+
     setValues({
-      // artikel_id: "",
+      artikel_id: "",
       gambar: "",
       nama: "",
       deskripsi: "",
@@ -117,11 +155,15 @@ const TambahEvent = () => {
       waktu_selesai: "",
       // tanggal_mulai: "12 Desember 2023",
       // tanggal_selesai: "12 Desember 2023",
-      harga_tiket: "",
-      stok_tiket: "",
+      harga_tiket: 0,
+      stok_tiket: 0,
     });
     setFile("");
   };
+
+  const onArtikel = (e) => {
+    navigate("/tentang-artikel");
+  }
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -143,6 +185,10 @@ const TambahEvent = () => {
     }
   };
 
+  const handleOnKeyUp = (e) => {
+    localStorage.setItem(e.target.name, values[e.target.name]);
+  }
+
   const getFile = (e) => {
     setFile(URL.createObjectURL(e.target.files[0]));
     setValues({
@@ -150,6 +196,65 @@ const TambahEvent = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  // get artikel
+  const { response: artikel, loading: loadingartikel, error: errorartikel,  get } = useApi();
+
+  useEffect(() => {
+    get(`/artikel/${localStorage.getItem("artikel_id")}`)
+    .then(() => {
+      console.log(artikel);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }, [localStorage.getItem("artikel_id")]);
+  console.log(localStorage.getItem("artikel_id"))
+  const paragraph = artikel?.data?.isi?.split("\n\n");
+
+  // modal
+  const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
+  const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
+
+  const openModalSukses = () => {
+    setModalSuksesIsOpen(true);
+    setTimeout(() => {
+      closeModalSukses();
+      navigate("/event");
+    }, 1500);
+  };
+
+  const closeModalSukses = () => {
+    setModalSuksesIsOpen(false);
+  };
+
+  const openModalGagal = () => {
+    setModalGagalIsOpen(true);
+    setTimeout(() => {
+      closeModalGagal();
+    }, 1500);
+  };
+
+  const closeModalGagal = () => {
+    setModalGagalIsOpen(false);
+  };
+
 
   return (
     <div className={styles.tambahEventContainer}>
@@ -161,7 +266,7 @@ const TambahEvent = () => {
             {/* upload foto */}
             <div className={styles.containerEvent}>
               <div className={styles.imgArea}>
-                <img id="uploadedImage" src={file} />
+                <img id="uploadedImage" src={file}/>
               </div>
               <div className="d-flex justify-content-center">
                 <label htmlFor="gambar">
@@ -178,8 +283,9 @@ const TambahEvent = () => {
                   className={styles.inputPhoto}
                   type="file"
                   name="gambar"
-                  value={values.gambar}
+                  // value={values.gambar}
                   onChange={getFile}
+                  onKeyUp={handleOnKeyUp}
                 />
               </div>
               <div className="d-flex justify-content-center mt-3">
@@ -200,6 +306,7 @@ const TambahEvent = () => {
                 name="nama"
                 value={values.nama}
                 onChange={handleOnChange}
+                onKeyUp={handleOnKeyUp}
                 label={"Judul Event"}
                 error={errors.nama}
               />
@@ -220,6 +327,7 @@ const TambahEvent = () => {
                 name={"deskripsi"}
                 value={values.deskripsi}
                 onChange={handleOnChange}
+                onKeyUp={handleOnKeyUp}
               />
               <label
                 className={
@@ -246,7 +354,28 @@ const TambahEvent = () => {
                 <img src={info} alt="info" />
                 <span className="body-medium-semibold"> Info Lengkap</span>
                 <div className="d-grid col-12 ">
-                  <Button label="Tambah Artikel" color="brown" icon={add} />
+
+                  {/* <div className={`my-3 ${styles.layoutInfo}`}>
+                    <div>
+                      <img src={artikel?.data?.gambar} alt="" />
+                    </div>
+                    <div>
+                      <p className="body-medium-semibold">
+                        {artikel?.data?.judul}
+                      </p>
+                      {paragraph?.map((text, index) => (
+                        <p 
+                        key={index}
+                        id={`articleDescription${index}`}
+                        className="body-small-regular">
+                          {text}                      
+                        </p>
+                      ))}
+                      <p>test test halo halo</p>
+                    </div>
+                  </div> */}
+
+                  <Button label="Tambah Artikel" color="brown" icon={add} onClick={onArtikel}/>
                 </div>
               </div>
 
@@ -261,6 +390,7 @@ const TambahEvent = () => {
                       name="lokasi"
                       value={values.lokasi}
                       onChange={handleOnChange}
+                      onKeyUp={handleOnKeyUp}
                       label={"Lokasi"}
                       error={errors.lokasi}
                     />
@@ -277,6 +407,7 @@ const TambahEvent = () => {
                       name="link_lokasi"
                       value={values.link_lokasi}
                       onChange={handleOnChange}
+                      onKeyUp={handleOnKeyUp}
                       label={"Google Maps"}
                       error={errors.link_lokasi}
                     />
@@ -293,6 +424,7 @@ const TambahEvent = () => {
                       name="waktu_mulai"
                       value={values.waktu_mulai}
                       onChange={handleOnChange}
+                      onKeyUp={handleOnKeyUp}
                       label={"Waktu Mulai"}
                       error={errors.waktu_mulai}
                     />
@@ -309,6 +441,7 @@ const TambahEvent = () => {
                       name="waktu_selesai"
                       value={values.waktu_selesai}
                       onChange={handleOnChange}
+                      onKeyUp={handleOnKeyUp}
                       label={"Waktu Selesai"}
                       error={errors.waktu_selesai}
                     />
@@ -335,7 +468,7 @@ const TambahEvent = () => {
 
               <div className="col-lg-6">
                 <div className="d-flex justify-content-end">
-                  <Switch onClick={toggler} />
+                  <Switch onClick={toggler} id="switch" />
                 </div>
               </div>
             </div>
@@ -352,6 +485,7 @@ const TambahEvent = () => {
                         name="harga_tiket"
                         value={values.harga_tiket}
                         onChange={handleOnChange}
+                        onKeyUp={handleOnKeyUp}
                         label={"Harga"}
                         error={toggle ? errors.harga_tiket : false}
                       />
@@ -370,6 +504,7 @@ const TambahEvent = () => {
                         name={"stok_tiket"}
                         value={values.stok_tiket}
                         onChange={handleOnChange}
+                        onKeyUp={handleOnKeyUp}
                         label={"Jumlah"}
                         error={toggle ? errors.stok_tiket : false}
                       />
@@ -385,12 +520,73 @@ const TambahEvent = () => {
       {/* button */}
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button label="Reset" color="white" icon={reset} onClick={onReset} />
+          <Button id="reset" label="Reset" color="white" icon={reset} onClick={onReset} />
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+          <Button id="submitButton" label="Simpan" color="brown" icon={save} onClick={onSubmit} />
         </div>
       </div>
+
+      {/* Modal */}
+      <Modal
+        isOpen={modalSuksesIsOpen}
+        onRequestClose={closeModalSukses}
+        contentLabel="Success Modal"
+        style={customStylesConfirmation}
+        id="modalSukses"
+      >
+        <div
+          id="modalSuksesContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalSuksesContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalSuksesLogo"
+              src={ModalSuksesLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+              Berhasil Disimpan
+            </h4>
+            <p id="modalSuksesMessage" className="body-small-regular mb-16">
+              Data yang anda buat sudah berhasil disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalGagalIsOpen}
+        onRequestClose={closeModalGagal}
+        contentLabel="Fail Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalGagalContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalGagalContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalGagalLogo"
+              src={ModalGagalLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+              Gagal Disimpan
+            </h4>
+            <p id="modalGagalText" className="body-small-regular mb-16">
+              Data yang anda buat Gagal disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -10,6 +10,7 @@ import Event from "./pages/Event/Event";
 import TambahEvent from "./pages/Event/TambahEvent";
 import EditEvent from "./pages/Event/EditEvent";
 import DetailEvent from "./pages/Event/DetailEvent";
+import EventArtikel from "./pages/Event/EventArtikel";
 import Produk from "./pages/Produk/Produk";
 import TambahProduk from "./pages/Produk/TambahProduk";
 import EditProduk from "./pages/Produk/EditProduk";
@@ -46,6 +47,7 @@ function App() {
             <Route path="/event/tambah" element={<TambahEvent />} />
             <Route path="/event/edit/:id" element={<EditEvent />} />
             <Route path="/event/detail/:id" element={<DetailEvent />} />
+            <Route path="/tentang-artikel" element={<EventArtikel />} />
             <Route path="/produk" element={<Produk />} />
             <Route path="/produk/tambah" element={<TambahProduk />} />
             <Route path="/produk/edit/:id" element={<EditProduk />} />

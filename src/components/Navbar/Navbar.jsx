@@ -14,6 +14,8 @@ const Navbar = () => {
       return "Akun";
     } else if (pathname.includes("event")) {
       return "Event";
+    } else if (pathname.includes("tentang-artikel")) {
+      return "Artikel tentang Event";
     } else if (pathname.includes("produk")) {
       return "Produk";
     } else if (pathname.includes("kategori")) {

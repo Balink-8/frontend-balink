@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import styles from "./DetailEvent.module.css";
-// import foto from "../../assets/images/Mask group.png";
+import useApi from "../../api/useApi";
+import { useNavigate, useParams } from "react-router-dom";
 import info from "../../assets/icons/language.svg";
 import lokasi from "../../assets/icons/location_on.svg";
 import link from "../../assets/icons/link.svg";
@@ -9,56 +11,83 @@ import edit from "../../assets/icons/edit_square_white.svg";
 import hapus from "../../assets/icons/delete.svg";
 import Button from "../../elements/Button/Button";
 import { Switch } from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../api/useApi";
 import Spinner from "../../components/Spinner/Spinner";
+import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
+import Modal from "react-modal";
+import konfirmasi from "../../assets/images/konfirmasi.png";
+import close from "../../assets/icons/close.svg";
+import check from "../../assets/icons/check.svg";
+import deleteImg from "../../assets/images/delete.png";
 
-const DetailEvent = ({ data }) => {
-  const { response: event, loading, error, get } = useApi();
+const DetailEvent = () => {
+  const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
+  const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+
+  const { response: event, loading, error, get, del } = useApi();
+  
   const navigate = useNavigate();
+
   const [toggle, setToggle] = useState(false);
   const toggler = () => {
     toggle ? setToggle(false) : setToggle(true);
   };
 
   const { id } = useParams();
-  const [values, setValues] = useState({
-    fotoEvent: "",
-    judulEvent: "",
-    deskripsiEvent: "",
-    lokasiEvent: "",
-    linkGoogleEvent: "",
-    waktuEvent: "",
-    hargaEvent: "",
-    jumlahEvent: "",
-  });
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
 
   useEffect(() => {
-    get(`https://6481c62b29fa1c5c50320b9a.mockapi.io/balink/event/${id}`).catch(
-      (error) => {
-        // Handle error
-        console.error(error);
-      }
-    );
-  }, []);
+    get(`/event/${id}`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
+  }, [id]);
 
-  useEffect(() => {
-    if (event) {
-      setValues({
-        fotoEvent: event.fotoEvent,
-        judulEvent: event.judulEvent,
-        deskripsiEvent: event.deskripsiEvent,
-        lokasiEvent: event.lokasiEvent,
-        linkGoogleEvent: event.linkGoogleEvent,
-        waktuEvent: event.waktuEvent,
-        hargaEvent: event.hargaEvent,
-        jumlahEvent: event.jumlahEvent,
-      });
-    }
-  }, [event]);
+  const handleDelete = (selectedId) => {
+    del(`/event/${id}`)
+    .then(() => {
+      openTerhapusModal();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  };
 
-  const paragraphs = values.deskripsiEvent?.split("\n\n");
+  const closeKonfirmasiModal = () => {
+    setModalKonfirmasiIsOpen(false);
+  };
+
+  const openKonfirmasiModal = () => {
+    setModalKonfirmasiIsOpen(true);
+  };
+
+  const openTerhapusModal = () => {
+    setModalTerhapusIsOpen(true);
+    setTimeout(() => {
+      closeTerhapusModal();
+      navigate(-1);
+    }, 1500);
+  };
+
+  const closeTerhapusModal = () => {
+    setModalTerhapusIsOpen(false);
+  };
+
+  const paragraph = event?.data?.deskripsi?.split("\n\n");
 
   const infoEvent = {
     imgInfo: rectangle,
@@ -74,7 +103,7 @@ const DetailEvent = ({ data }) => {
       {loading ? (
         <Spinner />
       ) : error ? (
-        <p>Error: {error}</p>
+        <ErrorDisplay errorMessage={error.message} />
       ) : (
         <div className={styles.tambahEventContainer}>
           <h1 className="headline-small-semibold">Detail Event</h1>
@@ -87,7 +116,8 @@ const DetailEvent = ({ data }) => {
                   <div className={styles.imgArea}>
                     <img
                       id="uploadedImage"
-                      src={file ? file : values.fotoEvent}
+                      src={event?.data?.gambar}
+                      alt="event-img"
                     />
                   </div>
                 </div>
@@ -97,15 +127,21 @@ const DetailEvent = ({ data }) => {
             {/* title + desc */}
             <div className="col">
               <div className="mt-3">
-                <p className="title-large-semibold" id="juduEvent">
-                  {values.judulEvent}
+                <p className="title-large-semibold" id="nama">
+                  {event?.data?.nama}
                 </p>
               </div>
 
               <div className="mt-3">
-                <p className="body-medium-reguler" id="deskripsiEvent">
-                  {values.deskripsiEvent}
-                </p>
+                {paragraph?.map((text, index) => (
+                  <p
+                    key={index}
+                    id={`articleDescription${index}`}
+                    className="body-medium-regular"
+                  >
+                    {text}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
@@ -142,29 +178,37 @@ const DetailEvent = ({ data }) => {
                     <div className="mt-24">
                       <img src={lokasi} alt="lokasi" />
                       <span className="body-medium-semibold"> Lokasi</span>
-                      <p className={`body-medium-regular`}>
-                        {values.lokasiEvent}
+                      <p className={`body-medium-regular`} id="lokasi"> 
+                        {event?.data?.lokasi}
                       </p>
                     </div>
 
                     <div className="mt-24">
                       <img src={link} alt="link" />
                       <span className="body-medium-semibold">
-                        {" "}
                         Link Google Maps
                       </span>
-                      <p className={`body-medium-regular`}>
-                        {values.linkGoogleEvent}
+                      <p className={`body-medium-regular`} id="linkLokasi">
+                        {event?.data?.link_lokasi}
                       </p>
                     </div>
 
                     <div className="mt-24">
                       <img src={waktu} alt="waktu" />
-                      <span className="body-medium-semibold"> Waktu</span>
-                      <p className={`body-medium-regular`}>
-                        {values.waktuEvent}
+                      <span className="body-medium-semibold"> Waktu Mulai</span>
+                      <p className={`body-medium-regular`} id="waktuMulai">
+                        {event?.data?.waktu_mulai}
                       </p>
                     </div>
+
+                    <div className="mt-24">
+                      <img src={waktu} alt="waktu" />
+                      <span className="body-medium-semibold"> Waktu Selesai</span>
+                      <p className={`body-medium-regular`} id="waktuSelesai">
+                        {event?.data?.waktu_selesai}
+                      </p>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -196,8 +240,8 @@ const DetailEvent = ({ data }) => {
                       <div className="m-2">
                         <span className="body-small-regular"> Harga</span>
                         <br />
-                        <span className="body-medium-regular">
-                          {values.hargaEvent}
+                        <span className="body-medium-regular" id="hargaTiket">
+                          {event?.data?.harga_tiket}
                         </span>
                       </div>
                     </div>
@@ -206,8 +250,8 @@ const DetailEvent = ({ data }) => {
                       <div className="m-2">
                         <span className="body-small-regular"> Jumlah</span>
                         <br />
-                        <span className="body-medium-regular">
-                          {values.jumlahEvent}
+                        <span className="body-medium-regular" id="stok_tiket">
+                          {event?.data?.stok_tiket}
                         </span>
                       </div>
                     </div>
@@ -216,13 +260,15 @@ const DetailEvent = ({ data }) => {
               </div>
             </div>
           </div>
+
           <div className="d-flex justify-content-end gap-3 pt-5">
             <div className="d-grid col-3">
               <Button
                 label="Hapus"
                 color="white"
                 icon={hapus}
-                // onClick={onDelete}
+                onClick={() => openKonfirmasiModal()}
+                id="hapusButton"
               />
             </div>
             <div className="d-grid col-3">
@@ -231,11 +277,100 @@ const DetailEvent = ({ data }) => {
                 color="brown"
                 icon={edit}
                 onClick={() => navigate(`/event/edit/${id}`)}
+                id="editButton"
               />
             </div>
           </div>
         </div>
       )}
+      {/* Modal */}
+      <Modal
+        isOpen={modalKonfirmasiIsOpen}
+        onRequestClose={closeKonfirmasiModal}
+        contentLabel="Confirmation Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalKonfirmasiContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalKonfirmasiContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalKonfirmasiImage"
+              src={konfirmasi}
+              alt="konfirmasi-img"
+              className="mb-16"
+            />
+            <h4
+              id="modalKonfirmasiTitle"
+              className="title-large-semibold mb-32 text-center"
+            >
+              Apakah anda ingin menghapus data ini?
+            </h4>
+            <p id="modalKonfirmasiText1" className="body-small-regular">
+              Data yang sudah dihapus tidak dapat dikembalikan lagi
+            </p>
+            <p id="modalKonfirmasiText2" className="body-small-regular mb-32">
+              Apakah anda yakin?
+            </p>
+            <div className="d-flex gap-5 justify-content-center">
+              <div className="d-grid col-6">
+                <Button
+                  id="modalKonfirmasiYesButton"
+                  label="Yes"
+                  color="white"
+                  icon={check}
+                  onClick={handleDelete}
+                />
+              </div>
+              <div className="d-grid col-6">
+                <Button
+                  id="modalKonfirmasiCancelButton"
+                  label="Cancel"
+                  color="brown"
+                  icon={close}
+                  onClick={closeKonfirmasiModal}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalTerhapusIsOpen}
+        onRequestClose={closeTerhapusModal}
+        contentLabel="Deleted Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modal-terhapus-container"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modal-terhapus-content"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modal-terhapus-image"
+              src={deleteImg}
+              alt="success"
+              className="mb-16"
+            />
+            <h4
+              id="modal-terhapus-heading"
+              className="title-large-semibold mb-16"
+            >
+              Berhasil Dihapus
+            </h4>
+            <p id="modal-terhapus-message" className="body-small-regular mb-16">
+              Data telah berhasil dihapus
+            </p>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
