@@ -1,5 +1,5 @@
 import React from "react";
-import EmptyTableImg from "../../assets/images/EmptyTableImg.svg";
+import EmptyTableImg from "../../assets/images/EmptyTableImg.png";
 
 const EmptyTable = () => {
   return (
