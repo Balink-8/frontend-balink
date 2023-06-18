@@ -11,7 +11,6 @@ import { Switch } from "antd";
 import Button from "../../elements/Button/Button";
 import useApi from "../../api/useApi";
 import { useEffect } from "react";
-// import rectangle from "../../assets/images/Rectangle 333.png";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-modal";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
@@ -78,24 +77,17 @@ const TambahEvent = () => {
   const onSubmit = (e) => {
     const newErrors = {};
 
-    localStorage.removeItem("artikel_id", values.artikel_id);
-    localStorage.removeItem("gambar", values.gambar);
-    localStorage.removeItem("nama", values.nama);
-    localStorage.removeItem("deskripsi", values.deskripsi);
-    localStorage.removeItem("lokasi", values.lokasi);
-    localStorage.removeItem("link_lokasi", values.nama);
-    localStorage.removeItem("waktu_mulai", values.waktu_mulai);
-    localStorage.removeItem("waktu_selesai", values.waktu_selesai);
-    localStorage.removeItem("harga_tiket", values.harga_tiket);
-    localStorage.removeItem("stok_tiket", values.stok_tiket);
+    if (values.artikel_id.trim() === "") {
+      newErrors.artikel_id = true;
+    } else {
+      newErrors.artikel_id = false;
+    }
 
-    // Object.keys(values).forEach((key) => {
-    //   if (values[key].trim() === "") {
-    //     newErrors[key] = true;
-    //   } else {
-    //     newErrors[key] = false;
-    //   }
-    // });
+    if (values.gambar.trim() === "") {
+      newErrors.gambar = true;
+    } else {
+      newErrors.gambar = false;
+    }
 
     if (values.nama.trim() === "") {
       newErrors.nama = true;
@@ -109,6 +101,29 @@ const TambahEvent = () => {
       newErrors.deskripsi = false;
     }
 
+    if (values.lokasi.trim() === "") {
+      newErrors.lokasi = true;
+    } else {
+      newErrors.lokasi = false;
+    }
+
+    if (values.link_lokasi.trim() === "") {
+      newErrors.link_lokasi = true;
+    } else {
+      newErrors.link_lokasi = false;
+    }
+
+    if (values.waktu_mulai.trim() === "") {
+      newErrors.waktu_mulai = true;
+    } else {
+      newErrors.waktu_mulai = false;
+    }
+
+    if (values.waktu_selesai.trim() === "") {
+      newErrors.waktu_selesai = true;
+    } else {
+      newErrors.waktu_selesai = false;
+    }
     setErrors(newErrors);
 
     if (toggle) {
@@ -142,6 +157,17 @@ const TambahEvent = () => {
         });
       console.log(values);
     }
+
+    localStorage.removeItem("artikel_id", values.artikel_id);
+    localStorage.removeItem("gambar", values.gambar);
+    localStorage.removeItem("nama", values.nama);
+    localStorage.removeItem("deskripsi", values.deskripsi);
+    localStorage.removeItem("lokasi", values.lokasi);
+    localStorage.removeItem("link_lokasi", values.link_lokasi);
+    localStorage.removeItem("waktu_mulai", values.waktu_mulai);
+    localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("harga_tiket", values.harga_tiket);
+    localStorage.removeItem("stok_tiket", values.stok_tiket);
   };
 
   const onReset = (e) => {
@@ -150,7 +176,7 @@ const TambahEvent = () => {
     localStorage.removeItem("nama", values.nama);
     localStorage.removeItem("deskripsi", values.deskripsi);
     localStorage.removeItem("lokasi", values.lokasi);
-    localStorage.removeItem("link_lokasi", values.nama);
+    localStorage.removeItem("link_lokasi", values.link_lokasi);
     localStorage.removeItem("waktu_mulai", values.waktu_mulai);
     localStorage.removeItem("waktu_selesai", values.waktu_selesai);
     localStorage.removeItem("harga_tiket", values.harga_tiket);

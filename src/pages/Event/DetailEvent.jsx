@@ -6,7 +6,6 @@ import info from "../../assets/icons/language.svg";
 import lokasi from "../../assets/icons/location_on.svg";
 import link from "../../assets/icons/link.svg";
 import waktu from "../../assets/icons/alarm.svg";
-import rectangle from "../../assets/images/Rectangle 333.png";
 import edit from "../../assets/icons/edit_square_white.svg";
 import hapus from "../../assets/icons/delete.svg";
 import Button from "../../elements/Button/Button";
@@ -18,7 +17,6 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
-import add from "../../assets/icons/add.svg";
 
 
 const DetailEvent = () => {
@@ -70,10 +68,6 @@ const DetailEvent = () => {
   }, [event?.data.artikel_id]);
   console.log(artikel)
 
-  const onArtikel = (e) => {
-    navigate("/tentang-artikel");
-  };
-
   const handleDelete = (selectedId) => {
     del(`/event/${id}`)
     .then(() => {
@@ -105,15 +99,6 @@ const DetailEvent = () => {
   };
 
   const paragraph = artikel?.data?.deskripsi?.split("\n\n");
-
-  const infoEvent = {
-    imgInfo: rectangle,
-    titleInfo: "Tari Kecak Daerah Bali",
-    descInfo:
-      "Tari kecak adalah saah satu tari khas bali yang menceritakan tentang bla bla bla bla...",
-  };
-
-  const [file, setFile] = useState();
 
   return (
     <div>
