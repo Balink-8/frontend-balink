@@ -147,23 +147,21 @@ const TambahArtikel = () => {
                 <img id="uploadedImage" src={file} />
               </div>
               <div className="d-flex justify-content-center">
-                <label htmlFor="fotoArtikel">
+                <label htmlFor="gambar">
                   <Button
                     id="pilihFotoButton"
                     label="Pilih Foto"
                     icon={Filefoto}
                     color="brown"
-                    onClick={() =>
-                      document.getElementById("fotoArtikel").click()
-                    }
+                    onClick={() => document.getElementById("gambar").click()}
                   />
                 </label>
                 <input
-                  id="fotoArtikel"
+                  id="gambar"
                   className={styles.inputPhoto}
                   type="file"
-                  name="fotoArtikel"
-                  value={values.fotoArtikel}
+                  name="gambar"
+                  value={values.gambar}
                   onChange={getFile}
                 />
               </div>
@@ -181,12 +179,12 @@ const TambahArtikel = () => {
                 type="text"
                 placeholder="Masukkan judul artikel"
                 className={styles.input}
-                id="judulArtikel"
-                name="judulArtikel"
-                value={values.judulArtikel}
+                id="judul"
+                name="judul"
+                value={values.judul}
                 onChange={handleOnChange}
                 label="Judul Artikel"
-                error={errors.judulArtikel}
+                error={errors.judul}
               />
             </div>
           </div>

@@ -40,9 +40,7 @@ const DetailArtikel = () => {
     },
   };
   useEffect(() => {
-    get(
-      `https://647ca813c0bae2880ad10a5f.mockapi.io/balink/article/${id}`
-    ).catch((error) => {
+    get(`/artikel/${id}`).catch((error) => {
       // Handle error
       console.error(error);
     });
@@ -82,9 +80,9 @@ const DetailArtikel = () => {
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : error ? (
-        <p>Error: {error}</p>
+        <ErrorDisplay errorMessage={error.message} />
       ) : (
         <div id="detailArtikelContainer">
           <div id="detailArtikelContentContainer" className={styles.container}>
@@ -97,17 +95,23 @@ const DetailArtikel = () => {
             <div className="d-flex justify-content-center align-items-center mb-24">
               <img
                 id="articleImage"
-                src={artikel?.fotoArtikel}
+                src={artikel?.data?.gambar}
                 alt="article-img"
                 className={`${styles.imgArticle} w-25`}
               />
             </div>
             <h4 id="articleTitle" className="title-large-semibold mb-24">
-              {artikel?.judulArtikel}
+              {artikel?.data?.judul}
             </h4>
-            <p id={`articleDescription`} className="body-medium-regular">
-              {artikel?.deskripsiArtikel}
-            </p>
+            {paragraph?.map((text, index) => (
+              <p
+                key={index}
+                id={`articleDescription${index}`}
+                className="body-medium-regular"
+              >
+                {text}
+              </p>
+            ))}
           </div>
           <div className="d-flex justify-content-end gap-3 pt-3">
             <div className="d-grid col-3">
@@ -125,6 +129,7 @@ const DetailArtikel = () => {
                 color="brown"
                 icon={edit}
                 onClick={() => navigate(`/artikel/edit/${id}`)}
+                id="editButton"
               />
             </div>
           </div>

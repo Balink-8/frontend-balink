@@ -14,17 +14,17 @@ import Modal from "react-modal";
 const TambahPromo = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    NamaPromo: "",
-    DeskripsiPromo: "",
-    KodePromo: "",
-    PotonganHarga: "",
+    nama: "",
+    deskripsi: "",
+    kode: "",
+    potongan_harga: 0,
   });
 
   const [errors, setErrors] = useState({
-    NamaPromo: false,
-    DeskripsiPromo: false,
-    KodePromo: false,
-    PotonganHarga: false,
+    nama: false,
+    deskripsi: false,
+    kode: false,
+    potongan_harga: false,
   });
 
   const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
@@ -61,27 +61,27 @@ const TambahPromo = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      const potongan_harga = parseInt(values.potongan_harga);
+      const potongan_harga = parseInt(values.potongan_harga)
       post("/promo", {
-        ...values,
-        potongan_harga: potongan_harga,
+        ...values, 
+        potongan_harga: potongan_harga
       })
-        .then(() => {
-          openModalSukses();
-        })
-        .catch((error) => {
-          openModalGagal();
-          console.error(error);
-        });
-      console.log(values);
+      .then(() => {
+        openModalSukses();
+      })
+      .catch((error) => {
+        openModalGagal();
+        console.error(error);
+      });
+      console.log(values)
     }
   };
   const onReset = (e) => {
     setValues({
-      NamaPromo: "",
-      DeskripsiPromo: "",
-      KodePromo: "",
-      PotonganHarga: "",
+      nama: "",
+      deskripsi: "",
+      kode: "",
+      potongan_harga: 0,
     });
   };
 
@@ -154,10 +154,10 @@ const TambahPromo = () => {
               id={"addNamaPromo"}
               label={"Nama Promo"}
               placeholder={"Masukkan Nama Promo"}
-              name={"NamaPromo"}
-              value={values.NamaPromo}
+              name={"nama"}
+              value={values.nama}
               onChange={handleOnChange}
-              error={errors.NamaPromo}
+              error={errors.nama}
             />
             <br />
           </div>
@@ -184,13 +184,13 @@ const TambahPromo = () => {
               required={"required"}
               placeholder={"Masukkan Deskripsi Promo"}
               className={
-                errors.DeskripsiPromo
+                errors.deskripsi
                   ? `${styles.errorInput} ${styles.textArea}`
                   : styles.textArea
               }
               id={"addDeskripsiPromo"}
-              name={"DeskripsiPromo"}
-              value={values.DeskripsiPromo}
+              name={"deskripsi"}
+              value={values.deskripsi}
               onChange={handleOnChange}
             />
             <label
@@ -226,10 +226,10 @@ const TambahPromo = () => {
               id={"addKodePromo"}
               label={"Kode Promo"}
               placeholder={"Masukkan Kode Promo"}
-              name={"KodePromo"}
-              value={values.KodePromo}
+              name={"kode"}
+              value={values.kode}
               onChange={handleOnChange}
-              error={errors.KodePromo}
+              error={errors.kode}
             />
             <br />
           </div>
@@ -258,10 +258,10 @@ const TambahPromo = () => {
               id={"addPotonganHarga"}
               label={"Potongan Harga"}
               placeholder={"Rp. 0"}
-              name={"PotonganHarga"}
-              value={values.PotonganHarga}
+              name={"potongan_harga"}
+              value={values.potongan_harga}
               onChange={handleOnChange}
-              error={errors.PotonganHarga}
+              error={errors.potongan_harga}
             />
             <br />
           </div>
@@ -271,6 +271,7 @@ const TambahPromo = () => {
       <div className="d-flex justify-content-end gap-3 pt-5">
         <div className="d-grid col-3">
           <Button
+            id="reset"
             label="Reset"
             color="white"
             icon={restart}
@@ -278,7 +279,13 @@ const TambahPromo = () => {
           />
         </div>
         <div className="d-grid col-3">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
+          <Button 
+            id="simpan"
+            label="Simpan" 
+            color="brown" 
+            icon={save} 
+            onClick={onSubmit} 
+          />
         </div>
       </div>
       {/* Modal */}

@@ -30,6 +30,7 @@ const DetailEvent = () => {
     get: getartikel,
   } = useApi();
 
+
   const navigate = useNavigate();
 
   const [toggle, setToggle] = useState(false);
@@ -111,7 +112,7 @@ const DetailEvent = () => {
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : error ? (
         <ErrorDisplay errorMessage={error.message} />
       ) : (

@@ -23,7 +23,7 @@ const EditPromo = () => {
     kode: "",
     potongan_harga: "",
   });
-
+  
   const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
   const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
 
@@ -44,10 +44,12 @@ const EditPromo = () => {
   };
 
   useEffect(() => {
-    get(`/promo/${id}`).catch((error) => {
-      // Handle error
-      console.error(error);
-    });
+    get(`/promo/${id}`).catch(
+      (error) => {
+        // Handle error
+        console.error(error);
+      }
+    );
   }, []);
 
   useEffect(() => {
@@ -62,11 +64,11 @@ const EditPromo = () => {
   }, [promo]);
 
   const onSubmit = () => {
-    const potongan_harga = parseInt(values.potongan_harga);
-    put(`/promo/${id}`, {
-      ...values,
-      potongan_harga: potongan_harga,
-    })
+      const potongan_harga = parseInt(values.potongan_harga)
+      put(`/promo/${id}`, {
+        ...values, 
+        potongan_harga: potongan_harga
+      })
       .then(() => {
         openModalSukses();
       })
@@ -261,68 +263,65 @@ const EditPromo = () => {
           </div>
 
           {/* Modal */}
-          <Modal
-            isOpen={modalSuksesIsOpen}
-            onRequestClose={closeModalSukses}
-            contentLabel="Success Modal"
-            style={customStylesConfirmation}
-            id="modalSukses"
+      <Modal
+        isOpen={modalSuksesIsOpen}
+        onRequestClose={closeModalSukses}
+        contentLabel="Success Modal"
+        style={customStylesConfirmation}
+        id="modalSukses"
+      >
+        <div
+          id="modalSuksesContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalSuksesContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
           >
-            <div
-              id="modalSuksesContainer"
-              className={`d-flex justify-content-center align-items-center`}
-            >
-              <div
-                id="modalSuksesContent"
-                className={`d-flex flex-column justify-content-center align-items-center`}
-              >
-                <img
-                  id="modalSuksesLogo"
-                  src={ModalSuksesLogo}
-                  alt="success"
-                  className="mb-16"
-                />
-                <h4
-                  id="modalSuksesTitle"
-                  className="title-large-semibold mb-16"
-                >
-                  Berhasil Disimpan
-                </h4>
-                <p id="modalSuksesMessage" className="body-small-regular mb-16">
-                  Data yang anda uba sudah berhasil disimpan
-                </p>
-              </div>
-            </div>
-          </Modal>
-          <Modal
-            isOpen={modalGagalIsOpen}
-            onRequestClose={closeModalGagal}
-            contentLabel="Fail Modal"
-            style={customStylesConfirmation}
+            <img
+              id="modalSuksesLogo"
+              src={ModalSuksesLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+              Berhasil Disimpan
+            </h4>
+            <p id="modalSuksesMessage" className="body-small-regular mb-16">
+              Data yang anda uba sudah berhasil disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalGagalIsOpen}
+        onRequestClose={closeModalGagal}
+        contentLabel="Fail Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalGagalContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalGagalContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
           >
-            <div
-              id="modalGagalContainer"
-              className={`d-flex justify-content-center align-items-center`}
-            >
-              <div
-                id="modalGagalContent"
-                className={`d-flex flex-column justify-content-center align-items-center`}
-              >
-                <img
-                  id="modalGagalLogo"
-                  src={ModalGagalLogo}
-                  alt="success"
-                  className="mb-16"
-                />
-                <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
-                  Gagal Disimpan
-                </h4>
-                <p id="modalGagalText" className="body-small-regular mb-16">
-                  Data yang anda ubah Gagal disimpan
-                </p>
-              </div>
-            </div>
-          </Modal>
+            <img
+              id="modalGagalLogo"
+              src={ModalGagalLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+              Gagal Disimpan
+            </h4>
+            <p id="modalGagalText" className="body-small-regular mb-16">
+              Data yang anda ubah Gagal disimpan
+            </p>
+          </div>
+        </div>
+      </Modal>
         </div>
       )}
     </div>

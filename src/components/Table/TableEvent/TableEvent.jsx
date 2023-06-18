@@ -59,7 +59,7 @@ const TableEvent = () => {
     },
   };
 
-  // Menghitung jumlah halaman
+   // Menghitung jumlah halaman
   const totalPages = Math.ceil(event?.data?.total_data / itemsPerPage);
   console.log(totalPages);
 
@@ -92,7 +92,7 @@ const TableEvent = () => {
   const handleTambahEvent = () => {
     navigate("/event/tambah");
   };
-
+  
   const closeKonfirmasiModal = () => {
     setModalKonfirmasiIsOpen(false);
   };
@@ -137,6 +137,7 @@ const TableEvent = () => {
                 color="brown"
               />
             </div>
+
           </div>
           <EmptyTable />
         </div>
@@ -173,12 +174,8 @@ const TableEvent = () => {
                             Foto
                           </th>
                           <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
-                          <th className={`p-3 ${styles.tableHeadRow}`}>
-                            Deskripsi
-                          </th>
-                          <th className={`p-3 ${styles.tableHeadRow}`}>
-                            Tanggal
-                          </th>
+                          <th className={`p-3 ${styles.tableHeadRow}`}>Deskripsi</th>
+                          <th className={`p-3 ${styles.tableHeadRow}`}>Tanggal</th>
                           <th
                             className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
                           ></th>
@@ -190,17 +187,13 @@ const TableEvent = () => {
                           <tr className={styles.tableRow} key={item.ID}>
                             <td
                               className="p-3"
-                              onClick={() =>
-                                navigate(`/event/detail/${item.ID}`)
-                              }
+                              onClick={() => navigate(`/event/detail/${item.ID}`)}
                             >
                               <img src={item.gambar} className={styles.image} />
                             </td>
                             <td
                               className="p-3"
-                              onClick={() =>
-                                navigate(`/event/detail/${item.ID}`)
-                              }
+                              onClick={() => navigate(`/event/detail/${item.ID}`)}
                             >
                               {item.nama}
                             </td>
@@ -212,17 +205,13 @@ const TableEvent = () => {
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                               }}
-                              onClick={() =>
-                                navigate(`/event/detail/${item.ID}`)
-                              }
+                              onClick={() => navigate(`/event/detail/${item.ID}`)}
                             >
                               {item.deskripsi}
                             </td>
                             <td
                               className="p-3"
-                              onClick={() =>
-                                navigate(`/event/detail/${item.ID}`)
-                              }
+                              onClick={() => navigate(`/event/detail/${item.ID}`)}
                             >
                               {item.waktu_mulai}
                             </td>
@@ -231,9 +220,7 @@ const TableEvent = () => {
                                 src={Edit}
                                 alt=""
                                 className={`${styles.actionButton} me-16`}
-                                onClick={() =>
-                                  navigate(`/event/edit/${item.ID}`)
-                                }
+                                onClick={() => navigate(`/event/edit/${item.ID}`)}
                                 id="edit-icon"
                               />
                               <img

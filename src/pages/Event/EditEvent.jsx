@@ -211,7 +211,7 @@ const EditEvent = () => {
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : error ? (
         <ErrorDisplay errorMessage={error.message} />
       ) : (

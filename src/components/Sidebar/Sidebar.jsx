@@ -45,10 +45,10 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`${styles.sidebar} d-flex`}>
+    <div className={`${styles.sidebar} d-flex position-fixed col-2`}>
       <div
         className="d-flex flex-column flex-shrink-0 p-3"
-        style={{ width: 280, height: "100vh" }}
+        style={{ width: "100%", height: "100vh" }}
       >
         <Link
           to="/dashboard"
