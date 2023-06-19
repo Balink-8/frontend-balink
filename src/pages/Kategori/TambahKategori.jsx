@@ -7,20 +7,42 @@ import save from "../../assets/icons/save.svg";
 import Button from "../../elements/Button/Button";
 import useApi from "../../api/useApi";
 import { useNavigate } from "react-router-dom";
+import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
+import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
+import Modal from "react-modal";
 
 const TambahKategori = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    namaKategori: "",
-    deskripsiKategori: "",
+    nama: "",
+    deskripsi: "",
   });
 
   const [errors, setErrors] = useState({
-    namaKategori: false,
-    deskripsiKategori: false,
+    nama: false,
+    deskripsi: false,
   });
 
-  const { response: kategori, loading, error, post } = useApi();
+  const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
+  const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
+
+  const { response: kategori_produk, loading, error, post } = useApi();
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
 
   const onSubmit = () => {
     const newErrors = {};
@@ -35,19 +57,21 @@ const TambahKategori = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      post(
-        "https://6486e617beba6297278f6c94.mockapi.io/kategori",
-        values
-      );
-      console.log(values)
-      navigate(-1);
+      post("/kategori_produk", values)
+        .then(() => {
+          openModalSukses();
+        })
+        .catch((error) => {
+          openModalGagal();
+          console.error(error);
+        });
     }
   };
 
   const onReset = (e) => {
     setValues({
-      namaKategori: "",
-      deskripsiKategori: "",
+      nama: "",
+      deskripsi: "",
     });
   };
 
@@ -71,14 +95,37 @@ const TambahKategori = () => {
     }
   };
 
+  const openModalSukses = () => {
+    setModalSuksesIsOpen(true);
+    setTimeout(() => {
+      closeModalSukses();
+      navigate("/kategori");
+    }, 1500);
+  };
+
+  const closeModalSukses = () => {
+    setModalSuksesIsOpen(false);
+  };
+
+  const openModalGagal = () => {
+    setModalGagalIsOpen(true);
+    setTimeout(() => {
+      closeModalGagal();
+    }, 1500);
+  };
+
+  const closeModalGagal = () => {
+    setModalGagalIsOpen(false);
+  };
+
   return (
-    <div className={styles.tambahEventContainer}>
-      <h1 className="headline-small-semibold">Tambah Kategori Baru</h1>
+    <div id="tambahKategoriContainer" className={styles.tambahEventContainer}>
+      <h1 id="tambahKategoriTitle" className="headline-small-semibold">Tambah Kategori Baru</h1>
 
       <div className="row">
         <div className="mt-5">
-          <div className={styles.sideTopParent}>
-            <h2 className="title-large-semibold">Nama Kategori</h2>
+          <div className={styles.sideTopParent} id="nama-kategori">
+            <h2 id="namaKategoriTitle" className="title-large-semibold" >Nama Kategori</h2>
             <p className={styles.info}>Wajib</p>
           </div>
           <div>
@@ -87,23 +134,24 @@ const TambahKategori = () => {
               Admin dapat dengan mudah memilih kategori berdasarkan barang yg
               dibuat.
             </p>
+
             <Input
               type={"text"}
               placeholder={"Masukkan nama kategori"}
               className={styles.input}
-              id={"namaKategori"}
-              name={"namaKategori"}
-              value={values.namaKategori}
+              id={"tambah-nama"}
+              name={"nama"}
+              value={values.nama}
               onChange={handleOnChange}
               label={"Nama Kategori"}
-              error={errors.namaKategori}
+              error={errors.nama}
             />
           </div>
         </div>
 
-        <div className="mt-5">
+        <div className="mt-5" id="deskripsi-kategori">
           <div className={styles.sideTopParent}>
-            <h2 className="title-large-semibold">Deskripsi Kategori</h2>
+            <h2 id="tambahdeskripsiTitle" className="title-large-semibold">Deskripsi Kategori</h2>
             <p className={styles.info}>Wajib</p>
           </div>
           <div>
@@ -117,18 +165,19 @@ const TambahKategori = () => {
                 rows={3}
                 placeholder={"Masukkan deskripsi kategori"}
                 className={
-                  errors.deskripsiKategori
+                  errors.deskripsi
                     ? `${styles.errorInput} ${styles.input}`
                     : styles.input
                 }
-                id={"deskripsiKategori"}
-                name={"deskripsiKategori"}
-                value={values.deskripsiKategori}
+                id={"tambah-deskripsi"}
+                name={"deskripsi"}
+                value={values.deskripsi}
                 onChange={handleOnChange}
               />
               <label
+                id="label-deskripsi"
                 className={
-                  errors.deskripsiKategori
+                  errors.deskripsi
                     ? `${styles.errorTitle} ${styles.inputTitle}`
                     : styles.inputTitle
                 }
@@ -144,6 +193,7 @@ const TambahKategori = () => {
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
           <Button 
+          id="resetButton"
           label="Reset" 
           color="white" 
           icon={reset} 
@@ -151,13 +201,78 @@ const TambahKategori = () => {
         </div>
         <div className="d-grid col-3 ">
           <Button 
+          id="submitButton"
           label="Simpan" 
           color="brown" 
           icon={save} 
           onClick={onSubmit} />
         </div>
       </div>
+
+       {/* Modal */}
+        <Modal
+        isOpen={modalSuksesIsOpen}
+        onRequestClose={closeModalSukses}
+        contentLabel="Success Modal"
+        style={customStylesConfirmation}
+        id="modalSukses"
+      >
+        <div
+          id="modalSuksesContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalSuksesContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
+          >
+            <img
+              id="modalSuksesLogo"
+              src={ModalSuksesLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalSuksesTitle" className="title-large-semibold mb-16">
+              Berhasil Disimpan
+            </h4>
+            <p id="modalSuksesMessage" className="body-small-regular mb-16">
+              Data yang anda buat sudah berhasil disimpan
+            </p>
+          </div>
+        </div>
+        </Modal>
+        <Modal
+          isOpen={modalGagalIsOpen}
+          onRequestClose={closeModalGagal}
+          contentLabel="Fail Modal"
+          style={customStylesConfirmation}
+        >
+          <div
+            id="modalGagalContainer"
+            className={`d-flex justify-content-center align-items-center`}
+          >
+            <div
+              id="modalGagalContent"
+              className={`d-flex flex-column justify-content-center align-items-center`}
+            >
+              <img
+                id="modalGagalLogo"
+                src={ModalGagalLogo}
+                alt="success"
+                className="mb-16"
+              />
+              <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+                Gagal Disimpan
+              </h4>
+              <p id="modalGagalText" className="body-small-regular mb-16">
+                Data yang anda buat Gagal disimpan
+              </p>
+            </div>
+          </div>
+        </Modal>
+    
     </div>
+
+    
   );
 };
 
