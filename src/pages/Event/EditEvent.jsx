@@ -28,8 +28,8 @@ const EditEvent = () => {
     link_lokasi: "",
     waktu_mulai: "",
     waktu_selesai: "",
-    tanggal_mulai: "12 Desember 2023",
-    tanggal_selesai: "12 Desember 2023",
+    tanggal_mulai: "",
+    tanggal_selesai: "",
     harga_tiket: 0,
     stok_tiket: 0,
   });
@@ -114,8 +114,12 @@ const EditEvent = () => {
       waktu_selesai: localStorage.getItem("waktu_selesai")
         ? localStorage.getItem("waktu_selesai")
         : event?.data.waktu_selesai,
-      // tanggal_mulai: "12 Desember 2023",
-      // tanggal_selesai: "12 Desember 2023",
+      tanggal_mulai: localStorage.getItem("tanggal_mulai")
+        ? localStorage.getItem("tanggal_mulai")
+        : event?.data.tanggal_mulai,
+      tanggal_selesai: localStorage.getItem("tanggal_selesai")
+        ? localStorage.getItem("tanggal_selesai")
+        : event?.data.tanggal_selesai,  
       harga_tiket: localStorage.getItem("harga_tiket")
         ? localStorage.getItem("harga_tiket")
         : event?.data.harga_tiket,
@@ -138,6 +142,8 @@ const EditEvent = () => {
     localStorage.removeItem("link_lokasi", values.nama);
     localStorage.removeItem("waktu_mulai", values.waktu_mulai);
     localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("tanggal_mulai", values.tanggal_mulai);
+    localStorage.removeItem("tanggal_selesai", values.tanggal_selesai);
     localStorage.removeItem("harga_tiket", values.harga_tiket);
     localStorage.removeItem("stok_tiket", values.stok_tiket);
 
@@ -374,6 +380,41 @@ const EditEvent = () => {
                         />
                       </div>
                     </div>
+
+                    <div className="row g-2">
+                      <div className="mt-24 col-md-6">
+                        <div className={styles.inputBox}>
+                          <Input
+                            type={"text"}
+                            placeholder={"Masukkan tanggal mulai"}
+                            className={styles.input}
+                            id={"tanggal_mulai"}
+                            name={"tanggal_mulai"}
+                            value={values.tanggal_mulai}
+                            onChange={handleOnChange}
+                            onKeyUp={handleOnKeyUp}
+                            label={"Tanggal event mulai"}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mt-24 col-md-6">
+                        <div className={styles.inputBox}>
+                          <Input
+                            type={"text"}
+                            placeholder={"Masukkan tanggal selesai"}
+                            className={styles.input}
+                            id={"tanggal_selesai"}
+                            name={"tanggal_selesai"}
+                            value={values.tanggal_selesai}
+                            onChange={handleOnChange}
+                            onKeyUp={handleOnKeyUp}
+                            label={"Tanggal event selesai"}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
 
                     <div className="mt-24">
                       <div className={styles.inputBox}>
