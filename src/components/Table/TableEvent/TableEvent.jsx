@@ -213,7 +213,7 @@ const TableEvent = () => {
                               className="p-3"
                               onClick={() => navigate(`/event/detail/${item.ID}`)}
                             >
-                              {item.waktu_mulai}
+                              {item.tanggal_mulai}
                             </td>
                             <td className="p-3">
                               <img

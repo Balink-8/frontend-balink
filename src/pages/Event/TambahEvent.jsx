@@ -27,8 +27,8 @@ const TambahEvent = () => {
     link_lokasi: "",
     waktu_mulai: "",
     waktu_selesai: "",
-    tanggal_mulai: "12 Desember 2023",
-    tanggal_selesai: "12 Desember 2023",
+    tanggal_mulai: "",
+    tanggal_selesai: "",
     harga_tiket: "",
     stok_tiket: "",
   });
@@ -41,8 +41,8 @@ const TambahEvent = () => {
     link_lokasi: false,
     waktu_mulai: false,
     waktu_selesai: false,
-    // tanggal_mulai: false,
-    // tanggal_selesai: false,
+    tanggal_mulai: false,
+    tanggal_selesai: false,
     harga_tiket: false,
     stok_tiket: false,
   });
@@ -57,8 +57,8 @@ const TambahEvent = () => {
       link_lokasi: localStorage.getItem("link_lokasi"),
       waktu_mulai: localStorage.getItem("waktu_mulai"),
       waktu_selesai: localStorage.getItem("waktu_selesai"),
-      // tanggal_mulai: "12 Desember 2023",
-      // tanggal_selesai: "12 Desember 2023",
+      tanggal_mulai: localStorage.getItem("tanggal_mulai"),
+      tanggal_selesai: localStorage.getItem("tanggal_selesai"),
       harga_tiket: localStorage.getItem("harga_tiket"),
       stok_tiket: localStorage.getItem("stok_tiket"),
     });
@@ -124,6 +124,18 @@ const TambahEvent = () => {
     } else {
       newErrors.waktu_selesai = false;
     }
+
+    if (values.tanggal_mulai.trim() === "") {
+      newErrors.tanggal_mulai = true;
+    } else {
+      newErrors.tanggal_mulai = false;
+    }
+
+    if (values.tanggal_selesai.trim() === "") {
+      newErrors.tanggal_selesai = true;
+    } else {
+      newErrors.tanggal_selesai = false;
+    }
     setErrors(newErrors);
 
     if (toggle) {
@@ -166,6 +178,8 @@ const TambahEvent = () => {
     localStorage.removeItem("link_lokasi", values.link_lokasi);
     localStorage.removeItem("waktu_mulai", values.waktu_mulai);
     localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("tanggal_mulai", values.tanggal_mulai);
+    localStorage.removeItem("tanggal_selesai", values.tanggal_selesai);
     localStorage.removeItem("harga_tiket", values.harga_tiket);
     localStorage.removeItem("stok_tiket", values.stok_tiket);
   };
@@ -179,6 +193,8 @@ const TambahEvent = () => {
     localStorage.removeItem("link_lokasi", values.link_lokasi);
     localStorage.removeItem("waktu_mulai", values.waktu_mulai);
     localStorage.removeItem("waktu_selesai", values.waktu_selesai);
+    localStorage.removeItem("tanggal_mulai", values.tanggal_mulai);
+    localStorage.removeItem("tanggal_selesai", values.tanggal_selesai);
     localStorage.removeItem("harga_tiket", values.harga_tiket);
     localStorage.removeItem("stok_tiket", values.stok_tiket);
 
@@ -191,8 +207,8 @@ const TambahEvent = () => {
       link_lokasi: "",
       waktu_mulai: "",
       waktu_selesai: "",
-      // tanggal_mulai: "12 Desember 2023",
-      // tanggal_selesai: "12 Desember 2023",
+      tanggal_mulai: "",
+      tanggal_selesai: "",
       harga_tiket: 0,
       stok_tiket: 0,
     });
@@ -233,6 +249,18 @@ const TambahEvent = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
+    // const reader = new FileReader();
+
+    // reader.onloadend = () => {
+    //   const base64String = reader.result;
+    //   localStorage.setItem("gambar", base64String);
+    // };
+
+    // if (e.target.files[0]) {
+    //   reader.readAsDataURL(e.target.files[0]);
+    // }
+    // localStorage.setItem(e.target.name, e.target.files[0]);
+    // console.log(e.target.files)
   };
 
   // get artikel
@@ -473,39 +501,78 @@ const TambahEvent = () => {
                   </div>
                 </div>
 
-                <div className="mt-24">
-                  <div className={styles.inputBox}>
-                    <Input
-                      type={"text"}
-                      placeholder={"Masukkan waktu mulai"}
-                      className={styles.input}
-                      id="waktu_mulai"
-                      name="waktu_mulai"
-                      value={values.waktu_mulai}
-                      onChange={handleOnChange}
-                      onKeyUp={handleOnKeyUp}
-                      label={"Waktu Mulai"}
-                      error={errors.waktu_mulai}
-                    />
+                <div className="row g-2">
+                  <div className="mt-24 col-md-6">
+                    <div className={styles.inputBox}>
+                      <Input
+                        type={"text"}
+                        placeholder={"Masukkan tanggal mulai"}
+                        className={styles.input}
+                        id="tanggal_mulai"
+                        name="tanggal_mulai"
+                        value={values.tanggal_mulai}
+                        onChange={handleOnChange}
+                        onKeyUp={handleOnKeyUp}
+                        label={"Tanggal event mulai"}
+                        error={errors.tanggal_mulai}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-24 col-md-6">
+                    <div className={styles.inputBox}>
+                      <Input
+                        type={"text"}
+                        placeholder={"Masukkan tanggal selesai"}
+                        className={styles.input}
+                        id="tanggal_selesai"
+                        name="tanggal_selesai"
+                        value={values.tanggal_selesai}
+                        onChange={handleOnChange}
+                        onKeyUp={handleOnKeyUp}
+                        label={"Tanggal event selesai"}
+                        error={errors.tanggal_selesai}
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-24">
-                  <div className={styles.inputBox}>
-                    <Input
-                      type={"text"}
-                      placeholder={"Masukkan waktu selesai"}
-                      className={styles.input}
-                      id="waktu_selesai"
-                      name="waktu_selesai"
-                      value={values.waktu_selesai}
-                      onChange={handleOnChange}
-                      onKeyUp={handleOnKeyUp}
-                      label={"Waktu Selesai"}
-                      error={errors.waktu_selesai}
-                    />
+                <div className="row g-2">
+                  <div className="mt-24 col-md-6">
+                    <div className={styles.inputBox}>
+                      <Input
+                        type={"text"}
+                        placeholder={"Masukkan waktu mulai"}
+                        className={styles.input}
+                        id="waktu_mulai"
+                        name="waktu_mulai"
+                        value={values.waktu_mulai}
+                        onChange={handleOnChange}
+                        onKeyUp={handleOnKeyUp}
+                        label={"Waktu Mulai"}
+                        error={errors.waktu_mulai}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-24 col-md-6">
+                    <div className={styles.inputBox}>
+                      <Input
+                        type={"text"}
+                        placeholder={"Masukkan waktu selesai"}
+                        className={styles.input}
+                        id="waktu_selesai"
+                        name="waktu_selesai"
+                        value={values.waktu_selesai}
+                        onChange={handleOnChange}
+                        onKeyUp={handleOnKeyUp}
+                        label={"Waktu Selesai"}
+                        error={errors.waktu_selesai}
+                      />
+                    </div>
                   </div>
                 </div>
+              
               </div>
             </div>
           </div>
