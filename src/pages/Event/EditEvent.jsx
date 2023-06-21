@@ -415,36 +415,37 @@ const EditEvent = () => {
                       </div>
                     </div>
 
-
-                    <div className="mt-24">
-                      <div className={styles.inputBox}>
-                        <Input
-                          type={"text"}
-                          placeholder={"Masukan waktu Mulai"}
-                          className={styles.input}
-                          id={"waktu_mulai"}
-                          name={"waktu_mulai"}
-                          value={values.waktu_mulai}
-                          onChange={handleOnChange}
-                          onKeyUp={handleOnKeyUp}
-                          label={"Waktu Mulai"}
-                        />
+                    <div className="row g-2">
+                      <div className="mt-24 col-md-6">
+                        <div className={styles.inputBox}>
+                          <Input
+                            type={"text"}
+                            placeholder={"Masukan waktu Mulai"}
+                            className={styles.input}
+                            id={"waktu_mulai"}
+                            name={"waktu_mulai"}
+                            value={values.waktu_mulai}
+                            onChange={handleOnChange}
+                            onKeyUp={handleOnKeyUp}
+                            label={"Waktu Mulai"}
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="mt-24">
-                      <div className={styles.inputBox}>
-                        <Input
-                          type={"text"}
-                          placeholder={"Masukan waktu Selesai"}
-                          className={styles.input}
-                          id={"waktu_selesai"}
-                          name={"waktu_selesai"}
-                          value={values.waktu_selesai}
-                          onChange={handleOnChange}
-                          onKeyUp={handleOnKeyUp}
-                          label={"Waktu Selesai"}
-                        />
+                      <div className="mt-24 col-md-6">
+                        <div className={styles.inputBox}>
+                          <Input
+                            type={"text"}
+                            placeholder={"Masukan waktu Selesai"}
+                            className={styles.input}
+                            id={"waktu_selesai"}
+                            name={"waktu_selesai"}
+                            value={values.waktu_selesai}
+                            onChange={handleOnChange}
+                            onKeyUp={handleOnKeyUp}
+                            label={"Waktu Selesai"}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
