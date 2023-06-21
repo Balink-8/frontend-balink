@@ -2,7 +2,7 @@ import styles from "./DetailProduk.module.css";
 import Images from "../../assets/assetsLandingPage/bali.svg";
 import Button from "../../elements/Button/Button";
 import Hapus from "../../assets/icons/delete.svg";
-import Edit from "../../assets/icons/edit_square.svg";
+import Edit from "../../assets/icons/edit_square_white.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../../api/useApi";
 import { useEffect, useState } from "react";
@@ -14,29 +14,24 @@ import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 
-const DataDetailProduk = {
-  title: "Pie susu khass bali",
-  titleDeskripsi:
-    "MasukaPie susu Bli ajik dengan Rasa yang manis dan tekstur yang lembut, jajanan khas Pulau Dewata Bali. Berbagai macam Rasa dan Variant yang ada.",
-  deskripsi:
-    "!! Apabila stok masih tersedia jadi Pie susu masih ready !! n DeskripsiMasukaPie susu Bli ajik dengan Rasa yang manis dan tekstur yang lembut, jajanan khas pulau dewata bali. Berbagai macam rasa dan variant yang ada.",
-  kategori: "Pakaian",
-  harga: "120000",
-  stok: "190",
-};
-
 const DetailProduk = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
 
   const { response: produk, loading, error, get } = useApi();
+  const {
+    response: kategori,
+    loading: loadingKategori,
+    error: errorKategori,
+    get: getKategori,
+  } = useApi();
   const navigate = useNavigate();
 
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const customStylesConfirmation = {
     content: {
-      top: "50%", 
+      top: "50%",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -50,13 +45,25 @@ const DetailProduk = () => {
     },
   };
 
- 
   useEffect(() => {
     get(`/produk/${id}`).catch((error) => {
       // Handle error
       console.error(error);
     });
   }, [id]);
+
+  const kategori_id = produk?.data?.kategori_id;
+
+  useEffect(() => {
+    if (kategori_id !== undefined) {
+      getKategori(`/kategori_produk/${parseInt(kategori_id)}`).catch(
+        (error) => {
+          // Handle error
+          console.error(error);
+        }
+      );
+    }
+  }, [kategori_id]);
 
   const deleteProduk = () => {
     del(`/produk/${id}`)
@@ -67,7 +74,7 @@ const DetailProduk = () => {
         console.error(error);
       });
   };
-   const closeKonfirmasiModal = () => {
+  const closeKonfirmasiModal = () => {
     setModalKonfirmasiIsOpen(false);
   };
 
@@ -94,101 +101,69 @@ const DetailProduk = () => {
       ) : error ? (
         <ErrorDisplay errorMessage={error.message} />
       ) : (
-      <div>
-        <div className={styles.wrapper} id="wrapper">
-          <div className={styles.wrapperDetail} id="wrapper-detail">
-            <h1 className="headline-small-semibold">Detail Produk</h1>
-            <div className={styles.parentImages} id="parentsImages">
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-              <img
-                src={produk?.data?.foto}
-                className={styles.fotoProduk}
-              />
-            </div>
-            <div className={styles.parentDetail} id="parentsDetail">
-              <h1
-                className={`title-large-semibold ${styles.titleProduk}`}
-                id="titleProduk"
-              >
-                {produk?.data?.nama}
-              </h1>
-              <p className="body-medium-reguler" id="title-deskripsi">
-                {DataDetailProduk.titleDeskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
-              <p className="body-medium-reguler" id="deskripsi">
-                {produk?.data?.deskripsi}
-              </p>
+        <div>
+          <div className={styles.wrapper} id="wrapper">
+            <div className={styles.wrapperDetail} id="wrapper-detail">
+              <h1 className="headline-small-semibold">Detail Produk</h1>
+              <div className={styles.parentImages} id="parentsImages">
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+                <img src={produk?.data?.foto} className={styles.fotoProduk} />
+              </div>
+              <div className={styles.parentDetail} id="parentsDetail">
+                <h1
+                  className={`title-large-semibold ${styles.titleProduk}`}
+                  id="titleProduk"
+                >
+                  {produk?.data?.nama}
+                </h1>
+                <p className="body-medium-reguler" id="deskripsi">
+                  {produk?.data?.deskripsi}
+                </p>
+              </div>
+              <div className={styles.keterangan} id="keterangan">
+                <div className={styles.kategori} id="kategori">
+                  <label className="body-medium-regular">Kategori Produk</label>
+                  <p className="title-medium-semibold">
+                    {kategori?.data?.nama}
+                  </p>
+                </div>
+                <div className={styles.harga} id="harga">
+                  <label className="body-medium-reguler">Harga Produk</label>
+                  <p className="title-medium-semibold">{produk?.data?.harga}</p>
+                </div>
+                <div className={styles.stok} id="stok">
+                  <label className="body-medium-reguler">Stok Produk</label>
+                  <p className="title-medium-semibold">{produk?.data?.stok}</p>
+                </div>
+              </div>
             </div>
 
-            <div className={styles.keterangan} id="keterangan">
-              <div className={styles.kategori} id="kategori">
-                <label className="body-medium-regular">Kategori Produk</label>
-                <p className="title-medium-semibold">{produk?.data?.kategori_id}</p>
+            <div>
+              <div className="d-flex justify-content-end gap-3 pt-3">
+                <div className="d-grid col-3">
+                  <Button
+                    label="Hapus"
+                    color="white"
+                    icon={Hapus}
+                    onClick={() => openKonfirmasiModal()}
+                    id="hapusButton"
+                  />
+                </div>
+                <div className="d-grid col-3">
+                  <Button
+                    label="Edit"
+                    color="brown"
+                    icon={Edit}
+                    onClick={() => navigate(`/produk/edit/${id}`)}
+                    id="editButton"
+                  />
+                </div>
               </div>
-              <div className={styles.harga} id="harga">
-                <label className="body-medium-reguler">Harga Produk</label>
-                <p className="title-medium-semibold">{produk?.data?.harga}</p>
-              </div>
-              <div className={styles.stok} id="stok">
-                <label className="body-medium-reguler">Stok Produk</label>
-                <p className="title-medium-semibold">{produk?.data?.stok}</p>
-              </div>
-            </div>
-          </div>
-     
-      <div>
-        <div className="d-flex justify-content-end gap-3 pt-3">
-            <div className="d-grid col-3">
-              <Button
-                label="Hapus"
-                color="white"
-                icon={Hapus}
-                onClick={() => openKonfirmasiModal()}
-                id="hapusButton"
-              />
-            </div>
-            <div className="d-grid col-3">
-              <Button
-                label="Edit"
-                color="brown"
-                icon={Edit}
-                onClick={() => navigate(`/produk/edit/${id}`)}
-                id="editButton"
-              />
             </div>
           </div>
         </div>
-      </div>
-    </div>
       )}
       <Modal
         isOpen={modalKonfirmasiIsOpen}
