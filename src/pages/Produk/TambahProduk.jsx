@@ -1,5 +1,5 @@
 import styles from "./TambahProduk.module.css";
-import Gunung from "../../assets/icons/plain-triangle.png"
+import Gunung from "../../assets/icons/plain-triangle.png";
 import Input from "../../elements/Input/Input";
 import Undo from "../../assets/icons/undo.png";
 import save from "../../assets/icons/save.svg";
@@ -12,8 +12,8 @@ import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import Modal from "react-modal";
 
 const TambahProduk = () => {
-   const navigate = useNavigate();
-   const [file, setFile] = useState();
+  const navigate = useNavigate();
+  const [file, setFile] = useState();
   const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
   const [modalGagalIsOpen, setModalGagalIsOpen] = useState(false);
 
@@ -31,7 +31,7 @@ const TambahProduk = () => {
     deskripsi: false,
     kategori_id: false,
     harga: false,
-    stok: false
+    stok: false,
   });
 
   const customStylesConfirmation = {
@@ -51,12 +51,16 @@ const TambahProduk = () => {
   };
 
   const { response: produk, loading, error, post } = useApi();
-   const { response: kategori, loading: kategoriLoading, error: errorKategori, get } = useApi();
+  const {
+    response: kategori,
+    loading: kategoriLoading,
+    error: errorKategori,
+    get,
+  } = useApi();
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const newErrors = {};
-
 
     Object.keys(values).forEach((key) => {
       if (values[key].trim() === "") {
@@ -64,56 +68,51 @@ const TambahProduk = () => {
       } else {
         newErrors[key] = false;
       }
-    }); 
+    });
 
     setErrors(newErrors);
 
-     console.log(newErrors)
+    console.log(newErrors);
     if (!Object.values(newErrors).some((error) => error)) {
-      const harga = parseInt(values.harga)
-      const stok = parseInt(values.stok)
-     
+      const harga = parseInt(values.harga);
+      const stok = parseInt(values.stok);
+
       post("/produk", {
-        ...values, 
+        ...values,
         harga: harga,
-        stok: stok
+        stok: stok,
       })
-      .then(() => {
+        .then(() => {
           openModalSukses();
         })
-      .catch((error) => {
+        .catch((error) => {
           openModalGagal();
           console.error(error);
         });
     }
   };
 
-   useEffect(() => {
-   get(`/kategori_produk`).catch(
-      (error) => {
-        // Handle error
-        console.error(error);
-      }
-    );
+  useEffect(() => {
+    get(`/kategori_produk`).catch((error) => {
+      // Handle error
+      console.error(error);
+    });
   }, []);
-  console.log(kategori?.data.data)
+  console.log(kategori?.data.data);
 
-
-
- const onReset = () => {
+  const onReset = () => {
     setValues({
-    foto: "",
-    nama: "",
-    deskripsi: "",
-    kategori_id: "",
-    harga: 0,
-    stok: 0
+      foto: "",
+      nama: "",
+      deskripsi: "",
+      kategori_id: "",
+      harga: 0,
+      stok: 0,
     });
   };
 
-
   const handleOnChange = (e) => {
-    const { name, value } = e.target; 
+    const { name, value } = e.target;
     setValues({
       ...values,
       [name]: value,
@@ -155,10 +154,8 @@ const TambahProduk = () => {
     setModalGagalIsOpen(false);
   };
 
-
-
   const getFile = (e) => {
-    console.log("random")
+    console.log("random");
     setFile(URL.createObjectURL(e.target.files[0]));
     setValues({
       ...values,
@@ -183,19 +180,19 @@ const TambahProduk = () => {
             <div className={styles.boxImage}>
               <img src={file} className={styles.imageProduk} />
               <div className={styles.gunung}>
-                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
+                <img src={!file ? Gunung : ""} className={styles.imgGunung} />
               </div>
             </div>
             <div className={styles.boxImage}>
               <img src={file} className={styles.imageProduk} />
               <div className={styles.gunung}>
-                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
+                <img src={!file ? Gunung : ""} className={styles.imgGunung} />
               </div>
             </div>
             <div className={styles.boxImage}>
               <img src={file} className={styles.imageProduk} />
               <div className={styles.gunung}>
-                <img src={!file ? Gunung : ""} className={styles.imgGunung}/>
+                <img src={!file ? Gunung : ""} className={styles.imgGunung} />
               </div>
             </div>
 
@@ -314,14 +311,12 @@ const TambahProduk = () => {
                 <option value="Perhiasan">Perhiasan</option>
                 <option value="Kerajinan Tangan">Kerajinan Tangan</option>
                 <option value="Aksesori">Aksesoris</option> */}
-                {
-                  kategori?.data.data.map((kategori)=>(
-                     <option value={kategori.ID}>{kategori.nama}</option>
-                  ))
-                }
+                {kategori?.data.data.map((kategori) => (
+                  <option value={kategori.ID}>{kategori.nama}</option>
+                ))}
               </select>
               <div className={styles.kategori}>
-                <span style={{fontSize: "11px"}}>Kategori Produk</span>
+                <span style={{ fontSize: "11px" }}>Kategori Produk</span>
               </div>
             </div>
           </div>
@@ -393,14 +388,14 @@ const TambahProduk = () => {
       </div>
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button label="Reset" color="white" icon={Undo} onClick={onReset}/>
+          <Button label="Reset" color="white" icon={Undo} onClick={onReset} />
         </div>
         <div className="d-grid col-3 ">
-          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit}/>
+          <Button label="Simpan" color="brown" icon={save} onClick={onSubmit} />
         </div>
       </div>
 
-       <Modal
+      <Modal
         isOpen={modalSuksesIsOpen}
         onRequestClose={closeModalSukses}
         contentLabel="Success Modal"
