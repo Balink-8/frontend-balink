@@ -335,6 +335,7 @@ const TambahEvent = () => {
             {/* upload foto */}
             <div className={styles.containerEvent}>
               <div className={styles.imgArea}>
+                <img id="uploadedImage" src={values.gambar} />
                 <img id="uploadedImage" src={file} />
               </div>
               <div className="d-flex justify-content-center">
