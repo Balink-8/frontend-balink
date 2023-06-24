@@ -154,6 +154,14 @@ const TableAkun = () => {
     }
   };
 
+  const handleSearchClick = () => {
+    get(
+      `/user?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
@@ -162,6 +170,7 @@ const TableAkun = () => {
             onChange={handleSearchInputChange}
             value={searchQuery}
             onKeyDown={handleSearchInputKeyPress}
+            onClick={handleSearchClick}
           />
           <EmptyTable />
         </div>
@@ -178,6 +187,7 @@ const TableAkun = () => {
                   onChange={handleSearchInputChange}
                   value={searchQuery}
                   onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
                 />
                 <div className="row mt-4 text-center">
                   <div className="col-12 p-0">

@@ -134,6 +134,14 @@ const TableArtikel = () => {
     }
   };
 
+  const handleSearchClick = () => {
+    get(
+      `/artikel?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
@@ -143,6 +151,7 @@ const TableArtikel = () => {
               onChange={handleSearchInputChange}
               value={searchQuery}
               onKeyDown={handleSearchInputKeyPress}
+              onClick={handleSearchClick}
             />
             <Button
               onClick={handleTambahArtikel}
@@ -167,6 +176,7 @@ const TableArtikel = () => {
                   onChange={handleSearchInputChange}
                   value={searchQuery}
                   onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
                 />
                 <Button
                   onClick={handleTambahArtikel}
