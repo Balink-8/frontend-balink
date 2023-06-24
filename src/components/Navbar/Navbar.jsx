@@ -12,6 +12,12 @@ const Navbar = () => {
       return "Dashboard";
     } else if (pathname.includes("akun")) {
       return "Akun";
+    } else if (pathname.includes("transaksi/produk")) {
+      return "Transaksi Produk";
+    } else if (pathname.includes("transaksi/event")) {
+      return "Transaksi Event";
+    } else if (pathname.includes("transaksi")) {
+      return "Transaksi";
     } else if (pathname.includes("event")) {
       return "Event";
     } else if (pathname.includes("tentang-artikel")) {
@@ -20,8 +26,6 @@ const Navbar = () => {
       return "Produk";
     } else if (pathname.includes("kategori")) {
       return "Kategori";
-    } else if (pathname.includes("transaksi")) {
-      return "Transaksi";
     } else if (pathname.includes("promo")) {
       return "Promo";
     } else if (pathname.includes("artikel")) {
