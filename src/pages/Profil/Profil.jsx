@@ -85,6 +85,30 @@ const Profil = () => {
           </div>
 
           <div className={styles.informasi}>
+            <h2 className="title-medium-bold">Alamat Perusahaan</h2>
+            <div className={styles.parentInformasi}>
+              <div className={styles.sideLeftInformasi}>
+                <div className="email">
+                  <p className={`body-large-regular ${styles.label}`}>Negara</p>
+                  <p className="body-large-regular">{profil?.negara}</p>
+                </div>
+                <div className="kode-pos">
+                  <p className={`body-large-regular ${styles.label}`}>
+                    Kode Pos
+                  </p>
+                  <p className="body-large-regular">{profil?.kode_pos}</p>
+                </div>
+              </div>
+              <div className={styles.sideRightInformasi}>
+                <div className={styles.whatsapp}>
+                  <p className={`body-large-regular ${styles.label}`}>Alamat</p>
+                  <p className="body-large-regular">{profil?.alamat}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.informasi}>
             <h2 className="title-medium-bold" id="rekeningPerusahaanTitle">
               Rekening Perusahaan
             </h2>

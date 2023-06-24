@@ -1,10 +1,21 @@
 import styles from "./DetailTransaksiEvent.module.css";
 import React, { useState } from "react";
 import young_bearded_man_with_striped_shirt1 from "../../../assets/images/young_bearded_man_with_striped_shirt1.png";
+import bukti from "../../../assets/images/bukti.png";
+import Button from "../../../elements/Button/Button";
+import visibility from "../../../assets/icons/visibility.svg";
+import Modal from "react-modal";
+import buktiFull from "../../../assets/images/buktiFull.png";
+import close_black from "../../../assets/icons/close_black.svg";
+import close from "../../../assets/icons/close.svg";
+import check from "../../../assets/icons/check.svg";
+import konfirmasi from "../../../assets/images/konfirmasi.png";
 
 const DetailTransaksiEvent = ({ userDataDetailEvent, userDataEventStatus }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [modalBuktiIsOpen, setModalBuktiIsOpen] = useState(false);
+  const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -18,6 +29,42 @@ const DetailTransaksiEvent = ({ userDataDetailEvent, userDataEventStatus }) => {
     indexOfFirstItem,
     indexOfLastItem
   );
+
+  const customStylesConfirmation = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "8px",
+      padding: "60px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      zIndex: "9999",
+    },
+  };
+
+  const closeBuktiModal = () => {
+    setModalBuktiIsOpen(false);
+  };
+
+  const openBuktiModal = () => {
+    setModalBuktiIsOpen(true);
+  };
+
+  const closeKonfirmasiModal = () => {
+    setModalKonfirmasiIsOpen(false);
+  };
+
+  const openKonfirmasiModal = () => {
+    setModalKonfirmasiIsOpen(true);
+  };
+
+  const konfirmasiPesanan = () => {
+    alert("Pesanan berhasil dikonfirmasi");
+  };
 
   return (
     <div>
@@ -158,7 +205,7 @@ const DetailTransaksiEvent = ({ userDataDetailEvent, userDataEventStatus }) => {
         </div>
       </div>
 
-      <div className={`p-4 ${styles.container}`} id="container">
+      <div className={`p-4 mb-3 ${styles.container}`} id="container">
         <p className="title-medium-semibold">Status Transaksi</p>
         <div className="row mt-4 text-center ">
           <div className="col-12 p-0 ">
@@ -203,16 +250,9 @@ const DetailTransaksiEvent = ({ userDataDetailEvent, userDataEventStatus }) => {
                         } ${styles.roundedRightBot} ${
                           item.status === "Sukses" ? styles.success : ""
                         } 
-                                          ${
-                                            item.status === "Dipesan"
-                                              ? styles.order
-                                              : ""
-                                          } 
-                                          ${
-                                            item.status === "Dibatalkan"
-                                              ? styles.cancel
-                                              : ""
-                                          }`}
+        ${item.status === "Dipesan" ? styles.order : ""}
+        ${item.status === "Dibatalkan" ? styles.cancel : ""}
+        ${item.status === "Menunggu" ? styles.waiting : ""}`}
                       >
                         {item.status}
                       </td>
@@ -224,6 +264,136 @@ const DetailTransaksiEvent = ({ userDataDetailEvent, userDataEventStatus }) => {
           </div>
         </div>
       </div>
+
+      <div className={`p-4 ${styles.container}`} id="container">
+        <p className="title-medium-semibold">Bukti Transaksi</p>
+        <div className="d-flex gap-5 align-items-center justify-content-between">
+          <ol className="w-50">
+            <li>
+              Periksa kembali nomor transaksi dan rincian pembayaran yang
+              tertera pada gambar.
+            </li>
+            <li>
+              Pastikan bahwa jumlah yang tertera pada bukti pembayaran sesuai
+              dengan jumlah yang tercatat dalam sistem.
+            </li>
+            <li>
+              Periksa keaslian bukti pembayaran dengan memperhatikan elemen
+              keamanan seperti cap, tanda tangan, atau kode unik (jika ada).
+            </li>
+          </ol>
+          <img src={bukti} alt="" style={{ width: "205px", height: "165px" }} />
+          <div className="d-flex flex-column  gap-3">
+            <div className="d-grid ">
+              <Button
+                label="Lihat Bukti Transaksi"
+                color="brown"
+                icon={visibility}
+                id="lihatBuktiButton"
+                onClick={openBuktiModal}
+              />
+            </div>
+            <div className="d-grid ">
+              <Button
+                label="Konfirmasi Pesanan"
+                color="white"
+                icon={check}
+                id="konfirmasiPesananButton"
+                onClick={openKonfirmasiModal}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <Modal
+        isOpen={modalBuktiIsOpen}
+        onRequestClose={closeBuktiModal}
+        contentLabel="Bukti Modal"
+        style={customStylesConfirmation}
+        id="modalBukti"
+      >
+        <div
+          id="modalKonfirmasiContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalKonfirmasiContent"
+            className={`d-flex flex-column justify-content-center align-items-end`}
+          >
+            <img
+              src={close_black}
+              alt=""
+              className="mb-8"
+              style={{ cursor: "pointer" }}
+              onClick={closeBuktiModal}
+            />
+            <img id="buktiFull" src={buktiFull} alt="bukti-img" />
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={modalKonfirmasiIsOpen}
+        onRequestClose={closeKonfirmasiModal}
+        contentLabel="Confirmation Modal"
+        style={customStylesConfirmation}
+        id="modalKonfirmasi"
+      >
+        <div
+          id="modalKonfirmasiContainer"
+          className={`d-flex justify-content-center align-items-center`}
+        >
+          <div
+            id="modalKonfirmasiContent"
+            className={`d-flex flex-column justify-content-center align-items-center w-75`}
+          >
+            <img
+              id="modalKonfirmasiImage"
+              src={konfirmasi}
+              alt="konfirmasi-img"
+              className="mb-16"
+            />
+            <h4
+              id="modalKonfirmasiTitle"
+              className="title-large-semibold mb-32 text-center"
+            >
+              Apakah anda ingin mengonfirmasi transaksi ini?
+            </h4>
+            <p
+              id="modalKonfirmasiText1"
+              className="body-small-regular text-center"
+            >
+              Pastikan anda sudah mengecek bukti pembayaran yang dikirimkan user
+              Data yang sudah dikonfirmasi tidak dapat dikembalikan lagi
+            </p>
+            <p
+              id="modalKonfirmasiText2"
+              className="body-small-regular mb-32 text-center"
+            >
+              Apakah anda yakin?
+            </p>
+            <div className="d-flex gap-5 justify-content-center">
+              <div className="d-grid col-6">
+                <Button
+                  id="modalKonfirmasiYesButton"
+                  label="Yes"
+                  color="white"
+                  icon={check}
+                  onClick={konfirmasiPesanan}
+                />
+              </div>
+              <div className="d-grid col-6">
+                <Button
+                  id="modalKonfirmasiCancelButton"
+                  label="Cancel"
+                  color="brown"
+                  icon={close}
+                  onClick={closeKonfirmasiModal}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

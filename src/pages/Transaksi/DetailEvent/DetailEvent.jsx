@@ -1,7 +1,6 @@
 import React from "react";
 import DetailTransaksiEvent from "../../../components/DetailTransaksi/DetailTransaksiEvent/DetailTransaksiEvent";
 
-
 const DetailEvent = () => {
   const userDataDetailEvent = [
     {
@@ -11,38 +10,40 @@ const DetailEvent = () => {
       jumlah: "3",
       total: "Rp 360.000",
     },
-
-
   ];
-
 
   //status
   const userDataEventStatus = [
-  {
-    tanggal: "15 Januari 2023",
-    jam: "20:40:55 WITA",
-    status: "Dipesan",
-  },
+    {
+      tanggal: "15 Januari 2023",
+      jam: "20:40:55 WITA",
+      status: "Dipesan",
+    },
 
-  {
-    tanggal: "15 Januari 2023",
-    jam: "21:32:32 WITA",
-    status: "Sukses",
-  },
+    {
+      tanggal: "15 Januari 2023",
+      jam: "21:32:32 WITA",
+      status: "Sukses",
+    },
 
-  {
-    tanggal: "15 Januari 2023",
-    jam: "21:32:32 WITA",
-    status: "Dibatalkan",
-  },
-
-
+    {
+      tanggal: "15 Januari 2023",
+      jam: "21:32:32 WITA",
+      status: "Dibatalkan",
+    },
+    {
+      tanggal: "15 Januari 2023",
+      jam: "21:32:32 WITA",
+      status: "Menunggu",
+    },
   ];
 
-  
-  return <DetailTransaksiEvent userDataDetailEvent={userDataDetailEvent}  userDataEventStatus={userDataEventStatus} />;
+  return (
+    <DetailTransaksiEvent
+      userDataDetailEvent={userDataDetailEvent}
+      userDataEventStatus={userDataEventStatus}
+    />
+  );
 };
-  
- 
-  
-  export default DetailEvent;
+
+export default DetailEvent;
