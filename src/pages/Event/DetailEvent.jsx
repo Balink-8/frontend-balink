@@ -255,25 +255,20 @@ const DetailEvent = () => {
           </div>
 
           {/* berbayar */}
-          <div className="pb-4">
-            <div className={styles.containerEvent}>
-              <div className="container">
-                <h1 className="body-large-semibold">Ticket Berbayar</h1>
+          {event?.data?.harga_tiket && event?.data?.stok_tiket ? (
+            <div className="pb-4">
+              <div className={styles.containerEvent}>
+                <div className="container">
+                  <h1 className="body-large-semibold">Ticket Berbayar</h1>
 
-                <div className="row">
-                  <div className="col-lg-6">
-                    <p className="body-smaill-regular">
-                      Harga ticket aktif dan non aktif
-                    </p>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="d-flex justify-content-end">
-                      <Switch onClick={toggler} />
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <p className="body-smaill-regular">
+                        Harga ticket aktif dan non aktif
+                      </p>
                     </div>
                   </div>
-                </div>
-                {toggle && (
+
                   <div className="row py-3">
                     <div className="col-lg-6">
                       <div className="m-2">
@@ -295,10 +290,13 @@ const DetailEvent = () => {
                       </div>
                     </div>
                   </div>
-                )}
+
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            null 
+          )}
 
           <div className="d-flex justify-content-end gap-3 pt-5">
             <div className="d-grid col-3">

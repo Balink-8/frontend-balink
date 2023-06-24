@@ -81,18 +81,13 @@ const TableTransaksiEvent = ({ userDataEvent }) => {
                     <td className="p-3">{item.total}</td>
                     <td
                       className={`p-3 title-small-semibold ${
+                        styles.tableHeadRowBody
+                      } ${styles.roundedRightBot} ${
                         item.status === "Sukses" ? styles.success : ""
                       } 
-                                          ${
-                                            item.status === "Dipesan"
-                                              ? styles.order
-                                              : ""
-                                          } 
-                                          ${
-                                            item.status === "Dibatalkan"
-                                              ? styles.cancel
-                                              : ""
-                                          }`}
+  ${item.status === "Dipesan" ? styles.order : ""}
+  ${item.status === "Dibatalkan" ? styles.cancel : ""}
+  ${item.status === "Menunggu" ? styles.waiting : ""}`}
                     >
                       {item.status}
                     </td>

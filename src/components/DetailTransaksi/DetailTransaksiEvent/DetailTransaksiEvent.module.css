@@ -63,6 +63,10 @@
   color: var(--red-dark) !important;
 }
 
+.waiting {
+  color: var(--brown-darker) !important;
+}
+
 .tableRow2 {
   background-color: var(--brown-light) !important;
 }

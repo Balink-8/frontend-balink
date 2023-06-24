@@ -91,6 +91,7 @@
 .tableRow:hover {
   background-color: #fffcf8;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .actionButton {
@@ -129,6 +130,10 @@
 
 .cancel {
   color: var(--red-dark) !important;
+}
+
+.waiting {
+  color: var(--brown-darker) !important;
 }
 
 .btnevent {

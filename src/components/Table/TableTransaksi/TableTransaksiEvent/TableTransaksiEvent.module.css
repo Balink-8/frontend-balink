@@ -120,6 +120,10 @@
   color: var(--red-dark) !important;
 }
 
+.waiting {
+  color: var(--brown-darker) !important;
+}
+
 .btnevent {
   position: absolute;
   right: 130px;

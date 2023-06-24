@@ -8,3 +8,7 @@
   text-decoration: none;
   color: var(--dark-black);
 }
+
+.navbarBrand:hover {
+  color: var(--dark-black);
+}

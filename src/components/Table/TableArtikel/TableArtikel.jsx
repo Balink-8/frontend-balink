@@ -25,23 +25,19 @@ const TableArtikel = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { response: artikel, loading, error, del, get } = useApi();
 
   useEffect(() => {
-    get(`/artikel?page=${currentPage}&limit=${itemsPerPage}`).catch((error) => {
+    get(
+      `/artikel?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
       console.log(error);
     });
   }, [currentPage, itemsPerPage]);
 
-  console.log(artikel);
-  console.log(loading);
-  console.log(error);
-
   const data = artikel?.data?.data;
-  console.log(data?.length);
-  console.log(data);
-  console.log(artikel?.data);
 
   const customStylesConfirmation = {
     content: {
@@ -61,7 +57,6 @@ const TableArtikel = () => {
 
   // Menghitung jumlah halaman
   const totalPages = Math.ceil(artikel?.data?.total_data / itemsPerPage);
-  console.log(totalPages);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -124,11 +119,40 @@ const TableArtikel = () => {
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/artikel?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  const handleSearchClick = () => {
+    get(
+      `/artikel?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
-        <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
+        <div className="d-flex flex-column justify-content-center align-items-between">
+          <div className="d-flex flex-row gap-3 ">
+            <TableSearch
+              onChange={handleSearchInputChange}
+              value={searchQuery}
+              onKeyDown={handleSearchInputKeyPress}
+              onClick={handleSearchClick}
+            />
             <Button
               onClick={handleTambahArtikel}
               label="Tambah Artikel"
@@ -148,7 +172,12 @@ const TableArtikel = () => {
           ) : (
             <div>
               <div className="d-flex justify-content-between">
-                <TableSearch />
+                <TableSearch
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
+                />
                 <Button
                   onClick={handleTambahArtikel}
                   label="Tambah Artikel"

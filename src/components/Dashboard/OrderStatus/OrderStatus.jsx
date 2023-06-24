@@ -6,7 +6,7 @@ import TableProdukDashboard from "../../Table/TableProdukDashboard/TableProdukDa
 import TableEventDashboard from "../../Table/TableEventDashboard/TableEventDashboard";
 
 const OrderStatus = () => {
-  const [activeButton, setActiveButton] = useState("produk");
+  const [activeButton, setActiveButton] = useState("event");
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
@@ -35,7 +35,7 @@ const OrderStatus = () => {
       waktu: "15/12/23 - 20:40:56",
       produk: "Kaos Barang",
       total: "Rp 110.000 ",
-      status: "Dipesan",
+      status: "Menunggu",
     },
     {
       kodetransaksi: "ABCD1234E5F6",
@@ -126,7 +126,7 @@ const OrderStatus = () => {
       waktu: "15/12/23 - 20:40:56",
       event: "Tari Kecak",
       total: "Rp 110.000 ",
-      status: "Dipesan",
+      status: "Menunggu",
     },
     {
       kodetransaksi: "ABCD1234E5F6",
