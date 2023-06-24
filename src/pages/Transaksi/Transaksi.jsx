@@ -52,7 +52,7 @@ const Transaksi = () => {
       waktu: "15/12/23 - 20:40:56",
       produk: "Kaos Barang",
       total: "Rp 110.000 ",
-      status: "Sukses",
+      status: "Menunggu",
     },
     {
       kodetransaksi: "ABCD1234E5F6",
@@ -143,7 +143,7 @@ const Transaksi = () => {
       waktu: "15/12/23 - 20:40:56",
       event: "Tari Kecak",
       total: "Rp 110.000 ",
-      status: "Sukses",
+      status: "Menunggu",
     },
     {
       kodetransaksi: "ABCD1234E5F6",
