@@ -27,6 +27,7 @@ const TableAkun = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { response: akun, loading, error, del, get } = useApi();
 
@@ -138,10 +139,30 @@ const TableAkun = () => {
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/user?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
   return (
     <>
       {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
+          <TableSearch
+            onChange={handleSearchInputChange}
+            value={searchQuery}
+            onKeyDown={handleSearchInputKeyPress}
+          />
           <EmptyTable />
         </div>
       ) : (
@@ -153,7 +174,11 @@ const TableAkun = () => {
           ) : (
             <div>
               <div>
-                <TableSearch />
+                <TableSearch
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                />
                 <div className="row mt-4 text-center">
                   <div className="col-12 p-0">
                     <div className="table-responsive">
