@@ -14,7 +14,13 @@ const TableSearch = ({ onClick, onChange, value, onKeyDown, onKeyPress }) => {
         value={value}
         onKeyDown={onKeyDown}
       />
-      <img src={vector} alt="" className={styles.vector} onClick={onClick} />
+      <img
+        src={vector}
+        alt=""
+        className={styles.vector}
+        onClick={onClick}
+        id="searchIcon"
+      />
     </div>
   );
 };
