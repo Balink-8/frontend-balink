@@ -26,6 +26,7 @@ const TableProduk = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { response: produk, loading, error, del, get } = useApi();
   const {
@@ -105,7 +106,7 @@ const TableProduk = () => {
 
   const closeKonfirmasiModal = () => {
     setModalKonfirmasiIsOpen(false);
-  };
+  }; 
 
   const openKonfirmasiModal = (id) => {
     setSelectedId(id);
@@ -134,17 +135,40 @@ const TableProduk = () => {
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  }; 
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/produk?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  const handleSearchClick = () => {
+    get(
+      `/produk?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error); 
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
+          <div className="d-grid col-2 ms-auto">          
             <Button
-              onClick={handleTambahArtikel}
-              label="Tambah Artikel"
+              onClick={handleTambahProduk}
+              label="Tambah Produk"
               icon={add}
               color="brown"
-              id="tambah-artikel-button"
+              id="tambah-produk-button"
             />
           </div>
           <EmptyTable />
@@ -158,7 +182,12 @@ const TableProduk = () => {
           ) : (
             <div>
               <div className="d-flex justify-content-between">
-                <TableSearch />
+                <TableSearch
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
+                />
 
                 <Button
                   onClick={handleTambahProduk}
