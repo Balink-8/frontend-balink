@@ -158,113 +158,45 @@ const TableKategori = () => {
     <>
       {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
-          <TableSearch
+          <div className="d-flex flex-row gap-3 ">
+            <TableSearch
               onChange={handleSearchInputChange}
               value={searchQuery}
               onKeyDown={handleSearchInputKeyPress}
               onClick={handleSearchClick}
             />
-          <Button
-            onClick={handleTambahKategori}
-            label="Tambah Kategori"
-            icon={add}
-            color="brown"
-            id="tambah-kategori-button"
-          />
+            <Button
+              onClick={handleTambahKategori}
+              label="Tambah Kategori"
+              icon={add}
+              color="brown"
+              id="tambah-kategori-button"
+            />
           </div>
           <EmptyTable />
         </div>
       ) : (
         <div>
-            {loading ? (
-              <Spinner />
-            ) : error ? (
-              <ErrorDisplay errorMessage={error.message} />
-            ) : (
-              <div>
-                <div className="d-flex justify-content-between">
-                  <TableSearch
-                    onChange={handleSearchInputChange}
-                    value={searchQuery}
-                    onKeyDown={handleSearchInputKeyPress}
-                    onClick={handleSearchClick}
-                  />
-                  <Button
-                    onClick={handleTambahKategori}
-                    label="Tambah Kategori"
-                    icon={add}
-                    color="brown"
-                    id="tambah-kategori-button"
-                  />
-                </div>
-              
-          <div className="row mt-4 text-center">
-            <div className="col-12 p-0">
-              <div className="table-responsive">
-                <table className="table ">
-                  {/* Render data pada halaman saat ini */}
-                  <thead className={styles.thead} id="thead">
-                    <tr id="tr-table">
-                      <th
-                        className={`p-3 ${styles.roundedLeftTop} ${styles.tableHeadRow}`}
-                        id="nama-header"
-                      >
-                        Nama Kategori
-                      </th>
-                      <th 
-                        className={`p-3 ${styles.tableHeadRow}`}
-                        id="deskripsi-header"  
-                      >
-                        Deskripsi Kategori
-                      </th>
-                      <th
-                        className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
-                      ></th>
-                    </tr>
-                  </thead>
-                  <tbody className={styles.tbody} id="tbody">
-                    {data?.map((item) => (
-                      <tr className={styles.tableRow} key={item.ID}>
-                        <td className="p-3" 
-                          onClick={() => navigate(`/kategori/detail/${item.ID}`)}
-                          id="namakategori-cell"
-                          >
-                          {item.nama}  
-                        </td>
-                        <td
-                          className="p-3"
-                          style={{
-                            maxWidth: "400px",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                          onClick={() => navigate(`/kategori/detail/${item.ID}`)}
-                          id="deskripsi-cell"
-                        >
-                          {item.deskripsi}
-                        </td>
-                        <td className="p-3">
-                          <img
-                            src={Edit}
-                            alt=""
-                            className={`${styles.actionButton} me-16`}
-                            onClick={() => navigate(`/kategori/edit/${item.ID}`)}
-                            id="edit-button"
-                          />
-                          <img
-                            src={Delete}
-                            alt=""
-                            className={styles.actionButton}
-                            onClick={() => openKonfirmasiModal(item.ID)}
-                            id={`delete-button`}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          {loading ? (
+            <Spinner />
+          ) : error ? (
+            <ErrorDisplay errorMessage={error.message} />
+          ) : (
+            <div>
+              <div className="d-flex justify-content-between">
+                <TableSearch
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
+                />
+                <Button
+                  onClick={handleTambahKategori}
+                  label="Tambah Kategori"
+                  icon={add}
+                  color="brown"
+                  id="tambah-kategori-button"
+                />
               </div>
 
               <div className="row mt-4 text-center">
