@@ -7,7 +7,12 @@ import brownDot from "../../../assets/images/Ellipse 150.svg";
 import orangeDot from "../../../assets/images/Ellipse 151.svg";
 
 const Transaction = ({ data }) => {
-  const statusCounts = {};
+  const statusCounts = {
+    Sukses: 0,
+    Dibatalkan: 0,
+    Menunggu: 0,
+    Dipesan: 0,
+  };
   data.forEach((item) => {
     const status = item.status;
     statusCounts[status] = (statusCounts[status] || 0) + 1;
