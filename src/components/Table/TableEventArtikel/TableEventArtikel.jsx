@@ -26,18 +26,10 @@ const TableEventArtikel = () => {
     });
   }, [currentPage, itemsPerPage]);
 
-  console.log(artikel);
-  console.log(loading);
-  console.log(error);
-
   const data = artikel?.data?.data;
-  console.log(data?.length);
-  console.log(data);
-  console.log(artikel?.data);
 
   // Menghitung jumlah halaman
   const totalPages = Math.ceil(artikel?.data?.total_data / itemsPerPage);
-  console.log(totalPages);
 
   // Mengubah halaman
   const goToPage = (page) => {

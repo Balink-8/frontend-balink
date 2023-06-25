@@ -48,7 +48,6 @@ const useApi = () => {
       setError(null);
       return result;
     } catch (error) {
-      console.log(error);
       setError(error);
       setResponse(null);
     } finally {

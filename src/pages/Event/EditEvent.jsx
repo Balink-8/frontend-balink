@@ -17,7 +17,7 @@ import Modal from "react-modal";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import add from "../../assets/icons/add.svg";
-import wisata from "../../assets/images/wisata.svg"
+import wisata from "../../assets/images/wisata.svg";
 
 const EditEvent = () => {
   const [values, setValues] = useState({
@@ -162,7 +162,6 @@ const EditEvent = () => {
         openModalGagal();
         console.error(error);
       });
-    console.log(values);
   };
 
   const onCancel = (e) => {
@@ -232,7 +231,10 @@ const EditEvent = () => {
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
                     {values.gambar ? (
-                      <img id="uploadedImage" src={file ? file : values.gambar} />
+                      <img
+                        id="uploadedImage"
+                        src={file ? file : values.gambar}
+                      />
                     ) : (
                       <img id="uploadedImage" src={wisata} />
                     )}
