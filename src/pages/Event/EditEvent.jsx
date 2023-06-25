@@ -17,6 +17,7 @@ import Modal from "react-modal";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import add from "../../assets/icons/add.svg";
+import wisata from "../../assets/images/wisata.svg"
 
 const EditEvent = () => {
   const [values, setValues] = useState({
@@ -230,7 +231,11 @@ const EditEvent = () => {
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
-                    <img id="uploadedImage" src={file ? file : values.gambar} />
+                    {values.gambar ? (
+                      <img id="uploadedImage" src={file ? file : values.gambar} />
+                    ) : (
+                      <img id="uploadedImage" src={wisata} />
+                    )}
                   </div>
                   <div className="d-flex justify-content-center">
                     <label htmlFor={"gambar"}>

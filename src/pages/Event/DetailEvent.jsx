@@ -17,6 +17,7 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
+import wisata from "../../assets/images/wisata.svg"
 
 const DetailEvent = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
@@ -127,7 +128,7 @@ const DetailEvent = () => {
                   <div className={styles.imgArea}>
                     <img
                       id="uploadedImage"
-                      src={event?.data?.gambar}
+                      src={wisata}
                       alt="event-img"
                     />
                   </div>

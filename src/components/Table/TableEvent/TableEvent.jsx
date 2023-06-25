@@ -17,6 +17,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
+import wisata from "../../../assets/images/wisata.svg"
 
 const TableEvent = () => {
   const navigate = useNavigate();
@@ -25,18 +26,17 @@ const TableEvent = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { response: event, loading, error, del, get } = useApi();
 
   useEffect(() => {
-    get(`/event?page=${currentPage}&limit=${itemsPerPage}`).catch((error) => {
+    get(
+      `/event?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
       console.log(error);
     });
   }, [currentPage, itemsPerPage]);
-
-  console.log(event);
-  console.log(loading);
-  console.log(error);
 
   const data = event?.data?.data;
   console.log(data?.length);
@@ -60,8 +60,8 @@ const TableEvent = () => {
   };
 
    // Menghitung jumlah halaman
-  const totalPages = Math.ceil(event?.data?.total_data / itemsPerPage);
-  console.log(totalPages);
+   const totalPages = Math.ceil(event?.data?.total_data / itemsPerPage);
+
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -124,20 +124,47 @@ const TableEvent = () => {
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/event?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  const handleSearchClick = () => {
+    get(
+      `/event?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
-            <div id="tambahEventFirst">
-              <Button
-                onClick={handleTambahEvent}
-                label="Tambah Event"
-                icon={add}
-                color="brown"
-              />
-            </div>
-
+          <div className="d-flex flex-row gap-3 ">
+            <TableSearch
+              onChange={handleSearchInputChange}
+              value={searchQuery}
+              onKeyDown={handleSearchInputKeyPress}
+              onClick={handleSearchClick}
+            />
+            <Button
+              onClick={handleTambahEvent}
+              label="Tambah Event"
+              icon={add}
+              color="brown"
+              id="tambah-event-button"
+            />
           </div>
           <EmptyTable />
         </div>
@@ -150,7 +177,12 @@ const TableEvent = () => {
           ) : (
             <div>
               <div className="d-flex justify-content-between">
-                <TableSearch />
+                <TableSearch
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
+                />
                 <div id="tambahEvent">
                   <Button
                     onClick={handleTambahEvent}
@@ -189,7 +221,7 @@ const TableEvent = () => {
                               className="p-3"
                               onClick={() => navigate(`/event/detail/${item.ID}`)}
                             >
-                              <img src={item.gambar} className={styles.image} />
+                              <img src={wisata} className={styles.image} />
                             </td>
                             <td
                               className="p-3"

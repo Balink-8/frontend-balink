@@ -249,18 +249,18 @@ const TambahEvent = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
-    // const reader = new FileReader();
+    const reader = new FileReader();
 
     // reader.onloadend = () => {
     //   const base64String = reader.result;
     //   localStorage.setItem("gambar", base64String);
     // };
 
-    // if (e.target.files[0]) {
-    //   reader.readAsDataURL(e.target.files[0]);
-    // }
-    // localStorage.setItem(e.target.name, e.target.files[0]);
-    // console.log(e.target.files)
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    localStorage.setItem(e.target.name, e.target.files[0]);
+    console.log(e.target.files)
   };
 
   // get artikel
