@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./NewArticles.module.css";
-import kulinerUbud from "../../../assets/images/kuliner-ubud.png";
 import SeeMore from "../../../elements/SeeMore/SeeMore";
+import defaultImg from "../../../assets/images/bg.jpg";
 import { useNavigate } from "react-router-dom";
 
 const NewArticles = ({ articles }) => {
@@ -38,8 +38,9 @@ const NewArticles = ({ articles }) => {
             <img
               id={`new-article-img-${index}`}
               className={styles.articlesImg}
-              src={kulinerUbud}
+              src={defaultImg}
               alt="article-img"
+              style={{ width: "40px", height: "40px" }}
             />
             <div
               id={`new-article-content-${index}`}

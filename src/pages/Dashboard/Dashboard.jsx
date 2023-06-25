@@ -102,7 +102,7 @@ const Dashboard = () => {
             <Statistics
               label="Ticket Terjual"
               total={event?.data.total_data}
-              newAmount="50"
+              newAmount="0"
               id="ticket-terjual"
             />
           </div>
@@ -113,7 +113,7 @@ const Dashboard = () => {
             <Statistics
               label="Barang Terjual"
               total={produk?.data.total_data}
-              newAmount="700"
+              newAmount="0"
               id="barang-terjual"
             />
           </div>

@@ -13,6 +13,7 @@ import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import Modal from "react-modal";
+import defaultImg from "../../assets/images/bg.jpg";
 
 const EditArtikel = () => {
   const { response: artikel, loading, error, get, put } = useApi();
@@ -133,7 +134,7 @@ const EditArtikel = () => {
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
-                    <img id="uploadedImage" src={file ? file : values.gambar} />
+                    <img id="uploadedImage" src={file ? file : defaultImg} />
                   </div>
                   <div className="d-flex justify-content-center">
                     <label htmlFor="gambar">

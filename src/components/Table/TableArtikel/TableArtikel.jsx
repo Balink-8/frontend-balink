@@ -17,6 +17,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
+import defaultImg from "../../../assets/images/bg.jpg";
 
 const TableArtikel = () => {
   const navigate = useNavigate();
@@ -227,7 +228,7 @@ const TableArtikel = () => {
                               }
                               id={`foto-cell`}
                             >
-                              <img src={item.gambar} className={styles.image} />
+                              <img src={defaultImg} className={styles.image} />
                             </td>
                             <td
                               className="p-3"
