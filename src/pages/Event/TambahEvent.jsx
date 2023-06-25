@@ -71,7 +71,6 @@ const TambahEvent = () => {
 
   const toggler = () => {
     toggle ? setToggle(false) : setToggle(true);
-    console.log(toggle);
   };
 
   const onSubmit = (e) => {
@@ -167,7 +166,6 @@ const TambahEvent = () => {
           openModalGagal();
           console.error(error);
         });
-      console.log(values);
     }
 
     localStorage.removeItem("artikel_id", values.artikel_id);
@@ -260,7 +258,6 @@ const TambahEvent = () => {
       reader.readAsDataURL(e.target.files[0]);
     }
     localStorage.setItem(e.target.name, e.target.files[0]);
-    console.log(e.target.files)
   };
 
   // get artikel
@@ -279,7 +276,6 @@ const TambahEvent = () => {
       });
   }, [localStorage.getItem("artikel_id")]);
 
-  console.log(localStorage.getItem("artikel_id"));
   const paragraph = artikel?.data?.deskripsi?.split("\n\n");
 
   // modal

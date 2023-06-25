@@ -72,7 +72,6 @@ const TambahProduk = () => {
 
     setErrors(newErrors);
 
-    console.log(newErrors);
     if (!Object.values(newErrors).some((error) => error)) {
       const harga = parseInt(values.harga);
       const stok = parseInt(values.stok);
@@ -98,7 +97,6 @@ const TambahProduk = () => {
       console.error(error);
     });
   }, []);
-  console.log(kategori?.data.data);
 
   const onReset = () => {
     setValues({
@@ -155,7 +153,6 @@ const TambahProduk = () => {
   };
 
   const getFile = (e) => {
-    console.log("random");
     setFile(URL.createObjectURL(e.target.files[0]));
     setValues({
       ...values,

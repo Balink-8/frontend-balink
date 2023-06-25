@@ -39,9 +39,6 @@ const TablePromo = () => {
   }, [currentPage, itemsPerPage]);
 
   const data = promo?.data?.data;
-  console.log(data?.length);
-  console.log(data);
-  console.log(promo?.data);
 
   const customStylesConfirmation = {
     content: {

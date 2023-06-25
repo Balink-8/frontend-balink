@@ -63,7 +63,6 @@ const EditProduk = () => {
       console.error(error);
     });
   }, []);
-  console.log(kategoriProduk);
 
   useEffect(() => {
     if (produk) {
@@ -77,8 +76,6 @@ const EditProduk = () => {
       });
     }
   }, [produk]);
-
-  console.log(values);
 
   const onSubmit = () => {
     put(`/produk/${id}`, values)

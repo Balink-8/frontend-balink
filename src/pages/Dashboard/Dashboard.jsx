@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 import Statistics from "../../components/Dashboard/Statistics/Statistics";
 import NewArticles from "../../components/Dashboard/NewArticles/NewArticles";
@@ -10,8 +10,43 @@ import OrderStatus from "../../components/Dashboard/OrderStatus/OrderStatus";
 import useApi from "../../utils/useApi";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
+import axios from "axios";
 
 const Dashboard = () => {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  let successCount = 0;
+
+  data.forEach((transaction) => {
+    if (transaction.status === "Sukses") {
+      successCount++;
+    }
+  });
+
+  console.log("Success Count:", successCount);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        "https://647ca813c0bae2880ad10a5f.mockapi.io/balink/transaksiProduk"
+      );
+
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const {
     response: user,
     loading: loadingUser,
@@ -71,15 +106,27 @@ const Dashboard = () => {
 
   return (
     <>
-      {loadingUser || loadingEvent || loadingProduk || loadingArtikel ? (
+      {loadingUser ||
+      loadingEvent ||
+      loadingProduk ||
+      loadingArtikel ||
+      loadingWebDashboard ||
+      loading ? (
         <Spinner />
-      ) : errorUser || errorEvent || errorProduk || errorArtikel ? (
+      ) : errorUser ||
+        errorEvent ||
+        errorProduk ||
+        errorArtikel ||
+        errorWebDashboard ||
+        error ? (
         <ErrorDisplay
           errorMessage={
             errorUser?.message ||
             errorEvent?.message ||
             errorProduk?.message ||
-            errorArtikel?.message
+            errorArtikel?.message ||
+            errorWebDashboard?.message ||
+            error?.message
           }
         />
       ) : (
@@ -101,7 +148,7 @@ const Dashboard = () => {
           >
             <Statistics
               label="Ticket Terjual"
-              total={event?.data.total_data}
+              total={successCount}
               newAmount="0"
               id="ticket-terjual"
             />
@@ -112,7 +159,7 @@ const Dashboard = () => {
           >
             <Statistics
               label="Barang Terjual"
-              total={produk?.data.total_data}
+              total={successCount}
               newAmount="0"
               id="barang-terjual"
             />
@@ -150,13 +197,13 @@ const Dashboard = () => {
             id="transactionsContainer"
             className={`${styles.transactionsContainer} ${styles.card}`}
           >
-            <Transaction />
+            <Transaction data={data} />
           </div>
           <div
             id="orderStatusContainer"
             className={`${styles.orderStatusContainer} ${styles.card}`}
           >
-            <OrderStatus />
+            <OrderStatus data={data} />
           </div>
           <div
             id="eventContainer"

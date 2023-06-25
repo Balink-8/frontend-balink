@@ -60,7 +60,6 @@ const TableProduk = () => {
   }, [currentPage, itemsPerPage]);
 
   const data = produk?.data?.data;
-  console.log(data);
 
   useEffect(() => {
     getKategori(`/kategori_produk`).catch((error) => {
