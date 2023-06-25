@@ -14,7 +14,7 @@ const Statistics = ({ id, label, total, newAmount }) => {
         {total}
       </h1>
       <p id={`${id}-new-amount`} className="body-small-reguler mb-0">
-        <span className={styles.spanGreen}>{newAmount}</span> Sebulan terakhir
+        <span className={styles.spanGreen}>+{newAmount}</span> Sebulan terakhir
       </p>
     </div>
   );
