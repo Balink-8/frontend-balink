@@ -5,8 +5,8 @@ import theater_comedy from "../../../assets/icons/theater_comedy.svg";
 import TableProdukDashboard from "../../Table/TableProdukDashboard/TableProdukDashboard";
 import TableEventDashboard from "../../Table/TableEventDashboard/TableEventDashboard";
 
-const OrderStatus = () => {
-  const [activeButton, setActiveButton] = useState("event");
+const OrderStatus = ({ data }) => {
+  const [activeButton, setActiveButton] = useState("produk");
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
@@ -204,26 +204,22 @@ const OrderStatus = () => {
           Status Order
         </h1>
         <Button
-          id="event-button"
-          label="Event"
-          color={activeButton === "event" ? "brown" : "white"}
-          icon={theater_comedy}
-          onClick={() => handleButtonClick("event")}
-        />
-        <Button
           id="produk-button"
           label="Produk"
           color={activeButton === "produk" ? "brown" : "white"}
           icon={local_mall}
           onClick={() => handleButtonClick("produk")}
         />
+        <Button
+          id="event-button"
+          label="Event"
+          color={activeButton === "event" ? "brown" : "white"}
+          icon={theater_comedy}
+          onClick={() => handleButtonClick("event")}
+        />
       </div>
-      {activeButton === "produk" && (
-        <TableProdukDashboard userDataProduk={userDataProduk} />
-      )}
-      {activeButton === "event" && (
-        <TableEventDashboard userDataEvent={userDataEvent} />
-      )}
+      {activeButton === "produk" && <TableProdukDashboard data={data} />}
+      {activeButton === "event" && <TableEventDashboard data={data} />}
     </div>
   );
 };
