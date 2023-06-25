@@ -185,6 +185,12 @@ const DetailEvent = () => {
                                   key={index}
                                   id={`articleDescription${index}`}
                                   className="body-small-regular"
+                                  style={{
+                                    maxWidth: "400px",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
                                 >
                                   {text}
                                 </p>
