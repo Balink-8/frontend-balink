@@ -25,10 +25,13 @@ const TablePromo = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  
   const { response: promo, loading, error, del, get } = useApi();
 
   useEffect(() => {
-    get(`/promo?page=${currentPage}&limit=${itemsPerPage}`).catch((error) => {
+    get(`/promo?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
       console.log(error);
     });
   }, [currentPage, itemsPerPage]);
@@ -58,9 +61,9 @@ const TablePromo = () => {
   const totalPages = Math.ceil(promo?.data?.total_data / itemsPerPage);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -123,21 +126,50 @@ const TablePromo = () => {
     });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/promo?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  const handleSearchClick = () => {
+    get(
+      `/promo?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
-        <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
-            <Button
-              onClick={handleTambahPromo}
-              label="Tambah Promo"
-              icon={add}
-              color="brown"
-              id="tambah-promo"
-            />
-          </div>
-          <EmptyTable />
+      <div className="d-flex flex-column justify-content-center align-items-between">
+        <div className="d-flex flex-row gap-3 ">
+          <TableSearch
+            onChange={handleSearchInputChange}
+            value={searchQuery}
+            onKeyDown={handleSearchInputKeyPress}
+            onClick={handleSearchClick}
+          />
+          <Button
+            onClick={handleTambahPromo}
+            label="Tambah Promo"
+            icon={add}
+            color="brown"
+            id="tambah-promo"
+          />
         </div>
+        <EmptyTable />
+      </div>
       ) : (
         <div>
           {loading ? (
@@ -147,7 +179,12 @@ const TablePromo = () => {
           ) : (
             <div>
               <div className="d-flex justify-content-between">
-                <TableSearch />
+                <TableSearch 
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
+                />
                 <div id="tambahPromo">
                   <Button
                     onClick={handleTambahPromo}
