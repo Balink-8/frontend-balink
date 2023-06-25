@@ -6,8 +6,29 @@ import redDot from "../../../assets/images/Ellipse 149.svg";
 import brownDot from "../../../assets/images/Ellipse 150.svg";
 import orangeDot from "../../../assets/images/Ellipse 151.svg";
 
-const Transaction = () => {
-  const series = [20, 15, 25, 40];
+const Transaction = ({ data }) => {
+  const statusCounts = {};
+  data.forEach((item) => {
+    const status = item.status;
+    statusCounts[status] = (statusCounts[status] || 0) + 1;
+  });
+
+  const totalCount = data.length;
+
+  const statusPercentages = {};
+  for (const status in statusCounts) {
+    const count = statusCounts[status];
+    const percentage = (count / totalCount) * 100;
+    statusPercentages[status] = percentage.toFixed(2); // Rounded to 2 decimal places
+  }
+
+  console.log(statusPercentages);
+  const series = [
+    statusPercentages["Sukses"],
+    statusPercentages["Dibatalkan"],
+    statusPercentages["Menunggu"],
+    statusPercentages["Dipesan"],
+  ].map(Number);
   const chartOptions = {
     labels: ["Sukses", "Dibatalkan", "Menunggu", "Dipesan"],
     dataLabels: {

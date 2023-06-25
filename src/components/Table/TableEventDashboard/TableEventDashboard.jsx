@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import styles from "./TableEventDashboard.module.css";
 import { useNavigate } from "react-router-dom";
 
-const TableEventDashboard = ({ userDataEvent }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-
+const TableEventDashboard = ({ data }) => {
   const navigate = useNavigate();
-
-  // Mendapatkan data yang ditampilkan pada halaman saat ini
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = userDataEvent.slice(indexOfFirstItem, indexOfLastItem);
+  const newestData = data.slice(-5);
 
   return (
     <div>
@@ -37,14 +30,16 @@ const TableEventDashboard = ({ userDataEvent }) => {
                 </tr>
               </thead>
               <tbody className={styles.tbody} id="tbody">
-                {currentItems.map((item, index) => (
+                {newestData.map((item, index) => (
                   <tr
                     className={styles.tableRow}
                     key={index}
-                    onClick={() => navigate("/transaksi/event/detail")}
+                    onClick={() =>
+                      navigate(`/transaksi/event/detail/${item.id}`)
+                    }
                   >
-                    <td className="p-3">{item.kodetransaksi}</td>
-                    <td className="p-3">{item.event}</td>
+                    <td className="p-3">{item.kodeTransaksi}</td>
+                    <td className="p-3">{item.namaProduct}</td>
                     <td
                       className={`p-3 title-small-semibold ${
                         styles.tableHeadRowBody
