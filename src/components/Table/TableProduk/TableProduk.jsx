@@ -9,7 +9,7 @@ import Edit from "../../../assets/icons/edit_square.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import Modal from "react-modal";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
@@ -18,6 +18,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
 import Spinner from "../../../components/Spinner/Spinner";
+import { formatCurrency } from "../../../utils/CurrencyFormatter";
 
 const TableProduk = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const TableProduk = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { response: produk, loading, error, del, get } = useApi();
   const {
@@ -134,17 +136,46 @@ const TableProduk = () => {
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/produk?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  const handleSearchClick = () => {
+    get(
+      `/produk?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
+          <div className="d-flex flex-row gap-3 ">
+            <TableSearch
+              onChange={handleSearchInputChange}
+              value={searchQuery}
+              onKeyDown={handleSearchInputKeyPress}
+              onClick={handleSearchClick}
+            />
             <Button
-              onClick={handleTambahArtikel}
-              label="Tambah Artikel"
+              onClick={handleTambahProduk}
+              label="Tambah Produk"
               icon={add}
               color="brown"
-              id="tambah-artikel-button"
+              id="tambah-produk-button"
             />
           </div>
           <EmptyTable />
@@ -158,7 +189,12 @@ const TableProduk = () => {
           ) : (
             <div>
               <div className="d-flex justify-content-between">
-                <TableSearch />
+                <TableSearch
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
+                />
 
                 <Button
                   onClick={handleTambahProduk}
@@ -222,7 +258,7 @@ const TableProduk = () => {
                                 navigate(`/produk/detail/${item.ID}`)
                               }
                             >
-                              {item.harga}
+                              {formatCurrency(item.harga)}
                             </td>
                             <td
                               className="p-3"

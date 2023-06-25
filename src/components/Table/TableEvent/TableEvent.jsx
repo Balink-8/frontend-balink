@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import Modal from "react-modal";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
 import close from "../../../assets/icons/close.svg";
@@ -17,6 +17,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
+import wisata from "../../../assets/images/wisata.svg"
 
 const TableEvent = () => {
   const navigate = useNavigate();
@@ -25,18 +26,17 @@ const TableEvent = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { response: event, loading, error, del, get } = useApi();
 
   useEffect(() => {
-    get(`/event?page=${currentPage}&limit=${itemsPerPage}`).catch((error) => {
+    get(
+      `/event?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
       console.log(error);
     });
   }, [currentPage, itemsPerPage]);
-
-  console.log(event);
-  console.log(loading);
-  console.log(error);
 
   const data = event?.data?.data;
   console.log(data?.length);
@@ -59,9 +59,9 @@ const TableEvent = () => {
     },
   };
 
+
    // Menghitung jumlah halaman
-  const totalPages = Math.ceil(event?.data?.total_data / itemsPerPage);
-  console.log(totalPages);
+   const totalPages = Math.ceil(event?.data?.total_data / itemsPerPage);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -92,7 +92,7 @@ const TableEvent = () => {
   const handleTambahEvent = () => {
     navigate("/event/tambah");
   };
-  
+
   const closeKonfirmasiModal = () => {
     setModalKonfirmasiIsOpen(false);
   };
@@ -124,20 +124,47 @@ const TableEvent = () => {
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/event?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  const handleSearchClick = () => {
+    get(
+      `/event?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
       {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
-          <div className="d-grid col-2 ms-auto">
-            <div id="tambahEventFirst">
-              <Button
-                onClick={handleTambahEvent}
-                label="Tambah Event"
-                icon={add}
-                color="brown"
-              />
-            </div>
-
+          <div className="d-flex flex-row gap-3 ">
+            <TableSearch
+              onChange={handleSearchInputChange}
+              value={searchQuery}
+              onKeyDown={handleSearchInputKeyPress}
+              onClick={handleSearchClick}
+            />
+            <Button
+              onClick={handleTambahEvent}
+              label="Tambah Event"
+              icon={add}
+              color="brown"
+              id="tambah-event-button"
+            />
           </div>
           <EmptyTable />
         </div>
@@ -150,7 +177,12 @@ const TableEvent = () => {
           ) : (
             <div>
               <div className="d-flex justify-content-between">
-                <TableSearch />
+                <TableSearch
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                  onKeyDown={handleSearchInputKeyPress}
+                  onClick={handleSearchClick}
+                />
                 <div id="tambahEvent">
                   <Button
                     onClick={handleTambahEvent}
@@ -174,8 +206,12 @@ const TableEvent = () => {
                             Foto
                           </th>
                           <th className={`p-3 ${styles.tableHeadRow}`}>Nama</th>
-                          <th className={`p-3 ${styles.tableHeadRow}`}>Deskripsi</th>
-                          <th className={`p-3 ${styles.tableHeadRow}`}>Tanggal</th>
+                          <th className={`p-3 ${styles.tableHeadRow}`}>
+                            Deskripsi
+                          </th>
+                          <th className={`p-3 ${styles.tableHeadRow}`}>
+                            Tanggal
+                          </th>
                           <th
                             className={`p-3 ${styles.roundedRightTop} ${styles.tableHeadRow}`}
                           ></th>
@@ -187,13 +223,17 @@ const TableEvent = () => {
                           <tr className={styles.tableRow} key={item.ID}>
                             <td
                               className="p-3"
-                              onClick={() => navigate(`/event/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/event/detail/${item.ID}`)
+                              }
                             >
-                              <img src={item.gambar} className={styles.image} />
+                              <img src={wisata} className={styles.image} />
                             </td>
                             <td
                               className="p-3"
-                              onClick={() => navigate(`/event/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/event/detail/${item.ID}`)
+                              }
                             >
                               {item.nama}
                             </td>
@@ -205,13 +245,17 @@ const TableEvent = () => {
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                               }}
-                              onClick={() => navigate(`/event/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/event/detail/${item.ID}`)
+                              }
                             >
                               {item.deskripsi}
                             </td>
                             <td
                               className="p-3"
-                              onClick={() => navigate(`/event/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/event/detail/${item.ID}`)
+                              }
                             >
                               {item.tanggal_mulai}
                             </td>
@@ -220,7 +264,9 @@ const TableEvent = () => {
                                 src={Edit}
                                 alt=""
                                 className={`${styles.actionButton} me-16`}
-                                onClick={() => navigate(`/event/edit/${item.ID}`)}
+                                onClick={() =>
+                                  navigate(`/event/edit/${item.ID}`)
+                                }
                                 id="edit-icon"
                               />
                               <img

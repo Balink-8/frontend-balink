@@ -9,7 +9,7 @@ import save from "../../assets/icons/save.svg";
 import add from "../../assets/icons/add.svg";
 import { Switch } from "antd";
 import Button from "../../elements/Button/Button";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-modal";
@@ -249,18 +249,18 @@ const TambahEvent = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
-    // const reader = new FileReader();
+    const reader = new FileReader();
 
     // reader.onloadend = () => {
     //   const base64String = reader.result;
     //   localStorage.setItem("gambar", base64String);
     // };
 
-    // if (e.target.files[0]) {
-    //   reader.readAsDataURL(e.target.files[0]);
-    // }
-    // localStorage.setItem(e.target.name, e.target.files[0]);
-    // console.log(e.target.files)
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    localStorage.setItem(e.target.name, e.target.files[0]);
+    console.log(e.target.files)
   };
 
   // get artikel
@@ -439,6 +439,12 @@ const TambahEvent = () => {
                               key={index}
                               id={`articleDescription${index}`}
                               className="body-small-regular"
+                              style={{
+                                maxWidth: "400px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
                             >
                               {text}
                             </p>
@@ -573,7 +579,6 @@ const TambahEvent = () => {
                     </div>
                   </div>
                 </div>
-              
               </div>
             </div>
           </div>

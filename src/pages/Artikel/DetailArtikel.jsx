@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DetailArtikel.module.css";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useParams } from "react-router-dom";
 import Button from "../../elements/Button/Button";
 import hapus from "../../assets/icons/delete.svg";
@@ -13,6 +13,7 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
+import defaultImg from "../../assets/images/bg.jpg";
 
 const DetailArtikel = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
@@ -95,7 +96,7 @@ const DetailArtikel = () => {
             <div className="d-flex justify-content-center align-items-center mb-24">
               <img
                 id="articleImage"
-                src={artikel?.data?.gambar}
+                src={defaultImg}
                 alt="article-img"
                 className={`${styles.imgArticle} w-25`}
               />

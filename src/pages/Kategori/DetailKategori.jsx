@@ -4,7 +4,7 @@ import Button from "../../elements/Button/Button";
 import edit from "../../assets/icons/edit_square_white.svg";
 import hapus from "../../assets/icons/delete.svg";
 import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import Modal from "react-modal";
@@ -12,7 +12,6 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
-
 
 const DetailKategori = () => {
   const navigate = useNavigate();
@@ -46,14 +45,14 @@ const DetailKategori = () => {
 
   const handleDeletePoduk = () => {
     del(`/kategori_produk/${id}`)
-    .then(() => {
-      openTerhapusModal();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
- 
+
   const closeKonfirmasiModal = () => {
     setModalKonfirmasiIsOpen(false);
   };
@@ -74,7 +73,6 @@ const DetailKategori = () => {
     setModalTerhapusIsOpen(false);
   };
 
-
   return (
     <div>
       {loading ? (
@@ -82,26 +80,24 @@ const DetailKategori = () => {
       ) : error ? (
         <ErrorDisplay errorMessage={error.message} />
       ) : (
+        <div className={styles.container} id="detailKategoriContentContainer">
+          <h1
+            className="headline-small-semibold mb-16"
+            id="detailKategoriTitle"
+          >
+            Detail Kategori
+          </h1>
+          <h4
+            className="title-large-semibold mb-24 mt-5"
+            id="detailNamaKategoriTitle"
+          >
+            {kategori_produk?.data?.nama}
+          </h4>
+          <p className="body-medium-regular" id="deskripsiDetail">
+            {kategori_produk?.data?.deskripsi}
+          </p>
 
-    <div className={styles.container} id="detailKategoriContentContainer">
-      <h1 
-        className="headline-small-semibold mb-16" 
-        id="detailKategoriTitle">
-          Detail Kategori
-        </h1>
-      <h4 
-        className="title-large-semibold mb-24 mt-5" 
-        id="detailNamaKategoriTitle">
-          {kategori_produk?.data?.nama}
-        </h4>
-      <p 
-        className="body-medium-regular"
-        id="deskripsiDetail">
-          {kategori_produk?.data?.deskripsi}
-      </p>
-      
-
-      <div className="d-flex justify-content-end gap-3 pt-5">
+          <div className="d-flex justify-content-end gap-3 pt-5">
             <div className="d-grid col-3">
               <Button
                 label="Hapus"
@@ -120,12 +116,12 @@ const DetailKategori = () => {
                 id="editButton"
               />
             </div>
+          </div>
         </div>
-    </div>
-    )}
+      )}
 
-    {/* Modal */}
-    <Modal
+      {/* Modal */}
+      <Modal
         isOpen={modalKonfirmasiIsOpen}
         onRequestClose={closeKonfirmasiModal}
         contentLabel="Confirmation Modal"
@@ -212,8 +208,6 @@ const DetailKategori = () => {
           </div>
         </div>
       </Modal>
-
-    
     </div>
   );
 };

@@ -8,7 +8,7 @@ import Edit from "../../../assets/icons/edit_square.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import Modal from "react-modal";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
@@ -17,6 +17,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
+import defaultImg from "../../../assets/images/bg.jpg";
 
 const TableArtikel = () => {
   const navigate = useNavigate();
@@ -227,7 +228,7 @@ const TableArtikel = () => {
                               }
                               id={`foto-cell`}
                             >
-                              <img src={item.gambar} className={styles.image} />
+                              <img src={defaultImg} className={styles.image} />
                             </td>
                             <td
                               className="p-3"
