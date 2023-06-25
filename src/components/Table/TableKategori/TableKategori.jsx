@@ -25,16 +25,20 @@ const TableKategori = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { response: kategori_produk, loading, error, del, get } = useApi();
 
   useEffect(() => {
-    get(`/kategori_produk?page=${currentPage}&limit=${itemsPerPage}`).catch((error) => {
+    get(
+      `/kategori_produk?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
       console.log(error);
     });
   }, [currentPage, itemsPerPage]);
 
   const data = kategori_produk?.data?.data;
+
   console.log(data?.length);
   console.log(data);
   console.log(kategori_produk?.data);
@@ -125,11 +129,40 @@ const TableKategori = () => {
       });
   };
 
+  const handleSearchInputChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      get(
+        `/kategori_produk?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+      ).catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  const handleSearchClick = () => {
+    get(
+      `/kategori_produk?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    ).catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <>
      {data?.length === 0 ? (
         <div className="d-flex flex-column justify-content-center">
           <div className="d-grid col-2 ms-auto">
+          <TableSearch
+              onChange={handleSearchInputChange}
+              value={searchQuery}
+              onKeyDown={handleSearchInputKeyPress}
+              onClick={handleSearchClick}
+            />
           <Button
             onClick={handleTambahKategori}
             label="Tambah Kategori"
@@ -149,7 +182,12 @@ const TableKategori = () => {
             ) : (
               <div>
                 <div className="d-flex justify-content-between">
-                  <TableSearch />
+                  <TableSearch
+                    onChange={handleSearchInputChange}
+                    value={searchQuery}
+                    onKeyDown={handleSearchInputKeyPress}
+                    onClick={handleSearchClick}
+                  />
                   <Button
                     onClick={handleTambahKategori}
                     label="Tambah Kategori"
