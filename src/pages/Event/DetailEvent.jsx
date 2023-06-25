@@ -17,7 +17,7 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
-import wisata from "../../assets/images/wisata.svg"
+import wisata from "../../assets/images/wisata.svg";
 
 const DetailEvent = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
@@ -72,7 +72,6 @@ const DetailEvent = () => {
       });
     }
   }, [event?.data.artikel_id]);
-  console.log(artikel);
 
   const handleDelete = (selectedId) => {
     del(`/event/${id}`)
@@ -125,11 +124,7 @@ const DetailEvent = () => {
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
-                    <img
-                      id="uploadedImage"
-                      src={wisata}
-                      alt="event-img"
-                    />
+                    <img id="uploadedImage" src={wisata} alt="event-img" />
                   </div>
                 </div>
               </div>

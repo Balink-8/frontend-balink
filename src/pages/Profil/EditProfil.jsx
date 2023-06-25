@@ -97,11 +97,8 @@ const EditProfil = () => {
     });
 
     setErrors(newErrors);
-    console.log(form);
-    console.log(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      console.log(form);
       put(`/admin`, form)
         .then(() => {
           navigate("/profile");
@@ -153,7 +150,6 @@ const EditProfil = () => {
         setIsApiCall(false);
         console.error(error);
       });
-    console.log(`profil : ${profil}`);
   }, [isApiCall]);
 
   return (

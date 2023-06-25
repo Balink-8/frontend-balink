@@ -51,8 +51,6 @@ const EditArtikel = () => {
     });
   }, []);
 
-  console.log(artikel?.data);
-
   useEffect(() => {
     if (artikel) {
       setValues({

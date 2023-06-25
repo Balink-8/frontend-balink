@@ -39,10 +39,6 @@ const TableKategori = () => {
 
   const data = kategori_produk?.data?.data;
 
-  console.log(data?.length);
-  console.log(data);
-  console.log(kategori_produk?.data);
-
   const customStylesConfirmation = {
     content: {
       top: "50%",
@@ -63,7 +59,6 @@ const TableKategori = () => {
   const totalPages = Math.ceil(
     kategori_produk?.data?.total_data / itemsPerPage
   );
-  console.log(totalPages);
 
   // Mendapatkan data yang ditampilkan pada halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;

@@ -73,7 +73,6 @@ const TambahPromo = () => {
           openModalGagal();
           console.error(error);
         });
-      console.log(values);
     }
   };
   const onReset = (e) => {

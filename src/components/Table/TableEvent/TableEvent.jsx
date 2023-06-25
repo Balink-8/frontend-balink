@@ -17,7 +17,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
-import wisata from "../../../assets/images/wisata.svg"
+import wisata from "../../../assets/images/wisata.svg";
 
 const TableEvent = () => {
   const navigate = useNavigate();
@@ -39,9 +39,6 @@ const TableEvent = () => {
   }, [currentPage, itemsPerPage]);
 
   const data = event?.data?.data;
-  console.log(data?.length);
-  console.log(data);
-  console.log(event?.data);
 
   const customStylesConfirmation = {
     content: {
@@ -59,9 +56,8 @@ const TableEvent = () => {
     },
   };
 
-
-   // Menghitung jumlah halaman
-   const totalPages = Math.ceil(event?.data?.total_data / itemsPerPage);
+  // Menghitung jumlah halaman
+  const totalPages = Math.ceil(event?.data?.total_data / itemsPerPage);
 
   // Mengubah halaman
   const goToPage = (page) => {
