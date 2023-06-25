@@ -9,7 +9,7 @@ import save from "../../assets/icons/save.svg";
 import add from "../../assets/icons/add.svg";
 import { Switch } from "antd";
 import Button from "../../elements/Button/Button";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-modal";
@@ -573,7 +573,6 @@ const TambahEvent = () => {
                     </div>
                   </div>
                 </div>
-              
               </div>
             </div>
           </div>

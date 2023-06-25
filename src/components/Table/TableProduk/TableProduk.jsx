@@ -9,7 +9,7 @@ import Edit from "../../../assets/icons/edit_square.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import Modal from "react-modal";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
@@ -18,6 +18,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
 import Spinner from "../../../components/Spinner/Spinner";
+import { formatCurrency } from "../../../utils/CurrencyFormatter";
 
 const TableProduk = () => {
   const navigate = useNavigate();
@@ -140,7 +141,7 @@ const TableProduk = () => {
         <div className="d-flex flex-column justify-content-center">
           <div className="d-grid col-2 ms-auto">
             <Button
-              onClick={handleTambahArtikel}
+              onClick={handleTambahProduk}
               label="Tambah Artikel"
               icon={add}
               color="brown"
@@ -222,7 +223,7 @@ const TableProduk = () => {
                                 navigate(`/produk/detail/${item.ID}`)
                               }
                             >
-                              {item.harga}
+                              {formatCurrency(item.harga)}
                             </td>
                             <td
                               className="p-3"

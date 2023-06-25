@@ -7,7 +7,7 @@ import Filefoto from "../../assets/icons/drive_folder_upload.svg";
 import Button from "../../elements/Button/Button";
 import cancel from "../../assets/icons/cancel.svg";
 import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";

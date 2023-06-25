@@ -4,7 +4,7 @@ import Button from "../../elements/Button/Button";
 import Hapus from "../../assets/icons/delete.svg";
 import Edit from "../../assets/icons/edit_square_white.svg";
 import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner/Spinner";
 import Modal from "react-modal";
@@ -13,6 +13,7 @@ import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
+import { formatCurrency } from "../../utils/CurrencyFormatter";
 
 const DetailProduk = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
@@ -131,7 +132,9 @@ const DetailProduk = () => {
                 </div>
                 <div className={styles.harga} id="harga">
                   <label className="body-medium-reguler">Harga Produk</label>
-                  <p className="title-medium-semibold">{produk?.data?.harga}</p>
+                  <p className="title-medium-semibold">
+                    {formatCurrency(produk?.data?.harga)}
+                  </p>
                 </div>
                 <div className={styles.stok} id="stok">
                   <label className="body-medium-reguler">Stok Produk</label>

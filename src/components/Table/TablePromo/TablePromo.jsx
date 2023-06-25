@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
 import add from "../../../assets/icons/add.svg";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import Modal from "react-modal";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
@@ -17,6 +17,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
+import { formatCurrency } from "../../../utils/CurrencyFormatter";
 
 const TablePromo = () => {
   const navigate = useNavigate();
@@ -26,11 +27,12 @@ const TablePromo = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [modalTerhapusIsOpen, setModalTerhapusIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const { response: promo, loading, error, del, get } = useApi();
 
   useEffect(() => {
-    get(`/promo?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
+    get(
+      `/promo?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}`
     ).catch((error) => {
       console.log(error);
     });
@@ -118,12 +120,12 @@ const TablePromo = () => {
 
   const handleDeletePromo = () => {
     del(`/promo/${selectedId}`)
-    .then(() => {
-      openTerhapusModal();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleSearchInputChange = (event) => {
@@ -152,24 +154,24 @@ const TablePromo = () => {
   return (
     <>
       {data?.length === 0 ? (
-      <div className="d-flex flex-column justify-content-center align-items-between">
-        <div className="d-flex flex-row gap-3 ">
-          <TableSearch
-            onChange={handleSearchInputChange}
-            value={searchQuery}
-            onKeyDown={handleSearchInputKeyPress}
-            onClick={handleSearchClick}
-          />
-          <Button
-            onClick={handleTambahPromo}
-            label="Tambah Promo"
-            icon={add}
-            color="brown"
-            id="tambah-promo"
-          />
+        <div className="d-flex flex-column justify-content-center align-items-between">
+          <div className="d-flex flex-row gap-3 ">
+            <TableSearch
+              onChange={handleSearchInputChange}
+              value={searchQuery}
+              onKeyDown={handleSearchInputKeyPress}
+              onClick={handleSearchClick}
+            />
+            <Button
+              onClick={handleTambahPromo}
+              label="Tambah Promo"
+              icon={add}
+              color="brown"
+              id="tambah-promo"
+            />
+          </div>
+          <EmptyTable />
         </div>
-        <EmptyTable />
-      </div>
       ) : (
         <div>
           {loading ? (
@@ -179,7 +181,7 @@ const TablePromo = () => {
           ) : (
             <div>
               <div className="d-flex justify-content-between">
-                <TableSearch 
+                <TableSearch
                   onChange={handleSearchInputChange}
                   value={searchQuery}
                   onKeyDown={handleSearchInputKeyPress}
@@ -209,21 +211,21 @@ const TablePromo = () => {
                           >
                             Nama Promo
                           </th>
-                          <th 
+                          <th
                             className={`p-3 ${styles.tableHeadRow}`}
                             id="deskripsi-header"
                           >
                             Deskripsi Promo
                           </th>
-                          <th 
+                          <th
                             className={`p-3 ${styles.tableHeadRow}`}
                             id="kode-header"
                           >
                             Kode Promo
                           </th>
-                          <th 
+                          <th
                             className={`p-3 ${styles.tableHeadRow}`}
-                          id="disc-header"
+                            id="disc-header"
                           >
                             Potongan Harga
                           </th>
@@ -237,7 +239,9 @@ const TablePromo = () => {
                           <tr className={styles.tableRow} key={item.ID}>
                             <td
                               className="p-3"
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="nama-cell"
                             >
                               {item.nama}
@@ -250,31 +254,39 @@ const TablePromo = () => {
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                               }}
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="deskripsi-cell"
                             >
                               {item.deskripsi}
                             </td>
                             <td
                               className="p-3 body-medium-semibold"
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="kode-cell"
                             >
                               {item.kode}
                             </td>
                             <td
                               className="p-3"
-                              onClick={() => navigate(`/promo/detail/${item.ID}`)}
+                              onClick={() =>
+                                navigate(`/promo/detail/${item.ID}`)
+                              }
                               id="disc-cell"
                             >
-                              {item.potongan_harga}
+                              {formatCurrency(item.potongan_harga)}
                             </td>
                             <td className="p-3">
                               <img
                                 src={edit}
                                 alt=""
                                 className={styles.actionButton}
-                                onClick={() => navigate(`/promo/edit/${item.ID}`)}
+                                onClick={() =>
+                                  navigate(`/promo/edit/${item.ID}`)
+                                }
                                 id="edit-icon"
                               />
                               <img
@@ -320,21 +332,23 @@ const TablePromo = () => {
                   </button>
 
                   {/* tombol halaman */}
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                    return (
-                      <button
-                        className={`${styles.paginationPage} me-1 ${
-                          currentPage === page && styles.active
-                        }`}
-                        key={page}
-                        onClick={() => goToPage(page)}
-                        disabled={currentPage === page}
-                        id={`pagination-page-${page}`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  })}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => {
+                      return (
+                        <button
+                          className={`${styles.paginationPage} me-1 ${
+                            currentPage === page && styles.active
+                          }`}
+                          key={page}
+                          onClick={() => goToPage(page)}
+                          disabled={currentPage === page}
+                          id={`pagination-page-${page}`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    }
+                  )}
 
                   {/* Tombol halaman berikutnya */}
                   <button
