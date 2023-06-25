@@ -5,7 +5,7 @@ import Button from "../../elements/Button/Button";
 import Edit from "../../assets/icons/edit_square_white.svg";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import Spinner from "../../components/Spinner/Spinner";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useNavigate } from "react-router-dom";
 
 const Profil = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DetailArtikel.module.css";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useParams } from "react-router-dom";
 import Button from "../../elements/Button/Button";
 import hapus from "../../assets/icons/delete.svg";

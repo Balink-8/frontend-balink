@@ -4,7 +4,7 @@ import Button from "../../elements/Button/Button";
 import edit from "../../assets/icons/edit_square_white.svg";
 import hapus from "../../assets/icons/delete.svg";
 import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import Modal from "react-modal";
@@ -12,6 +12,7 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
+import { formatCurrency } from "../../utils/CurrencyFormatter";
 
 const DetailPromo = () => {
   const navigate = useNavigate();
@@ -45,12 +46,12 @@ const DetailPromo = () => {
 
   const handleDeletePromo = () => {
     del(`/promo/${id}`)
-    .then(() => {
-      openTerhapusModal();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then(() => {
+        openTerhapusModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const closeKonfirmasiModal = () => {
@@ -96,7 +97,9 @@ const DetailPromo = () => {
 
             <div id="potonganHarga">
               <p className="body-small-regular">Potongan Harga</p>
-              <p className="body-medium-semibold">{promo?.data?.potongan_harga}</p>
+              <p className="body-medium-semibold">
+                {formatCurrency(promo?.data?.potongan_harga)}
+              </p>
             </div>
           </div>
 

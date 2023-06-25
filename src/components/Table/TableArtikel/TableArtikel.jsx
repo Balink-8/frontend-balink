@@ -8,7 +8,7 @@ import Edit from "../../../assets/icons/edit_square.svg";
 import Delete from "../../../assets/icons/deleteRed.svg";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import Modal from "react-modal";
 import konfirmasi from "../../../assets/images/konfirmasi.png";

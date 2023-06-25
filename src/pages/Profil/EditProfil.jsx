@@ -9,7 +9,7 @@ import Input from "../../elements/Input/Input";
 import Textarea from "../../elements/Textarea/Textarea";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useNavigate } from "react-router-dom";
 
 const EditProfil = () => {

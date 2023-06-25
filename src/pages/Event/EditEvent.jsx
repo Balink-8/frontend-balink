@@ -10,7 +10,7 @@ import edit from "../../assets/icons/edit_square_white.svg";
 import Button from "../../elements/Button/Button";
 import { Switch } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import Modal from "react-modal";
@@ -120,7 +120,7 @@ const EditEvent = () => {
         : event?.data.tanggal_mulai,
       tanggal_selesai: localStorage.getItem("tanggal_selesai")
         ? localStorage.getItem("tanggal_selesai")
-        : event?.data.tanggal_selesai,  
+        : event?.data.tanggal_selesai,
       harga_tiket: localStorage.getItem("harga_tiket")
         ? localStorage.getItem("harga_tiket")
         : event?.data.harga_tiket,

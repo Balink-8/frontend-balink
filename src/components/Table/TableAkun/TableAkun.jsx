@@ -14,7 +14,7 @@ import close from "../../../assets/icons/close.svg";
 import check from "../../../assets/icons/check.svg";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
 import deleteImg from "../../../assets/images/delete.png";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import Spinner from "../../../components/Spinner/Spinner";
 import EmptyTable from "../../EmptyTable/EmptyTable";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
