@@ -58,11 +58,11 @@ function App() {
             <Route path="/kategori/detail/:id" element={<DetailKategori />} />
             <Route path="/transaksi" element={<Transaksi />} />
             <Route
-              path="/transaksi/event/detail"
+              path="/transaksi/event/detail/:id"
               element={<DetailEventTransaksi />}
             />
             <Route
-              path="/transaksi/produk/detail"
+              path="/transaksi/produk/detail/:id"
               element={<DetailProdukTransaksi />}
             />
             <Route path="/promo" element={<Promo />} />
