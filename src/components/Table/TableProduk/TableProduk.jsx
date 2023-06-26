@@ -18,6 +18,7 @@ import check from "../../../assets/icons/check.svg";
 import deleteImg from "../../../assets/images/delete.png";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
 import Spinner from "../../../components/Spinner/Spinner";
+import Khas from '../../../assets/images/Khas.jpg'
 
 const TableProduk = () => {
   const navigate = useNavigate();
@@ -231,8 +232,8 @@ const TableProduk = () => {
                                 navigate(`/produk/detail/${item.ID}`)
                               }
                             >
-                              <img
-                                src={item.foto}
+                              <img  
+                                src={Khas}
                                 className={styles.image}
                                 alt="produk-img"
                               />

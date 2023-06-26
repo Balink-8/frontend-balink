@@ -12,6 +12,7 @@ import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import Modal from "react-modal";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
+import Khas from '../../assets/images/Khas.jpg'
 
 const EditProduk = () => {
   const [modalSuksesIsOpen, setModalSuksesIsOpen] = useState(false);
@@ -56,7 +57,7 @@ const EditProduk = () => {
   useEffect(() => {
     get(`/produk/${id}`).catch((error) => {
       // Handle error
-      console.error(error);
+      console.error(error); 
     });
     getArtikel(`/kategori_produk`).catch((error) => {
       // Handle error
@@ -71,7 +72,7 @@ const EditProduk = () => {
         foto: produk?.data.foto,
         nama: produk?.data.nama,
         deskripsi: produk?.data.deskripsi,
-        kategori_id: parseInt(produk?.data.kategori_id),
+        kategori_id:produk?.data.kategori_id,
         harga: produk?.data.harga,
         stok: produk?.data.stok,
       });
@@ -81,7 +82,13 @@ const EditProduk = () => {
   console.log(values);
 
   const onSubmit = () => {
-    put(`/produk/${id}`, values)
+    const harga = parseInt(values.harga)
+    const stok = parseInt(values.stok)
+    put(`/produk/${id}`, {
+      ...values,
+      harga: harga,
+      stok: stok
+    })
       .then(() => {
         openModalSukses();
       })
@@ -152,33 +159,15 @@ const EditProduk = () => {
                   foto. Pilih foto anda yang menarik agar pembeli lebih tertarik{" "}
                 </p>
               </div>
-              <div className={styles.sideGambar}>
+              <div className={styles.sideGambar}> 
                 <div className={styles.boxImage}>
-                  <img src={file && file} className={styles.imageProduk} />
-                  <div className={styles.gunung}>
-                    <img
-                      src={!file ? Gunung : ""}
-                      className={styles.imgGunung}
-                    />
-                  </div>
+                  <img src={!file ? Khas : file} className={styles.imageProduk} />           
                 </div>
                 <div className={styles.boxImage}>
-                  <img src={file} className={styles.imageProduk} />
-                  <div className={styles.gunung}>
-                    <img
-                      src={!file ? Gunung : ""}
-                      className={styles.imgGunung}
-                    />
-                  </div>
+                   <img src={!file ? Khas : file} className={styles.imageProduk} />                 
                 </div>
                 <div className={styles.boxImage}>
-                  <img src={file} className={styles.imageProduk} />
-                  <div className={styles.gunung}>
-                    <img
-                      src={!file ? Gunung : ""}
-                      className={styles.imgGunung}
-                    />
-                  </div>
+                   <img src={!file ? Khas : file} className={styles.imageProduk} />               
                 </div>
 
                 <div className={styles.parentBoxFile}>

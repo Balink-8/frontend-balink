@@ -184,7 +184,7 @@ const TambahProduk = () => {
               </div>
             </div>
             <div className={styles.boxImage}>
-              <img src={file} className={styles.imageProduk} />
+              <img src={file == values.foto ? "" : file} className={styles.imageProduk} />
               <div className={styles.gunung}>
                 <img src={!file ? Gunung : ""} className={styles.imgGunung} />
               </div>
