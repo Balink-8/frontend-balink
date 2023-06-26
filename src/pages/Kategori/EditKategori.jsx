@@ -52,8 +52,8 @@ const EditKategori = () => {
   useEffect(() => {
     if (kategori_produk) {
       setValues({
-        nama: kategori_produk.nama,
-        deskripsi: kategori_produk.deskripsi,
+        nama: kategori_produk?.data.nama,
+        deskripsi: kategori_produk?.data.deskripsi,
       });
     }
   }, [kategori_produk]);
