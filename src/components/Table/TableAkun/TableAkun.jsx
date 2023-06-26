@@ -14,10 +14,11 @@ import close from "../../../assets/icons/close.svg";
 import check from "../../../assets/icons/check.svg";
 import konfirmasi from "../../../assets/images/konfirmasi.png";
 import deleteImg from "../../../assets/images/delete.png";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import Spinner from "../../../components/Spinner/Spinner";
 import EmptyTable from "../../EmptyTable/EmptyTable";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
+import avatar from "../../../assets/images/young_bearded_man_with_striped_shirt1.png";
 
 const TableAkun = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -325,7 +326,7 @@ const TableAkun = () => {
                       <div>
                         <div className="d-flex justify-content-between align-items-start">
                           <img
-                            src={selectedItem.foto_profile}
+                            src={avatar}
                             alt="avatar-img"
                             className={styles.avatar}
                           />

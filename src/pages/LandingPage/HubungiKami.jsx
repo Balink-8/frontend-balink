@@ -1,44 +1,42 @@
 import React, { useState } from "react";
-import styles from './LandingPage.module.css'
-import balink from "../../assets/assetsLandingPage/balink.svg"
-import whatsapp from "../../assets/assetsLandingPage/whatsapp.svg"
-import instagram from "../../assets/assetsLandingPage/instagram.svg"
-import email from "../../assets/assetsLandingPage/email.svg"
-import gps from "../../assets/assetsLandingPage/gps.svg"
-import call from "../../assets/assetsLandingPage/call.svg"
-import at from "../../assets/assetsLandingPage/at_email.svg"
-import maps from "../../assets/assetsLandingPage/maps.svg"
+import styles from "./LandingPage.module.css";
+import balink from "../../assets/assetsLandingPage/balink.svg";
+import whatsapp from "../../assets/assetsLandingPage/whatsapp.svg";
+import instagram from "../../assets/assetsLandingPage/instagram.svg";
+import email from "../../assets/assetsLandingPage/email.svg";
+import gps from "../../assets/assetsLandingPage/gps.svg";
+import call from "../../assets/assetsLandingPage/call.svg";
+import at from "../../assets/assetsLandingPage/at_email.svg";
+import maps from "../../assets/assetsLandingPage/maps.svg";
 import { HashLink as Link } from "react-router-hash-link";
 import Input from "../../elements/Input/Input";
 import Textarea from "../../elements/Textarea/Textarea";
 
 const HubungiKami = () => {
-    const [values, setValues] = useState({
-        namaDepan: "",
-        namaBelakang: "",
-        email: "",
-        pesan: "",
-      });
+  const [values, setValues] = useState({
+    namaDepan: "",
+    namaBelakang: "",
+    email: "",
+    pesan: "",
+  });
 
-      const onSubmit = (e) => {
-        setValues({
-          namaDepan: "",
-          namaBelakang: "",
-          email: "",
-          pesan: "",
-        });
-        console.log(values);
-      };
-    
-      const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        setValues({
-          ...values,
-          [name]: value,
-        });
-      };
-      
-      
+  const onSubmit = (e) => {
+    setValues({
+      namaDepan: "",
+      namaBelakang: "",
+      email: "",
+      pesan: "",
+    });
+  };
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
   return (
     <div>
       {/* header */}
@@ -58,12 +56,12 @@ const HubungiKami = () => {
               </Link>
             </li>
             <li className="mx-8">
-              <Link to='/' className={styles.link} smooth>
+              <Link to="/" className={styles.link} smooth>
                 Tentang Kami
               </Link>
             </li>
             <li className="mx-8">
-              <Link to='/' className={styles.link} smooth>
+              <Link to="/" className={styles.link} smooth>
                 Download
               </Link>
             </li>
@@ -79,104 +77,116 @@ const HubungiKami = () => {
       {/* jumbotron */}
       <div className={styles.bgContact}>
         <div className="container py-5">
-            <div className="px-4 py-5 my-5 text-center">
-                <h1 className={`display-large-semibold ${styles.textJumbotron}`}>Hubungi Kami</h1>
-            </div>
+          <div className="px-4 py-5 my-5 text-center">
+            <h1 className={`display-large-semibold ${styles.textJumbotron}`}>
+              Hubungi Kami
+            </h1>
+          </div>
         </div>
       </div>
 
       {/* hubungikami */}
       <div className="card-group">
         <div className="card">
-            <img src={maps} alt="maps" />
+          <img src={maps} alt="maps" />
         </div>
 
         <div className="card">
-            <div className={styles.bgTemui}>
-                <div className="px-4 py-5 my-5 text-center">
-                    <h5 className="pt-5 display-small-semibold">Temui Kami</h5>
-                    <div className="py-5">
-                        <p className="body-large-regular"> <img src={call} alt="call" /> +62 81234567891</p>
-                        <p className="body-large-regular"> <img src={at} alt="at_email" />Balink@gmail.com</p>
-                    </div>
+          <div className={styles.bgTemui}>
+            <div className="px-4 py-5 my-5 text-center">
+              <h5 className="pt-5 display-small-semibold">Temui Kami</h5>
+              <div className="py-5">
+                <p className="body-large-regular">
+                  {" "}
+                  <img src={call} alt="call" /> +62 81234567891
+                </p>
+                <p className="body-large-regular">
+                  {" "}
+                  <img src={at} alt="at_email" />
+                  Balink@gmail.com
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="ps-4 my-5">
+            <h5 className="display-small-semibold"> Lemparkan Kami </h5>
+            <form className="needs-validation" noValidate="">
+              <div className="col-11 mt-3">
+                <div className={styles.inputBox}>
+                  <Input
+                    type={"text"}
+                    placeholder={"Masukkan nama depan"}
+                    className={styles.input}
+                    id={"namaDepan"}
+                    name={"namaDepan"}
+                    value={values.namaDepan}
+                    onChange={handleOnChange}
+                    label={"Nama Depan"}
+                  />
                 </div>
-            </div>
-        </div>
+              </div>
 
-        <div className="card">
-            <div className="ps-4 my-5">
-                <h5 className="display-small-semibold"> Lemparkan Kami </h5>
-                <form className="needs-validation" noValidate="">
-                    <div className="col-11 mt-3">
-                        <div className={styles.inputBox}>
-                            <Input
-                                type={"text"}
-                                placeholder={"Masukkan nama depan"}
-                                className={styles.input}
-                                id={"namaDepan"}
-                                name={"namaDepan"}
-                                value={values.namaDepan}
-                                onChange={handleOnChange}
-                                label={"Nama Depan"}
-                            />
-                        </div>
-                    </div>
+              <div className="col-11 mt-3">
+                <div className={styles.inputBox}>
+                  <Input
+                    type={"text"}
+                    placeholder={"Masukkan nama belakang"}
+                    className={styles.input}
+                    id={"namaBelakang"}
+                    name={"namaBelakang"}
+                    value={values.namaBelakang}
+                    onChange={handleOnChange}
+                    label={"Nama Belakang"}
+                  />
+                </div>
+              </div>
 
-                    <div className="col-11 mt-3">
-                        <div className={styles.inputBox}>
-                            <Input
-                                type={"text"}
-                                placeholder={"Masukkan nama belakang"}
-                                className={styles.input}
-                                id={"namaBelakang"}
-                                name={"namaBelakang"}
-                                value={values.namaBelakang}
-                                onChange={handleOnChange}
-                                label={"Nama Belakang"}
-                            />
-                        </div>
-                    </div>
+              <div className="col-11 mt-3">
+                <div className={styles.inputBox}>
+                  <Input
+                    type={"email"}
+                    placeholder={"Masukkan email"}
+                    className={styles.input}
+                    id={"email"}
+                    name={"email"}
+                    value={values.email}
+                    onChange={handleOnChange}
+                    label={"Email"}
+                  />
+                </div>
+              </div>
 
-                    <div className="col-11 mt-3">
-                        <div className={styles.inputBox}>
-                            <Input
-                                type={"email"}
-                                placeholder={"Masukkan email"}
-                                className={styles.input}
-                                id={"email"}
-                                name={"email"}
-                                value={values.email}
-                                onChange={handleOnChange}
-                                label={"Email"}
-                            />
-                        </div>
-                    </div>
+              <div className="col-11 mt-3">
+                <div className={styles.inputBox}>
+                  <label className={styles.inputTitle}> Pesan </label>
+                  <Textarea
+                    rows={2}
+                    placeholder={"Tuliskan Pesan"}
+                    className={styles.input}
+                    id={"pesan"}
+                    name={"pesan"}
+                    value={values.pesan}
+                    onChange={handleOnChange}
+                  />
+                </div>
+              </div>
 
-                    <div className="col-11 mt-3">
-                        <div className={styles.inputBox}>
-                            <label className={styles.inputTitle}> Pesan </label>
-                            <Textarea
-                                rows={2}
-                                placeholder={"Tuliskan Pesan"}
-                                className={styles.input}
-                                id={"pesan"}
-                                name={"pesan"}
-                                value={values.pesan}
-                                onChange={handleOnChange}
-                            />
-                        </div>
-                    </div>
-
-                    <div className='mt-3'>
-                        <button type="button" onClick={onSubmit} className={styles.buttonKirim}>
-                            Kirim
-                        </button>
-                    </div>
-                </form>
-            </div>
+              <div className="mt-3">
+                <button
+                  type="button"
+                  onClick={onSubmit}
+                  className={styles.buttonKirim}
+                >
+                  Kirim
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-
 
       {/* footer */}
       <footer className={`${styles.bgFooter} ${styles.textFooter}`}>

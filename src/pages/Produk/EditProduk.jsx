@@ -4,7 +4,7 @@ import Gunung from "../../assets/icons/plain-triangle.png";
 import Cancel from "../../assets/icons/cancel.svg";
 import save from "../../assets/icons/save.svg";
 import Button from "../../elements/Button/Button";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner/Spinner";
@@ -64,7 +64,6 @@ const EditProduk = () => {
       console.error(error);
     });
   }, []);
-  console.log(kategoriProduk);
 
   useEffect(() => {
     if (produk) {
@@ -78,8 +77,6 @@ const EditProduk = () => {
       });
     }
   }, [produk]);
-
-  console.log(values);
 
   const onSubmit = () => {
     const harga = parseInt(values.harga)

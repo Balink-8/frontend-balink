@@ -10,14 +10,14 @@ import edit from "../../assets/icons/edit_square_white.svg";
 import Button from "../../elements/Button/Button";
 import { Switch } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import Spinner from "../../components/Spinner/Spinner";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
 import Modal from "react-modal";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import add from "../../assets/icons/add.svg";
-import wisata from "../../assets/images/wisata.svg"
+import wisata from "../../assets/images/wisata.svg";
 
 const EditEvent = () => {
   const [values, setValues] = useState({
@@ -120,7 +120,7 @@ const EditEvent = () => {
         : event?.data.tanggal_mulai,
       tanggal_selesai: localStorage.getItem("tanggal_selesai")
         ? localStorage.getItem("tanggal_selesai")
-        : event?.data.tanggal_selesai,  
+        : event?.data.tanggal_selesai,
       harga_tiket: localStorage.getItem("harga_tiket")
         ? localStorage.getItem("harga_tiket")
         : event?.data.harga_tiket,
@@ -162,7 +162,6 @@ const EditEvent = () => {
         openModalGagal();
         console.error(error);
       });
-    console.log(values);
   };
 
   const onCancel = (e) => {
@@ -232,7 +231,10 @@ const EditEvent = () => {
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
                     {values.gambar ? (
-                      <img id="uploadedImage" src={file ? file : values.gambar} />
+                      <img
+                        id="uploadedImage"
+                        src={file ? file : values.gambar}
+                      />
                     ) : (
                       <img id="uploadedImage" src={wisata} />
                     )}
@@ -325,6 +327,12 @@ const EditEvent = () => {
                                   key={index}
                                   id={`articleDescription${index}`}
                                   className="body-small-regular"
+                                  style={{
+                                    maxWidth: "400px",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
                                 >
                                   {text}
                                 </p>

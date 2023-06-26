@@ -5,7 +5,7 @@ import Textarea from "../../elements/Textarea/Textarea";
 import reset from "../../assets/icons/restart_alt.svg";
 import save from "../../assets/icons/save.svg";
 import Button from "../../elements/Button/Button";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useNavigate } from "react-router-dom";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
@@ -120,12 +120,16 @@ const TambahKategori = () => {
 
   return (
     <div id="tambahKategoriContainer" className={styles.tambahEventContainer}>
-      <h1 id="tambahKategoriTitle" className="headline-small-semibold">Tambah Kategori Baru</h1>
+      <h1 id="tambahKategoriTitle" className="headline-small-semibold">
+        Tambah Kategori Baru
+      </h1>
 
       <div className="row">
         <div className="mt-5">
           <div className={styles.sideTopParent} id="nama-kategori">
-            <h2 id="namaKategoriTitle" className="title-large-semibold" >Nama Kategori</h2>
+            <h2 id="namaKategoriTitle" className="title-large-semibold">
+              Nama Kategori
+            </h2>
             <p className={styles.info}>Wajib</p>
           </div>
           <div>
@@ -151,7 +155,9 @@ const TambahKategori = () => {
 
         <div className="mt-5" id="deskripsi-kategori">
           <div className={styles.sideTopParent}>
-            <h2 id="tambahdeskripsiTitle" className="title-large-semibold">Deskripsi Kategori</h2>
+            <h2 id="tambahdeskripsiTitle" className="title-large-semibold">
+              Deskripsi Kategori
+            </h2>
             <p className={styles.info}>Wajib</p>
           </div>
           <div>
@@ -192,25 +198,27 @@ const TambahKategori = () => {
       {/* button */}
       <div className="d-flex justify-content-end align-items-center gap-3 pt-5">
         <div className="d-grid col-3 ">
-          <Button 
-          id="resetButton"
-          label="Reset" 
-          color="white" 
-          icon={reset} 
-          onClick={onReset} />
+          <Button
+            id="resetButton"
+            label="Reset"
+            color="white"
+            icon={reset}
+            onClick={onReset}
+          />
         </div>
         <div className="d-grid col-3 ">
-          <Button 
-          id="submitButton"
-          label="Simpan" 
-          color="brown" 
-          icon={save} 
-          onClick={onSubmit} />
+          <Button
+            id="submitButton"
+            label="Simpan"
+            color="brown"
+            icon={save}
+            onClick={onSubmit}
+          />
         </div>
       </div>
 
-       {/* Modal */}
-        <Modal
+      {/* Modal */}
+      <Modal
         isOpen={modalSuksesIsOpen}
         onRequestClose={closeModalSukses}
         contentLabel="Success Modal"
@@ -239,40 +247,37 @@ const TambahKategori = () => {
             </p>
           </div>
         </div>
-        </Modal>
-        <Modal
-          isOpen={modalGagalIsOpen}
-          onRequestClose={closeModalGagal}
-          contentLabel="Fail Modal"
-          style={customStylesConfirmation}
+      </Modal>
+      <Modal
+        isOpen={modalGagalIsOpen}
+        onRequestClose={closeModalGagal}
+        contentLabel="Fail Modal"
+        style={customStylesConfirmation}
+      >
+        <div
+          id="modalGagalContainer"
+          className={`d-flex justify-content-center align-items-center`}
         >
           <div
-            id="modalGagalContainer"
-            className={`d-flex justify-content-center align-items-center`}
+            id="modalGagalContent"
+            className={`d-flex flex-column justify-content-center align-items-center`}
           >
-            <div
-              id="modalGagalContent"
-              className={`d-flex flex-column justify-content-center align-items-center`}
-            >
-              <img
-                id="modalGagalLogo"
-                src={ModalGagalLogo}
-                alt="success"
-                className="mb-16"
-              />
-              <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
-                Gagal Disimpan
-              </h4>
-              <p id="modalGagalText" className="body-small-regular mb-16">
-                Data yang anda buat Gagal disimpan
-              </p>
-            </div>
+            <img
+              id="modalGagalLogo"
+              src={ModalGagalLogo}
+              alt="success"
+              className="mb-16"
+            />
+            <h4 id="modalGagalTitle" className="title-large-semibold mb-16">
+              Gagal Disimpan
+            </h4>
+            <p id="modalGagalText" className="body-small-regular mb-16">
+              Data yang anda buat Gagal disimpan
+            </p>
           </div>
-        </Modal>
-    
+        </div>
+      </Modal>
     </div>
-
-    
   );
 };
 

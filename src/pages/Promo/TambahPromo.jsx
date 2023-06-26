@@ -5,7 +5,7 @@ import Textarea from "../../elements/Textarea/Textarea";
 import Button from "../../elements/Button/Button";
 import restart from "../../assets/icons/restart_alt.svg";
 import save from "../../assets/icons/save.svg";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useNavigate } from "react-router-dom";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
@@ -61,19 +61,18 @@ const TambahPromo = () => {
     setErrors(newErrors);
 
     if (!Object.values(newErrors).some((error) => error)) {
-      const potongan_harga = parseInt(values.potongan_harga)
+      const potongan_harga = parseInt(values.potongan_harga);
       post("/promo", {
-        ...values, 
-        potongan_harga: potongan_harga
+        ...values,
+        potongan_harga: potongan_harga,
       })
-      .then(() => {
-        openModalSukses();
-      })
-      .catch((error) => {
-        openModalGagal();
-        console.error(error);
-      });
-      console.log(values)
+        .then(() => {
+          openModalSukses();
+        })
+        .catch((error) => {
+          openModalGagal();
+          console.error(error);
+        });
     }
   };
   const onReset = (e) => {
@@ -279,12 +278,12 @@ const TambahPromo = () => {
           />
         </div>
         <div className="d-grid col-3">
-          <Button 
+          <Button
             id="simpan"
-            label="Simpan" 
-            color="brown" 
-            icon={save} 
-            onClick={onSubmit} 
+            label="Simpan"
+            color="brown"
+            icon={save}
+            onClick={onSubmit}
           />
         </div>
       </div>

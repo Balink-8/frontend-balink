@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./DetailEvent.module.css";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import { useNavigate, useParams } from "react-router-dom";
 import info from "../../assets/icons/language.svg";
 import lokasi from "../../assets/icons/location_on.svg";
@@ -17,7 +17,7 @@ import konfirmasi from "../../assets/images/konfirmasi.png";
 import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
-import wisata from "../../assets/images/wisata.svg"
+import wisata from "../../assets/images/wisata.svg";
 
 const DetailEvent = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
@@ -30,7 +30,6 @@ const DetailEvent = () => {
     error: artikelerror,
     get: getartikel,
   } = useApi();
-
 
   const navigate = useNavigate();
 
@@ -73,7 +72,6 @@ const DetailEvent = () => {
       });
     }
   }, [event?.data.artikel_id]);
-  console.log(artikel);
 
   const handleDelete = (selectedId) => {
     del(`/event/${id}`)
@@ -126,11 +124,7 @@ const DetailEvent = () => {
                 {/* upload foto */}
                 <div className={styles.containerEvent}>
                   <div className={styles.imgArea}>
-                    <img
-                      id="uploadedImage"
-                      src={wisata}
-                      alt="event-img"
-                    />
+                    <img id="uploadedImage" src={wisata} alt="event-img" />
                   </div>
                 </div>
               </div>
@@ -185,6 +179,12 @@ const DetailEvent = () => {
                                   key={index}
                                   id={`articleDescription${index}`}
                                   className="body-small-regular"
+                                  style={{
+                                    maxWidth: "400px",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
                                 >
                                   {text}
                                 </p>
@@ -207,7 +207,10 @@ const DetailEvent = () => {
 
                     <div className="mt-24">
                       <img src={link} alt="link" />
-                      <span className="body-medium-semibold"> Link Google Maps</span>
+                      <span className="body-medium-semibold">
+                        {" "}
+                        Link Google Maps
+                      </span>
                       <p className={`body-medium-regular`} id="linkLokasi">
                         {event?.data?.link_lokasi}
                       </p>
@@ -216,7 +219,10 @@ const DetailEvent = () => {
                     <div className="row g-2">
                       <div className="mt-24 col-md-6">
                         <img src={waktu} alt="waktu" />
-                        <span className="body-medium-semibold"> Tanggal Event Mulai</span>
+                        <span className="body-medium-semibold">
+                          {" "}
+                          Tanggal Event Mulai
+                        </span>
                         <p className={`body-medium-regular`} id="tanggalMulai">
                           {event?.data?.tanggal_mulai}
                         </p>
@@ -224,8 +230,14 @@ const DetailEvent = () => {
 
                       <div className="mt-24 col-md-6">
                         <img src={waktu} alt="waktu" />
-                        <span className="body-medium-semibold"> Tanggal Event Selesai</span>
-                        <p className={`body-medium-regular`} id="tanggalSelesai">
+                        <span className="body-medium-semibold">
+                          {" "}
+                          Tanggal Event Selesai
+                        </span>
+                        <p
+                          className={`body-medium-regular`}
+                          id="tanggalSelesai"
+                        >
                           {event?.data?.tanggal_selesai}
                         </p>
                       </div>
@@ -234,7 +246,10 @@ const DetailEvent = () => {
                     <div className="row g-2">
                       <div className="mt-24 col-md-6">
                         <img src={waktu} alt="waktu" />
-                        <span className="body-medium-semibold"> Waktu Mulai</span>
+                        <span className="body-medium-semibold">
+                          {" "}
+                          Waktu Mulai
+                        </span>
                         <p className={`body-medium-regular`} id="waktuMulai">
                           {event?.data?.waktu_mulai}
                         </p>
@@ -242,13 +257,15 @@ const DetailEvent = () => {
 
                       <div className="mt-24 col-md-6">
                         <img src={waktu} alt="waktu" />
-                        <span className="body-medium-semibold"> Waktu Selesai</span>
+                        <span className="body-medium-semibold">
+                          {" "}
+                          Waktu Selesai
+                        </span>
                         <p className={`body-medium-regular`} id="waktuSelesai">
                           {event?.data?.waktu_selesai}
                         </p>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -291,13 +308,10 @@ const DetailEvent = () => {
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
-          ) : (
-            null 
-          )}
+          ) : null}
 
           <div className="d-flex justify-content-end gap-3 pt-5">
             <div className="d-grid col-3">

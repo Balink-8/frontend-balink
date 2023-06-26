@@ -8,7 +8,7 @@ import Filefoto from "../../assets/icons/drive_folder_upload.svg";
 import ModalSuksesLogo from "../../assets/images/ModalSuksesLogo.png";
 import ModalGagalLogo from "../../assets/images/ModalGagalLogo.png";
 import Button from "../../elements/Button/Button";
-import useApi from "../../api/useApi";
+import useApi from "../../utils/useApi";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 

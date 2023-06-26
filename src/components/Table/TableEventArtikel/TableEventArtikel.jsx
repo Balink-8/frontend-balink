@@ -6,12 +6,12 @@ import styles from "./TableEventArtikel.module.css";
 import { useNavigate } from "react-router-dom";
 import TableSearch from "../../../elements/TableSearch/TableSearch";
 import Button from "../../../elements/Button/Button";
-import useApi from "../../../api/useApi";
+import useApi from "../../../utils/useApi";
 import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
 import add_link from "../../../assets/icons/add_link.svg";
-
+import defaultImg from "../../../assets/images/bg.jpg";
 
 const TableEventArtikel = () => {
   const navigate = useNavigate();
@@ -27,18 +27,10 @@ const TableEventArtikel = () => {
     });
   }, [currentPage, itemsPerPage]);
 
-  console.log(artikel);
-  console.log(loading);
-  console.log(error);
-
   const data = artikel?.data?.data;
-  console.log(data?.length);
-  console.log(data);
-  console.log(artikel?.data);
 
   // Menghitung jumlah halaman
   const totalPages = Math.ceil(artikel?.data?.total_data / itemsPerPage);
-  console.log(totalPages);
 
   // Mengubah halaman
   const goToPage = (page) => {
@@ -72,9 +64,8 @@ const TableEventArtikel = () => {
 
   const handleSetArtikel = (ID) => {
     navigate(-1);
-    const artikel_id = parseInt(ID)
-    localStorage.setItem("artikel_id", artikel_id)
-
+    const artikel_id = parseInt(ID);
+    localStorage.setItem("artikel_id", artikel_id);
   };
 
   return (
@@ -146,14 +137,14 @@ const TableEventArtikel = () => {
                           <tr className={styles.tableRow} key={item.ID}>
                             <td
                               className="p-3"
-                              onClick={() => handleSetArtikel(item.ID)} 
+                              onClick={() => handleSetArtikel(item.ID)}
                               id={`foto-cell`}
                             >
-                              <img src={item.gambar} className={styles.image} />
+                              <img src={defaultImg} className={styles.image} />
                             </td>
                             <td
                               className="p-3"
-                              onClick={() => handleSetArtikel(item.ID)} 
+                              onClick={() => handleSetArtikel(item.ID)}
                               id={`nama-cell`}
                             >
                               {item.judul}
@@ -166,7 +157,7 @@ const TableEventArtikel = () => {
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                               }}
-                              onClick={() => handleSetArtikel(item.ID)} 
+                              onClick={() => handleSetArtikel(item.ID)}
                               id={`keterangan-cell`}
                             >
                               {item.deskripsi}
@@ -176,7 +167,7 @@ const TableEventArtikel = () => {
                                 src={add_link}
                                 alt=""
                                 className={`${styles.actionButton} me-16`}
-                                onClick={() => handleSetArtikel(item.ID)} 
+                                onClick={() => handleSetArtikel(item.ID)}
                                 id={`link-button`}
                               />
                             </td>
@@ -246,7 +237,7 @@ const TableEventArtikel = () => {
                     <img src={keyboard_arrow_right} alt="" />
                   </button>
                 </div>
-              </div>  
+              </div>
             </div>
           )}
         </div>
