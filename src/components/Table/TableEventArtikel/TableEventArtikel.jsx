@@ -11,6 +11,7 @@ import EmptyTable from "../../../components/EmptyTable/EmptyTable";
 import Spinner from "../../../components/Spinner/Spinner";
 import ErrorDisplay from "../../../components/ErrorDisplay/ErrorDisplay";
 import add_link from "../../../assets/icons/add_link.svg";
+import defaultImg from "../../../assets/images/bg.jpg";
 
 const TableEventArtikel = () => {
   const navigate = useNavigate();
@@ -139,7 +140,7 @@ const TableEventArtikel = () => {
                               onClick={() => handleSetArtikel(item.ID)}
                               id={`foto-cell`}
                             >
-                              <img src={item.gambar} className={styles.image} />
+                              <img src={defaultImg} className={styles.image} />
                             </td>
                             <td
                               className="p-3"
