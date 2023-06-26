@@ -1,5 +1,5 @@
 import styles from "./DetailProduk.module.css";
-import Images from "../../assets/assetsLandingPage/bali.svg";
+// import Images from "../../assets/assetsLandingPage/bali.svg";
 import Button from "../../elements/Button/Button";
 import Hapus from "../../assets/icons/delete.svg";
 import Edit from "../../assets/icons/edit_square_white.svg";
@@ -13,7 +13,11 @@ import close from "../../assets/icons/close.svg";
 import check from "../../assets/icons/check.svg";
 import deleteImg from "../../assets/images/delete.png";
 import ErrorDisplay from "../../components/ErrorDisplay/ErrorDisplay";
+
+import Khas from '../../assets/images/Khas.jpg'
+
 import { formatCurrency } from "../../utils/CurrencyFormatter";
+
 
 const DetailProduk = () => {
   const [modalKonfirmasiIsOpen, setModalKonfirmasiIsOpen] = useState(false);
@@ -95,7 +99,7 @@ const DetailProduk = () => {
     setModalTerhapusIsOpen(false);
   };
 
-  return (
+  return ( 
     <div>
       {loading ? (
         <Spinner />
@@ -107,11 +111,11 @@ const DetailProduk = () => {
             <div className={styles.wrapperDetail} id="wrapper-detail">
               <h1 className="headline-small-semibold">Detail Produk</h1>
               <div className={styles.parentImages} id="parentsImages">
-                <img src={produk?.data?.foto} className={styles.fotoProduk} />
-                <img src={produk?.data?.foto} className={styles.fotoProduk} />
-                <img src={produk?.data?.foto} className={styles.fotoProduk} />
-                <img src={produk?.data?.foto} className={styles.fotoProduk} />
-              </div>
+                <img src={Khas} className={styles.fotoProduk} />
+                <img src={Khas} className={styles.fotoProduk} />
+                <img src={Khas} className={styles.fotoProduk} />
+                <img src={Khas} className={styles.fotoProduk} />
+              </div> 
               <div className={styles.parentDetail} id="parentsDetail">
                 <h1
                   className={`title-large-semibold ${styles.titleProduk}`}
@@ -141,7 +145,7 @@ const DetailProduk = () => {
                   <p className="title-medium-semibold">{produk?.data?.stok}</p>
                 </div>
               </div>
-            </div>
+            </div> 
 
             <div>
               <div className="d-flex justify-content-end gap-3 pt-3">
